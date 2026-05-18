@@ -596,19 +596,20 @@
             <label><i class="fas fa-exchange-alt"></i> လဲလှယ်မှု အမျိုးအစား ရွေးချယ်ပါ</label>
             <select id="amount-select" onchange="syncCalculatorFromSelect()">
                 <optgroup label="အသေးစားလဲလှယ်မှု (Max 2 per month)" id="group-small">
-                    <option value="1k-5k">1,000 MMK -> 5,000 MMK</option>
-                    <option value="3k-15k">3,000 MMK -> 15,000 MMK</option>
-                    <option value="5k-25k">5,000 MMK -> 25,000 MMK</option>
-                    <option value="50k-250k">50,000 MMK -> 250,000 MMK</option>
+                    <option value="1k-3k">1,000 MMK -> 3,000 MMK</option>
+                    <option value="3k-9k">3,000 MMK -> 9,000 MMK</option>
+                    <option value="5k-15k">5,000 MMK -> 15000 MM
+                       K</option>
+                    <option value="50k-150k">50,000 MMK -> 150,000 MMK</option>
                 </optgroup>
                 <optgroup label="အလတ်စားလဲလှယ်မှု (Max 1 per month)" id="group-medium">
-                    <option value="100k-10000k">100,000 MMK -> 1,000,0000 MMK</option>
-                    <option value="300k-15000k">300,000 MMK -> 1,500,0000 MMK</option>
-                    <option value="500k-25000k">50,0000 MMK -> 2,500,0000 MMK</option>
+                    <option value="100k-1000k">100,000 MMK -> 1,00,0000 MMK</option>
+                    <option value="300k-5000k">300,000 MMK -> 500,0000 MMK</option>
+                    <option value="500k-9000k">50,0000 MMK -> 900,0000 MMK</option>
                 </optgroup>
                 <optgroup label="အကြီးစားလဲလှယ်မှု (Max 1 per month)" id="group-large">
-                    <option value="1000k-100000k">1,000,000 MMK -> 10,000,0000 MMK</option>
-                    <option value="5000k-500000k">5,000,000 MMK -> 50,000,0000 MMK</option>
+                    <option value="4000k-50000k">1,000,000 MMK -> 5,000,0000 MMK</option>
+                    <option value="5000k-90000k">5,000,000 MMK -> 9,000,0000 MMK</option>
                 </optgroup>
             </select>
 
@@ -707,15 +708,15 @@ window.calculateExchange = function() {
 window.syncCalculatorFromSelect = function() {
     const val = document.getElementById('amount-select').value;
     let cleanInput = 0;
-    if(val === "1k-5k") cleanInput = 1000;
-    else if(val === "3k-15k") cleanInput = 3000;
-    else if(val === "5k-25k") cleanInput = 5000;
-    else if(val === "50k-250k") cleanInput = 50000;
-    else if(val === "100k-10000k") cleanInput = 100000;
-    else if(val === "300k-15000k") cleanInput = 300000;
-    else if(val === "500k-25000k") cleanInput = 500000;
-    else if(val === "1000k-100000k") cleanInput = 1000000;
-    else if(val === "5000k-500000k") cleanInput = 5000000;
+    if(val === "1k-3k") cleanInput = 1000;
+    else if(val ==="3k-9k") cleanInput = 3000;
+    else if(val === "5k-15k") cleanInput = 5000;
+    else if(val === "50k-150k") cleanInput = 50000;
+    else if(val === "100k-1000k") cleanInput = 100000;
+    else if(val === "300k-5000k") cleanInput = 300000;
+    else if(val === "500k-9000k") cleanInput = 500000;
+    else if(val === "1000k-50000k") cleanInput = 1000000;
+    else if(val === "5000k-90000k") cleanInput = 5000000;
 
     document.getElementById('input-pay-amount').value = cleanInput;
     calculateExchange();
