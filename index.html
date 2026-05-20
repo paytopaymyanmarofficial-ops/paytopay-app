@@ -597,8 +597,8 @@
             <select id="amount-select" onchange="syncCalculatorFromSelect()">
                 <optgroup label="အသေးစားလဲလှယ်မှု (Max 2 per month)" id="group-small">
                     <option value="1k-3k">1,000 MMK -> 3,000 MMK</option>
-                    <option value="3k-9k">3,000 MMK -> 9,000 MMK</option>
-                    <option value="5k-15k">5,000 MMK -> 15000 MM
+                    <option value="3k-7k">3,000 MMK -> 7,000 MMK</option>
+                    <option value="5k-10k">5,000 MMK -> 10000 MM
                        K</option>
                     <option value="50k-150k">50,000 MMK -> 150,000 MMK</option>
                 </optgroup>
@@ -709,8 +709,8 @@ window.syncCalculatorFromSelect = function() {
     const val = document.getElementById('amount-select').value;
     let cleanInput = 0;
     if(val === "1k-3k") cleanInput = 1000;
-    else if(val ==="3k-9k") cleanInput = 3000;
-    else if(val === "5k-15k") cleanInput = 5000;
+    else if(val ==="3k-7k") cleanInput = 3000;
+    else if(val === "5k-10k") cleanInput = 5000;
     else if(val === "50k-150k") cleanInput = 50000;
     else if(val === "100k-1000k") cleanInput = 100000;
     else if(val === "300k-5000k") cleanInput = 300000;
