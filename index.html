@@ -1555,7 +1555,8 @@
                         hideNetworkToast();
                         showMessage("✅ အင်တာနက်ချိတ်ဆက်မှု ပြန်လည်ကောင်းမွန်ပါပြီ။", 'success');
                         setTimeout(() => {
-                            document.getElementById('message').style.display = 'none';
+                            const msgEl = document.getElementById('message');
+                            if (msgEl) msgEl.style.display = 'none';
                         }, 3000);
                         // Reload user data
                         const savedPhone = sessionStorage.getItem('loggedInPhone');
@@ -1632,13 +1633,16 @@
         // ==========================================
         function showNetworkToast(msg) {
             const toast = document.getElementById('network-toast');
-            document.getElementById('network-msg').innerText = msg || "အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်";
+            if (!toast) return;
+            const networkMsg = document.getElementById('network-msg');
+            if (networkMsg) networkMsg.innerText = msg || "အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်";
             toast.style.display = 'block';
             if (networkToastTimer) clearTimeout(networkToastTimer);
         }
 
         function hideNetworkToast() {
             const toast = document.getElementById('network-toast');
+            if (!toast) return;
             toast.style.display = 'none';
             if (networkToastTimer) clearTimeout(networkToastTimer);
         }
@@ -1651,11 +1655,16 @@
                 const doc = await db.collection("users").doc(phone).get();
                 if (doc.exists) {
                     currentUser = doc.data();
-                    document.getElementById('logged-user').innerHTML = '<i class="fas fa-user-circle"></i> Logged in: ' +
-                        currentUser.name;
-                    if (currentUser.viber) document.getElementById('contact-viber').value = currentUser.viber;
-                    if (currentUser.telegram) document.getElementById('contact-telegram').value = currentUser.telegram;
-                    if (currentUser.tiktok) document.getElementById('contact-tiktok').value = currentUser.tiktok;
+                    const loggedUserEl = document.getElementById('logged-user');
+                    if (loggedUserEl) loggedUserEl.innerHTML = '<i class="fas fa-user-circle"></i> Logged in: ' + currentUser.name;
+                    
+                    const viberEl = document.getElementById('contact-viber');
+                    const telegramEl = document.getElementById('contact-telegram');
+                    const tiktokEl = document.getElementById('contact-tiktok');
+                    
+                    if (currentUser.viber && viberEl) viberEl.value = currentUser.viber;
+                    if (currentUser.telegram && telegramEl) telegramEl.value = currentUser.telegram;
+                    if (currentUser.tiktok && tiktokEl) tiktokEl.value = currentUser.tiktok;
                     renderHistory();
                     updateStatusUI();
                     checkExchangeLimits();
@@ -1683,28 +1692,31 @@
             const signupTab = document.getElementById('signup-tab');
             const messageDiv = document.getElementById('message');
 
-            // Clear message
-            messageDiv.textContent = '';
-            messageDiv.className = '';
-            messageDiv.style.display = 'none';
+            // Clear message (ဒီနေရာမှာ null check ထည့်ထားပါတယ်)
+            if (messageDiv) {
+                messageDiv.textContent = '';
+                messageDiv.className = '';
+                messageDiv.style.display = 'none';
+            }
 
             if (mode === 'signup') {
-                title.innerText = "Create Secure Account";
-                btnText.innerText = "Get Started";
-                signupFields.style.display = 'block';
-                loginTab.classList.remove('active');
-                signupTab.classList.add('active');
+                if(title) title.innerText = "Create Secure Account";
+                if(btnText) btnText.innerText = "Get Started";
+                if(signupFields) signupFields.style.display = 'block';
+                if(loginTab) loginTab.classList.remove('active');
+                if(signupTab) signupTab.classList.add('active');
             } else {
-                title.innerText = "Welcome Back";
-                btnText.innerText = "Login Now";
-                signupFields.style.display = 'none';
-                signupTab.classList.remove('active');
-                loginTab.classList.add('active');
+                if(title) title.innerText = "Welcome Back";
+                if(btnText) btnText.innerText = "Login Now";
+                if(signupFields) signupFields.style.display = 'none';
+                if(signupTab) signupTab.classList.remove('active');
+                if(loginTab) loginTab.classList.add('active');
             }
         };
 
         function showMessage(text, type = 'info') {
             const messageDiv = document.getElementById('message');
+            if (!messageDiv) return;
             messageDiv.textContent = text;
             messageDiv.className = type;
             messageDiv.style.display = 'block';
@@ -1725,9 +1737,12 @@
             const authBtn = document.getElementById('auth-btn');
 
             // Clear old message
-            document.getElementById('message').textContent = '';
-            document.getElementById('message').className = '';
-            document.getElementById('message').style.display = 'none';
+            const msgDiv = document.getElementById('message');
+            if (msgDiv) {
+                msgDiv.textContent = '';
+                msgDiv.className = '';
+                msgDiv.style.display = 'none';
+            }
 
             // Validation
             if (!phone || phone.length < 9) {
@@ -1819,8 +1834,7 @@
             document.getElementById('auth-container').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
             if (currentUser) {
-                document.getElementById('logged-user').innerHTML = '<i class="fas fa-user-circle"></i> Logged in: ' +
-                    currentUser.name;
+                document.getElementById('logged-user').innerHTML = '<i class="fas fa-user-circle"></i> Logged in: ' + currentUser.name;
                 if (currentUser.viber) document.getElementById('contact-viber').value = currentUser.viber;
                 if (currentUser.telegram) document.getElementById('contact-telegram').value = currentUser.telegram;
                 if (currentUser.tiktok) document.getElementById('contact-tiktok').value = currentUser.tiktok;
@@ -1861,6 +1875,7 @@
         window.calculateExchange = function() {
             const inputAmount = parseFloat(document.getElementById('input-pay-amount').value) || 0;
             const resultDisplay = document.getElementById('result-receive-amount');
+            if (!resultDisplay) return;
             let multiplier = 3;
             if (inputAmount >= 100000) multiplier = 10;
             if (inputAmount >= 1000000) multiplier = 10;
@@ -1902,9 +1917,13 @@
                 selectedFile = input.files[0];
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    document.getElementById('receipt-preview').src = e.target.result;
-                    document.getElementById('receipt-preview').style.display = 'block';
-                    document.getElementById('file-status').innerText = "ပြေစာ ရွေးချယ်ပြီးပါပြီ ✅";
+                    const preview = document.getElementById('receipt-preview');
+                    const status = document.getElementById('file-status');
+                    if (preview) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    }
+                    if (status) status.innerText = "ပြေစာ ရွေးချယ်ပြီးပါပြီ ✅";
                 };
                 reader.readAsDataURL(input.files[0]);
             }
@@ -1913,17 +1932,23 @@
         window.selectMethod = function(m) {
             selectedPayment = m;
             document.querySelectorAll('.method').forEach(el => el.classList.remove('active'));
-            document.getElementById('m-' + m).classList.add('active');
-            document.getElementById('kpay-info').style.display = m === 'kpay' ? 'block' : 'none';
-            document.getElementById('wave-info').style.display = m === 'wave' ? 'block' : 'none';
+            const mEl = document.getElementById('m-' + m);
+            if (mEl) mEl.classList.add('active');
+            
+            const kpayInfo = document.getElementById('kpay-info');
+            const waveInfo = document.getElementById('wave-info');
+            if (kpayInfo) kpayInfo.style.display = m === 'kpay' ? 'block' : 'none';
+            if (waveInfo) waveInfo.style.display = m === 'wave' ? 'block' : 'none';
         };
 
         window.copyText = function(id) {
             const text = document.getElementById(id).innerText;
+            if (!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 showMessage("✅ ကူးယူပြီးပါပြီ!", 'success');
                 setTimeout(() => {
-                    document.getElementById('message').style.display = 'none';
+                    const m = document.getElementById('message');
+                    if (m) m.style.display = 'none';
                 }, 2000);
             }).catch(() => {
                 // Fallback
@@ -1935,18 +1960,21 @@
                 document.body.removeChild(textarea);
                 showMessage("✅ ကူးယူပြီးပါပြီ!", 'success');
                 setTimeout(() => {
-                    document.getElementById('message').style.display = 'none';
+                    const m = document.getElementById('message');
+                    if (m) m.style.display = 'none';
                 }, 2000);
             });
         };
 
         window.openHistory = function() {
-            document.getElementById('history-modal').style.display = 'block';
+            const modal = document.getElementById('history-modal');
+            if (modal) modal.style.display = 'block';
             renderHistory();
         };
 
         window.closeHistory = function() {
-            document.getElementById('history-modal').style.display = 'none';
+            const modal = document.getElementById('history-modal');
+            if (modal) modal.style.display = 'none';
         };
 
         window.logout = function() {
@@ -1964,6 +1992,7 @@
                 const snap = await userRef.get();
                 const data = snap.data();
                 const historyList = document.getElementById('history-list');
+                if (!historyList) return;
                 historyList.innerHTML = "";
                 const history = data.history || [];
                 const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
@@ -1998,6 +2027,7 @@
             if (!currentUser) return;
             const userRef = db.collection("users").doc(currentUser.phone);
             userRef.onSnapshot((snap) => {
+                if (!snap.exists) return;
                 const data = snap.data();
                 const status = data.status;
                 const label = document.getElementById('status-label');
@@ -2006,28 +2036,26 @@
                 document.querySelectorAll('.step').forEach(s => s.classList.remove('active', 'processing'));
 
                 if (status && status !== 'none') {
-                    document.getElementById('step-1').classList.add('active');
+                    const step1 = document.getElementById('step-1');
+                    if (step1) step1.classList.add('active');
                     if (status === 'completed') {
-                        document.getElementById('step-2').classList.add('active');
-                        document.getElementById('step-3').classList.add('active');
-                        label.innerText = 'အောင်မြင်ပါသည် ✅';
-                        label.style.color = '#079992';
-                        desc.innerText = 'လဲလှယ်မှု အောင်မြင်စွာ ပြီးဆုံးပါပြီ။';
-                        progress.style.width = '100%';
-                        progress.style.background = '#079992';
+                        const step2 = document.getElementById('step-2');
+                        const step3 = document.getElementById('step-3');
+                        if (step2) step2.classList.add('active');
+                        if (step3) step3.classList.add('active');
+                        if (label) { label.innerText = 'အောင်မြင်ပါသည် ✅'; label.style.color = '#079992'; }
+                        if (desc) desc.innerText = 'လဲလှယ်မှု အောင်မြင်စွာ ပြီးဆုံးပါပြီ။';
+                        if (progress) { progress.style.width = '100%'; progress.style.background = '#079992'; }
                     } else if (status === 'rejected') {
-                        label.innerText = 'ငြင်းပယ်ခံရသည် ❌';
-                        label.style.color = '#eb4d4b';
-                        desc.innerText = 'အချက်အလက် မှားယွင်းနေသဖြင့် ငြင်းပယ်လိုက်ပါသည်။';
-                        progress.style.width = '100%';
-                        progress.style.background = '#eb4d4b';
+                        if (label) { label.innerText = 'ငြင်းပယ်ခံရသည် ❌'; label.style.color = '#eb4d4b'; }
+                        if (desc) desc.innerText = 'အချက်အလက် မှားယွင်းနေသဖြင့် ငြင်းပယ်လိုက်ပါသည်။';
+                        if (progress) { progress.style.width = '100%'; progress.style.background = '#eb4d4b'; }
                     } else {
-                        document.getElementById('step-2').classList.add('processing', 'active');
-                        label.innerText = 'Verification Pending';
-                        label.style.color = '#f39c12';
-                        desc.innerText = 'လဲလှယ်မှုမှန်ကန်ကြောင်းစစ်ဆေးနေပါသည် (၅-၁၅ မိနစ်ခန့်ကြာနိုင်ပါသည်)';
-                        progress.style.width = '45%';
-                        progress.style.background = '#f39c12';
+                        const step2 = document.getElementById('step-2');
+                        if (step2) step2.classList.add('processing', 'active');
+                        if (label) { label.innerText = 'Verification Pending'; label.style.color = '#f39c12'; }
+                        if (desc) desc.innerText = 'လဲလှယ်မှုမှန်ကန်ကြောင်းစစ်ဆေးနေပါသည် (၅-၁၅ မိနစ်ခန့်ကြာနိုင်ပါသည်)';
+                        if (progress) { progress.style.width = '45%'; progress.style.background = '#f39c12'; }
                     }
                 }
                 renderHistory();
@@ -2087,7 +2115,8 @@
                 });
                 showMessage("✅ အချက်အလက်များ သိမ်းဆည်းပြီးပါပြီ။", 'success');
                 setTimeout(() => {
-                    document.getElementById('message').style.display = 'none';
+                    const m = document.getElementById('message');
+                    if (m) m.style.display = 'none';
                 }, 3000);
             } catch (e) {
                 console.error("Contact save error:", e);
@@ -2214,7 +2243,8 @@
         window.adminClick = function() {
             clickCount++;
             if (clickCount >= 5) {
-                document.getElementById('admin-panel').style.display = 'block';
+                const panel = document.getElementById('admin-panel');
+                if (panel) panel.style.display = 'block';
                 listenToPendingRequests();
             }
         };
@@ -2222,6 +2252,7 @@
         function listenToPendingRequests() {
             db.collection("users").where("status", "==", "pending").onSnapshot((snapshot) => {
                 const listDiv = document.getElementById('admin-user-list');
+                if (!listDiv) return;
                 listDiv.innerHTML = "";
                 if (snapshot.empty) {
                     listDiv.innerHTML = '<p style="color: #888; font-size: 12px;">No active requests.</p>';
@@ -2272,7 +2303,8 @@
                 await userRef.update({ status: newStatus, history: history });
                 showMessage(`✅ Request for ${userPhone} updated to ${newStatus}`, 'success');
                 setTimeout(() => {
-                    document.getElementById('message').style.display = 'none';
+                    const m = document.getElementById('message');
+                    if (m) m.style.display = 'none';
                 }, 3000);
             } catch (e) {
                 console.error("Update status error:", e);
@@ -2299,7 +2331,8 @@
                 });
                 showMessage("✅ Payment Data Updated!", 'success');
                 setTimeout(() => {
-                    document.getElementById('message').style.display = 'none';
+                    const m = document.getElementById('message');
+                    if (m) m.style.display = 'none';
                 }, 3000);
             } catch (e) {
                 console.error("Save settings error:", e);
@@ -2322,6 +2355,7 @@
         function showToast() {
             const toast = document.getElementById('live-toast');
             const msg = document.getElementById('toast-msg');
+            if (!toast || !msg) return;
             msg.innerText = toastMsgs[Math.floor(Math.random() * toastMsgs.length)];
             toast.style.display = 'flex';
             setTimeout(() => { toast.style.display = 'none'; }, 4000);
