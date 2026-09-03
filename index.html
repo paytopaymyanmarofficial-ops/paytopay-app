@@ -17,10 +17,15 @@
             --warning: #f39c12;
             --card-shadow: 0 10px 30px rgba(0,0,0,0.12);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --border-color: #edf2f7;
+            --input-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, var(--primary), var(--secondary));
+            --footer-bg: #1a202c;
+            --footer-text: #a0aec0;
         }
-
-        body { font-family: 'Pyidaungsu', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; overflow-x: hidden; }
-        
+        body { font-family: 'Pyidaungsu', sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--text-color); overflow-x: hidden; transition: var(--transition); }
         /* --- Enhanced Auth Styles --- */
         #auth-container {
             display: flex;
@@ -28,21 +33,20 @@
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: var(--bg);
+            transition: var(--transition);
         }
-
         .auth-card {
-            background: white;
+            background: var(--card-bg);
             padding: 40px;
             border-radius: 24px;
             box-shadow: var(--card-shadow);
             width: 100%;
             max-width: 420px;
             transition: var(--transition);
+            border: 1px solid var(--border-color);
         }
-
         .auth-card:hover { transform: translateY(-5px); }
-
         .auth-card h2 { 
             color: var(--primary); 
             text-align: center; 
@@ -50,15 +54,13 @@
             font-size: 24px;
             font-weight: 700;
         }
-
         .auth-tabs { 
             display: flex; 
             margin-bottom: 30px; 
-            background: #f1f2f6;
+            background: var(--bg);
             border-radius: 12px;
             padding: 5px;
         }
-
         .tab { 
             flex: 1; 
             text-align: center; 
@@ -69,43 +71,36 @@
             transition: var(--transition);
             border-radius: 10px;
         }
-
         .tab.active { 
-            background: white;
+            background: var(--card-bg);
             color: var(--primary); 
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-
-        /* Input Styling */
         .input-group { margin-bottom: 20px; }
-        
         label { 
             display: block; 
             margin-bottom: 8px; 
             font-weight: 600; 
             font-size: 14px; 
-            color: #555; 
+            color: var(--text-color); 
             transition: var(--transition);
         }
-
         input, select { 
             width: 100%; 
             padding: 14px 16px; 
-            border: 2px solid #edf2f7; 
+            border: 2px solid var(--border-color); 
             border-radius: 12px; 
             font-size: 15px; 
             box-sizing: border-box;
             transition: var(--transition);
             outline: none;
+            background: var(--input-bg);
+            color: var(--text-color);
         }
-
-        input:focus {
+        input:focus, select:focus {
             border-color: var(--secondary);
-            background-color: #fff;
             box-shadow: 0 0 0 4px rgba(74, 105, 189, 0.1);
         }
-
-        /* Buttons with Animation */
         .main-btn { 
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white; 
@@ -123,54 +118,95 @@
             align-items: center;
             gap: 10px;
         }
-
         .main-btn:hover {
             filter: brightness(1.1);
             transform: scale(1.02);
             box-shadow: 0 6px 20px rgba(30, 55, 153, 0.4);
         }
-
-        .main-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* --- Main Content Styles --- */
+        .main-btn:active { transform: scale(0.98); }
+        .main-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        /* --- Main Content --- */
         #main-content { display: none; }
-
         .header { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--header-bg);
             color: white; 
             padding: 50px 20px; 
             text-align: center; 
             border-radius: 0 0 30px 30px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             position: relative;
+            transition: var(--transition);
         }
-
-        /* History Icon Styling */
         .history-icon {
             position: absolute;
             top: 20px;
             left: 20px;
-            font-size: 24px;
+            font-size: 28px;
             color: white;
             cursor: pointer;
             transition: var(--transition);
+            background: rgba(255,255,255,0.15);
+            padding: 10px;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .history-icon:hover { transform: scale(1.1); opacity: 0.8; }
-        
+        .history-icon:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
         .container { padding: 15px; max-width: 500px; margin: auto; margin-top: -30px; }
-        
         .card {
-            background: #ffffff;
+            background: var(--card-bg);
             border-radius: 18px;
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
         }
-
-        /* History Modal Styling */
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .trust-badge {
+            background: var(--bg);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .trust-badge i { color: var(--success); }
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .faq-answer {
+            display: none;
+            padding-top: 8px;
+            font-size: 14px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .faq-answer.active { display: block; }
+        /* History Modal */
         #history-modal {
             display: none;
             position: fixed;
@@ -180,7 +216,7 @@
             backdrop-filter: blur(5px);
         }
         .modal-content {
-            background: white;
+            background: var(--card-bg);
             width: 90%;
             max-width: 450px;
             margin: 50px auto;
@@ -190,113 +226,90 @@
             max-height: 80vh;
             overflow-y: auto;
             animation: fadeIn 0.3s;
+            color: var(--text-color);
         }
-
-        /* History Items Style */
-        .history-list-container { margin-top: 15px; }
-        .history-item { 
-            background: #f8fafc; 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin-bottom: 10px; 
+        .history-item {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
             border-left: 5px solid var(--primary);
             font-size: 14px;
         }
         .h-status-pending { color: var(--warning); font-weight: bold; }
         .h-status-completed { color: var(--success); font-weight: bold; }
         .h-status-rejected { color: var(--danger); font-weight: bold; }
-
-        /* Moved Status Card Style */
-        .status-container { display: block; background: #fff; border-left: 6px solid var(--warning); padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 10px; }
+        /* Status container */
+        .status-container { display: block; background: var(--card-bg); border-left: 6px solid var(--warning); padding: 15px; border-radius: 12px; box-shadow: var(--card-shadow); margin-bottom: 10px; border: 1px solid var(--border-color); }
         .status-title { font-weight: bold; color: var(--primary); display: flex; justify-content: space-between; align-items: center; }
         .status-bar { height: 8px; background: #eee; border-radius: 10px; overflow: hidden; margin: 10px 0; }
         .status-progress { height: 100%; width: 45%; background: var(--warning); transition: 0.6s ease-in-out; }
-
         .info-toggle {
             background: #fff3cd; color: #856404; padding: 15px; border-radius: 15px;
             display: flex; align-items: center; cursor: pointer; border: 1px solid #ffeeba; margin-bottom: 20px;
         }
         .info-content {
-            display: none; background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px;
+            display: none; background: var(--card-bg); padding: 20px; border-radius: 15px; margin-bottom: 20px;
             line-height: 1.7; border-top: 5px solid var(--warning); box-shadow: var(--card-shadow);
         }
         .info-content.active { display: block; animation: fadeIn 0.4s; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
         .trust-section { background: #eef2ff; border-left: 5px solid var(--primary); }
         .trust-section h4 { margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-
         .payment-methods { display: flex; justify-content: space-around; gap: 15px; margin: 20px 0; }
         .method { 
-            flex: 1; border: 2px solid #eee; border-radius: 18px; padding: 15px; cursor: pointer; 
-            transition: 0.3s; text-align: center; background: white;
+            flex: 1; border: 2px solid var(--border-color); border-radius: 18px; padding: 15px; cursor: pointer; 
+            transition: 0.3s; text-align: center; background: var(--card-bg);
         }
         .method img { width: 50px; height: 50px; border-radius: 12px; margin-bottom: 8px; }
         .method.active { border-color: var(--primary); background: #f0f4ff; transform: translateY(-5px); }
-
         .payment-info { display: none; border-left: 6px solid var(--success); }
         .payment-info.show { display: block; }
-
         .file-input-wrapper {
-            border: 2px dashed #cbd5e0; padding: 25px; border-radius: 15px;
-            text-align: center; cursor: pointer; background: #f8fafc;
+            border: 2px dashed var(--border-color); padding: 25px; border-radius: 15px;
+            text-align: center; cursor: pointer; background: var(--bg);
         }
         #receipt-preview { max-width: 100%; margin-top: 15px; border-radius: 10px; display: none; }
-
         .confirm-btn { background: var(--success); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
         .confirm-btn:hover { opacity: 0.9; }
-
         .admin-panel { display: none; background: #1a202c; color: white; padding: 25px; border-radius: 20px; margin-top: 20px; border: 2px solid gold; }
-        .admin-panel input { background: #2d3748; border: none; color: white; margin-bottom: 10px;}
+        .admin-panel input { background: #2d3748; border: none; color: white; margin-bottom: 10px; }
         .admin-btn-group { display: flex; gap: 10px; margin-top: 10px; }
         .reject-btn { background: var(--danger); flex: 1; }
         .approve-btn { background: var(--success); flex: 1; }
-        
         .copy-btn { float: right; color: var(--primary); font-size: 12px; cursor: pointer; text-decoration: underline; }
-
-        /* --- NEW: Trust Building Styles --- */
+        /* Toast */
         #live-toast {
-            position: fixed; bottom: 20px; left: 20px; background: white;
+            position: fixed; bottom: 20px; left: 20px; background: var(--card-bg);
             padding: 12px 20px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             display: none; align-items: center; gap: 10px; z-index: 9999;
             border-left: 5px solid var(--success); animation: slideRight 0.5s;
+            color: var(--text-color);
         }
         @keyframes slideRight { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-        .review-card { background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #eee; margin-bottom: 10px; }
+        .review-card { background: var(--bg); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); margin-bottom: 10px; }
         .star-rating { color: #f1c40f; font-size: 12px; margin-bottom: 5px; }
-        
         .footer-badges { text-align: center; padding: 20px; opacity: 0.6; }
         .footer-badges img { height: 25px; margin: 0 10px; filter: grayscale(100%); transition: 0.3s; }
         .footer-badges img:hover { filter: grayscale(0%); opacity: 1; }
-
         .guarantee-box { 
             background: #d1fae5; border: 2px dashed var(--success); 
             padding: 15px; border-radius: 15px; color: #065f46; 
             margin-top: 15px; font-size: 13px; text-align: center;
         }
-        
         .verified-badge { color: #3498db; margin-left: 5px; font-size: 14px; }
-
-        /* Dynamic Calculator Styles */
+        /* Calculator */
         .calc-container {
-            background: #fff;
+            background: var(--card-bg);
             padding: 20px;
             border-radius: 18px;
             margin-bottom: 20px;
             box-shadow: var(--card-shadow);
             border-top: 5px solid var(--primary);
+            border: 1px solid var(--border-color);
         }
-        .calc-box {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .calc-input-wrapper {
-            position: relative;
-        }
+        .calc-box { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .calc-input-wrapper { position: relative; }
         .calc-input-wrapper span {
             position: absolute;
             right: 15px;
@@ -306,7 +319,7 @@
             color: var(--primary);
         }
         .result-box {
-            background: #f0f4ff;
+            background: var(--bg);
             padding: 15px;
             border-radius: 12px;
             text-align: center;
@@ -318,8 +331,7 @@
             font-weight: 800;
             color: var(--primary);
         }
-
-        /* Animated Step Timeline */
+        /* Timeline */
         .process-timeline {
             display: flex;
             justify-content: space-between;
@@ -345,7 +357,7 @@
         .step-icon {
             width: 50px;
             height: 50px;
-            background: white;
+            background: var(--card-bg);
             border: 3px solid #ddd;
             border-radius: 50%;
             display: flex;
@@ -368,8 +380,6 @@
         }
         .step p { font-size: 11px; font-weight: bold; margin: 0; color: #777; }
         .step.active p { color: var(--success); }
-
-        /* Admin User List Styles */
         .admin-user-card {
             background: #2d3748;
             padding: 15px;
@@ -379,13 +389,52 @@
         }
         .admin-user-info { font-size: 13px; line-height: 1.5; margin-bottom: 10px; }
         .admin-user-info b { color: gold; }
-
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-
+        /* Footer */
+        .main-footer {
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 30px 30px 0 0;
+            margin-top: 30px;
+            font-size: 13px;
+        }
+        .main-footer a { color: #63b3ed; text-decoration: none; }
+        .main-footer .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 15px 0; }
+        /* Live Chat Floating Button */
+        .live-chat-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: #0088cc;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 999;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        .live-chat-btn:hover { transform: scale(1.05); background: #006699; }
+        /* Responsive */
+        @media (max-width: 480px) {
+            .auth-card { padding: 25px; }
+            .header { padding: 30px 15px; }
+            .container { padding: 10px; }
+            .card { padding: 15px; }
+            .history-icon { top: 10px; left: 10px; width: 40px; height: 40px; font-size: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -396,16 +445,20 @@
         <i class="fas fa-check"></i>
     </div>
     <div>
-        <div id="toast-msg" style="font-size: 12px; font-weight: bold; color: #333;">09***၁၂၃ မှ ၅ သောင်းလဲလှယ်မှု အောင်မြင်သည်။</div>
+        <div id="toast-msg" style="font-size: 12px; font-weight: bold; color: var(--text-color);">09***123 မှ ၅ သောင်းလဲလှယ်မှု အောင်မြင်သည်။</div>
         <div style="font-size: 10px; color: #888;">Just now via Secure Gateway</div>
     </div>
 </div>
 
+<!-- Live Chat Floating Button - Updated to @Paytopay3429 -->
+<a href="https://t.me/Paytopay3429" target="_blank" rel="noopener" class="live-chat-btn">
+    <i class="fab fa-telegram-plane"></i> Live Chat
+</a>
+
+<!-- History Modal -->
 <div id="history-modal">
     <div class="modal-content">
         <h3 style="color:var(--primary); text-align:center;"><i class="fas fa-history"></i> လဲလှယ်မှုမှတ်တမ်း (ရက် ၃၀)</h3>
-        
-        <!-- Animated Process Timeline -->
         <div class="process-timeline" id="status-timeline">
             <div class="step" id="step-1">
                 <div class="step-icon"><i class="fas fa-file-invoice-dollar"></i></div>
@@ -420,10 +473,8 @@
                 <p>ငွေဝင်ပြီ</p>
             </div>
         </div>
-
         <p style="text-align: center; font-size: 12px; color: #666; margin-top: -10px;">မှတ်တမ်းများကို ရက် ၃၀ အထိသာ စနစ်တကျသိမ်းဆည်းပေးပါသည်။</p>
         <hr>
-        
         <div id="active-status-box" class="status-container">
             <div class="status-title">
                 <span><i class="fas fa-sync fa-spin"></i> လက်ရှိအခြေအနေ</span>
@@ -434,60 +485,60 @@
             </div>
             <p style="font-size: 12px; color: #666; margin: 0;" id="status-desc">လဲလှယ်မှုပြုလုပ်နေပါသည် လဲလှယ်မှုမှန်ကန်ကြောင်းစစ်ဆေးနေပါသည်</p>
         </div>
-
         <div id="history-list" class="history-list-container">
             <p style="text-align: center; color: #999;">မှတ်တမ်းများမရှိသေးပါ။</p>
         </div>
-
         <button class="main-btn" style="margin-top:20px;" onclick="closeHistory()">ပိတ်မည်</button>
     </div>
 </div>
 
+<!-- Auth Container -->
 <div id="auth-container">
     <div class="auth-card">
         <div style="text-align: center; margin-bottom: 20px;">
             <img src="https://i.ibb.co/JWmddJQL/logo.png" width="80" style="filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));">
         </div>
         <h2 id="auth-title">Welcome Back</h2>
-        
         <div class="auth-tabs">
             <div class="tab active" id="login-tab" onclick="switchAuth('login')">Login</div>
             <div class="tab" id="signup-tab" onclick="switchAuth('signup')">Sign Up</div>
         </div>
-
         <div id="auth-form">
             <div id="signup-fields" style="display: none;">
                 <div class="input-group">
                     <label><i class="fas fa-user-circle"></i> Full Name</label>
                     <input type="text" id="reg-name" placeholder="သင့်နာမည်အပြည့်အစုံ">
                 </div>
+                <div class="input-group">
+                    <label><i class="fas fa-id-card"></i> National ID (Optional)</label>
+                    <input type="text" id="reg-nid" placeholder="၁၂-၃၄၅-၆၇၈၉၀၁">
+                </div>
             </div>
-            
             <div class="input-group">
                 <label><i class="fas fa-phone-volume"></i> Phone Number</label>
                 <input type="number" id="auth-phone" placeholder="09xxxxxxxxx">
             </div>
-
             <div class="input-group">
                 <label><i class="fas fa-shield-alt"></i> Password</label>
                 <input type="password" id="auth-pass" placeholder="Password အနည်းဆုံး ၆ လုံး">
             </div>
-
             <button class="main-btn" id="auth-btn" onclick="handleAuth()">
                 <span id="btn-text">Login Now</span>
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
-        
         <div style="text-align: center; margin-top: 20px; font-size: 11px; color: #999;">
             <i class="fas fa-lock"></i> Secured by End-to-End Encryption
         </div>
     </div>
 </div>
 
+<!-- Main Content -->
 <div id="main-content">
     <div class="header">
-        <i class="fas fa-history history-icon" onclick="openHistory()"></i>
+        <div class="history-icon" onclick="openHistory()" title="မှတ်တမ်းကြည့်ရန်">
+            <i class="fas fa-history"></i>
+        </div>
         <img src="https://i.ibb.co/JWmddJQL/logo.png" width="70" style="border-radius: 15px; margin-bottom: 10px;">
         <h2>PAY TO PAY <i class="fas fa-check-circle verified-badge"></i></h2>
         <p>Professional Myanmar Money Exchange</p>
@@ -495,6 +546,14 @@
     </div>
 
     <div class="container">
+        <!-- Trust Badges -->
+        <div class="trust-badges">
+            <span class="trust-badge"><i class="fas fa-shield-alt"></i> SSL Secure</span>
+            <span class="trust-badge"><i class="fas fa-handshake"></i> Money-Back Guarantee</span>
+            <span class="trust-badge"><i class="fas fa-check-circle"></i> Verified Merchant</span>
+            <span class="trust-badge"><i class="fas fa-lock"></i> PCI-DSS Compliant</span>
+        </div>
+
         <!-- Dynamic Exchange Calculator -->
         <div class="calc-container">
             <h4 style="margin:0 0 15px 0; color:var(--primary); text-align:center;"><i class="fas fa-calculator"></i> Real-time Calculator</h4>
@@ -510,6 +569,7 @@
                 <span class="result-amount" id="result-receive-amount">0</span>
                 <small>MMK (Cash Out Rate Included)</small>
             </div>
+            <p style="font-size: 11px; color: #888; text-align: center; margin-top: 10px;">* ငွေလဲနှုန်းမှာ ဈေးကွက်ပေါ်မူတည်၍ ပြောင်းလဲနိုင်ပါသည်။</p>
         </div>
 
         <div class="info-toggle" onclick="toggleInfo()">
@@ -519,17 +579,25 @@
                 <small style="display: block; opacity: 0.8;">ယုံကြည်စိတ်ချစွာ လဲလှယ်နိုင်ရန်</small>
             </div>
         </div>
-
         <div id="p2p-info" class="info-content">
             <h3 style="color:var(--primary); margin-top: 0;"><i class="fas fa-user-shield"></i> လုံခြုံစိတ်ချရသော ငွေကြေးဝန်ဆောင်မှု</h3>
             <p>မြန်မာနိုင်ငံတွင် လက်ရှိဖြစ်ပေါ်နေသော ငွေကြေးစီးဆင်းမှုစနစ်များ၌ မသန့်ရှင်းသော လမ်းကြောင်းများမှ ရရှိလာသော ငွေကြေးများကြောင့် သာမန်ပြည်သူများ၏ ဘဏ်အကောင့်များ ပိတ်သိမ်းခံရခြင်းမှ ကာကွယ်ရန် ကျွန်ုပ်တို့မှ တာဝန်ယူပါသည်။</p>
-            <p><strong>ကျွန်ုပ်တို့၏ ရည်ရွယ်ချက်မှာ-</strong> အသုံးပြုသူများ၏ ငွေကြေးစီးဆင်းမှု လုံခြုံစိတ်ချရစေရန် စနစ်တကျ စစ်ဆေးပေးခြင်း (Secure Flow Management) ကို အခြေခံကျကျ ကိုင်တွယ်ဖြေရှင်းပေးရန် ဖြစ်ပါသည်။ ကျွန်ုပ်တို့သည် အသုံးပြုသူများ၏ လဲလှယ်မှုတိုင်းကို စနစ်တကျ စစ်ဆေးပြီး၊ တရားဝင်သော ငွေဖြူများအဖြစ်သာ လည်ပတ်နိုင်ရန် လမ်းကြောင်းဖော်ဆောင်ပေးပါသည်။</p>
-            
+            <p><strong>ကျွန်ုပ်တို့၏ ရည်ရွယ်ချက်မှာ-</strong> အသုံးပြုသူများ၏ ငွေကြေးစီးဆင်းမှု လုံခြုံစိတ်ချရစေရန် စနစ်တကျ စစ်ဆေးပေးခြင်း (Secure Flow Management) ကို အခြေခံကျကျ ကိုင်တွယ်ဖြေရှင်းပေးရန် ဖြစ်ပါသည်။</p>
             <div class="guarantee-box">
                 <i class="fas fa-handshake"></i> <b>100% Guarantee:</b> လဲလှယ်မှု ကြာချိန်သည် ၅ မိနစ်မှ ၁၅ မိနစ်အတွင်းသာ ကြာမြင့်မည်။ အကယ်၍ ၁ နာရီထက် ကျော်လွန်ပါက ငွေပမာဏကို ၁၀၀% အပြည့်အဝ တာဝန်ယူ ပြန်ပေးမည် ဖြစ်ပါသည်။
             </div>
-            
             <button class="main-btn" style="padding: 10px; margin-top: 15px;" onclick="toggleInfo()">ဖတ်ရှုပြီးပါပြီ</button>
+        </div>
+
+        <!-- Security Tips -->
+        <div class="card" style="border-left: 5px solid var(--secondary);">
+            <h4 style="margin-top:0; color:var(--primary);"><i class="fas fa-lightbulb"></i> လုံခြုံရေးအကြံပြုချက်များ</h4>
+            <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8;">
+                <li>ငွေလွှဲပြီးတိုင်း ပြေစာကို သေချာသိမ်းဆည်းပါ။</li>
+                <li>သင့်အကောင့်စကားဝှက်ကို အခြားသူများနှင့် မျှဝေခြင်းမပြုပါနှင့်။</li>
+                <li>တရားဝင် Telegram နှင့် Website မှတစ်ဆင့်သာ ဆက်သွယ်ပါ။</li>
+                <li>ငွေလွှဲပမာဏနှင့် လက်ခံသူအချက်အလက်ကို နှစ်ခါစစ်ဆေးပါ။</li>
+            </ul>
         </div>
 
         <div class="card trust-section">
@@ -537,43 +605,40 @@
             <p style="margin: 0; line-height: 1.6; font-size: 13.5px;">ကျွန်ုပ်တို့သည် သင့်ငွေကြေးများကို သန့်ရှင်းသော ငွေဖြူများအဖြစ် အသွင်ပြောင်းပေးရန်နှင့် ဘဏ်အကောင့်များ ပိတ်သိမ်းခံရမှုမရှိစေရန် တာဝန်ယူ စောင့်ရှောက်ပေးပါသည်။</p>
         </div>
 
+        <!-- Reviews -->
         <div class="card">
             <h4 style="margin-top:0; color:var(--primary);"><i class="fas fa-comment-dots"></i> သုံးစွဲသူများ၏ မှက်ချက်များ</h4>
             <div class="review-card">
                 <div class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <div style="font-size: 13px; font-weight: bold;">Ko Aung Kyaw</div>
-                <div style="font-size: 12px; color: #666;">"ငွေလွှဲတာ အရမ်းမြန်တယ်ဗျ။ ၅ မိနစ်တောင်မကြာဘူး ငွေဝင်လာတယ်။ တကယ့်ကို ယုံကြည်ရပါတယ်။"</div>
+                <div style="font-size: 13px; font-weight: bold;">Ko Aung Kyaw <span style="color: #3498db; font-size: 12px;"><i class="fas fa-check-circle"></i> Verified</span></div>
+                <div style="font-size: 12px; color: var(--text-color);">"ငွေလွှဲတာ အရမ်းမြန်တယ်ဗျ။ ၅ မိနစ်တောင်မကြာဘူး ငွေဝင်လာတယ်။ တကယ့်ကို ယုံကြည်ရပါတယ်။"</div>
             </div>
             <div class="review-card">
                 <div class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                <div style="font-size: 13px; font-weight: bold;">Ma Sandar</div>
-                <div style="font-size: 12px; color: #666;">"Customer Service ကလည်း အပြောအဆို ယဉ်ကျေးပါတယ်။ အမြဲ ဒီကပဲ လဲဖြစ်တော့မယ်။"</div>
+                <div style="font-size: 13px; font-weight: bold;">Ma Sandar <span style="color: #3498db; font-size: 12px;"><i class="fas fa-check-circle"></i> Verified</span></div>
+                <div style="font-size: 12px; color: var(--text-color);">"Customer Service ကလည်း အပြောအဆို ယဉ်ကျေးပါတယ်။ အမြဲ ဒီကပဲ လဲဖြစ်တော့မယ်။"</div>
+            </div>
+            <div class="review-card">
+                <div class="star-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                <div style="font-size: 13px; font-weight: bold;">Ko Min Thu <span style="color: #3498db; font-size: 12px;"><i class="fas fa-check-circle"></i> Verified</span></div>
+                <div style="font-size: 12px; color: var(--text-color);">"ငွေလဲနှုန်းက သင့်တင့်တယ်၊ စိတ်ချရတယ်။ နောက်လည်းသုံးမယ်။"</div>
             </div>
         </div>
 
+        <!-- Contact Info -->
         <div class="card">
             <h4 style="margin-top:0; color:var(--primary);"><i class="fas fa-headset"></i> ဆက်သွယ်ရန် အချက်အလက်</h4>
             <p style="font-size: 12px; color: #666; margin-bottom: 15px;">လဲလှယ်မှုနှင့် ပတ်သက်၍ အမြန်ဆုံး ဆက်သွယ်နိုင်ရန် ဖြည့်စွက်ပေးပါ။</p>
-            
             <label><i class="fab fa-telegram" style="color:#0088cc;"></i> Telegram Username / Phone</label>
             <input type="text" id="contact-telegram" placeholder="@username or 09...">
-            
             <label><i class="fas fa-phone-alt" style="color:#25d366;"></i> Viber Number</label>
             <input type="number" id="contact-viber" placeholder="09xxxxxxxxx">
-            
             <label><i class="fab fa-tiktok"></i> TikTok Username</label>
             <input type="text" id="contact-tiktok" placeholder="Tiktok ID">
-            
             <button class="confirm-btn" onclick="sendContactData()"><i class="fas fa-save"></i> အချက်အလက်အတည်ပြုမည်</button>
         </div>
 
-        <div class="card" style="text-align:center;">
-            <img src="https://i.ibb.co/9mbw7qwY/cs-photo.jpg" style="width:70px; height:70px; border-radius:50%; border:3px solid var(--primary); margin-bottom:10px;">
-            <a href="https://t.me/Sarina233396" class="cs-button" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px; background:#0088cc; color:white; padding:12px; border-radius:12px; font-weight:bold;">
-                <i class="fab fa-telegram-plane"></i> Contact Live Support
-            </a>
-        </div>
-
+        <!-- Payment Methods -->
         <div class="payment-methods">
             <div class="method" id="m-kpay" onclick="selectMethod('kpay')">
                 <img src="https://i.ibb.co/C5qZ7m3Y/kpay.png"><span>KPay</span>
@@ -592,24 +657,24 @@
             <p><strong>Acc Number:</strong> <span id="wave-num">Loading...</span> <span class="copy-btn" onclick="copyText('wave-num')">Copy <i class="fas fa-copy"></i></span></p>
         </div>
 
+        <!-- Exchange Form -->
         <div class="card">
             <label><i class="fas fa-exchange-alt"></i> လဲလှယ်မှု အမျိုးအစား ရွေးချယ်ပါ</label>
             <select id="amount-select" onchange="syncCalculatorFromSelect()">
                 <optgroup label="အသေးစားလဲလှယ်မှု (Max 2 per month)" id="group-small">
                     <option value="1k-3k">1,000 MMK -> 3,000 MMK</option>
                     <option value="3k-7k">3,000 MMK -> 7,000 MMK</option>
-                    <option value="5k-10k">5,000 MMK -> 10000 MM
-                       K</option>
+                    <option value="5k-10k">5,000 MMK -> 10,000 MMK</option>
                     <option value="50k-150k">50,000 MMK -> 150,000 MMK</option>
                 </optgroup>
                 <optgroup label="အလတ်စားလဲလှယ်မှု (Max 1 per month)" id="group-medium">
-                    <option value="100k-1000k">100,000 MMK -> 1,00,0000 MMK</option>
-                    <option value="300k-5000k">300,000 MMK -> 500,0000 MMK</option>
-                    <option value="500k-9000k">50,0000 MMK -> 900,0000 MMK</option>
+                    <option value="100k-1000k">100,000 MMK -> 1,000,000 MMK</option>
+                    <option value="300k-5000k">300,000 MMK -> 5,000,000 MMK</option>
+                    <option value="500k-9000k">500,000 MMK -> 9,000,000 MMK</option>
                 </optgroup>
                 <optgroup label="အကြီးစားလဲလှယ်မှု (Max 1 per month)" id="group-large">
-                    <option value="4000k-50000k">1,000,000 MMK -> 5,000,0000 MMK</option>
-                    <option value="5000k-90000k">5,000,000 MMK -> 9,000,0000 MMK</option>
+                    <option value="4000k-50000k">1,000,000 MMK -> 50,000,000 MMK</option>
+                    <option value="5000k-90000k">5,000,000 MMK -> 90,000,000 MMK</option>
                 </optgroup>
             </select>
 
@@ -636,6 +701,27 @@
             <button class="main-btn" style="background: #e2e8f0; margin-top: 12px; color: #4a5568; box-shadow: none;" onclick="logout()">Logout</button>
         </div>
 
+        <!-- FAQ Section -->
+        <div class="card">
+            <h4 style="margin-top:0; color:var(--primary);"><i class="fas fa-question-circle"></i> အမေးများသောမေးခွန်းများ (FAQ)</h4>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">ငွေလွှဲပြီးရင် ဘယ်လောက်ကြာကြာမှ ငွေပြန်ရမလဲ? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">ပုံမှန်အားဖြင့် ၅ မိနစ်မှ ၁၅ မိနစ်အတွင်း သင့်ဖုန်းနံပါတ်သို့ ငွေပြန်ရောက်ရှိမည် ဖြစ်ပါသည်။</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">ငွေလဲလှယ်မှု အနည်းဆုံးနှင့် အများဆုံး ပမာဏက ဘယ်လောက်လဲ? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">အနည်းဆုံး ၁,၀၀၀ MMK မှ စတင်ပြီး အများဆုံး ၉၀,၀၀၀,၀၀၀ MMK အထိ လဲလှယ်နိုင်ပါသည်။</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">ကျွန်တော် ဘယ်လိုငွေပေးချေနိုင်မလဲ? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">KPay နှင့် Wave Money နှစ်မျိုးလုံးကို လက်ခံပါသည်။ သင်နှစ်သက်ရာ တစ်ခုကို ရွေးချယ်နိုင်ပါသည်။</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">လုံခြုံရေးအတွက် ဘာအာမခံချက်တွေရှိလဲ? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">ကျွန်ုပ်တို့သည် 100% Money-Back Guarantee နှင့် SSL Encryption ကို အသုံးပြုထားပြီး သင့်ငွေကြေးကို လုံခြုံစွာ စီမံဆောင်ရွက်ပေးပါသည်။</div>
+            </div>
+        </div>
+
         <div class="footer-badges">
             <img src="https://i.ibb.co/C5qZ7m3Y/kpay.png" alt="KPay">
             <img src="https://i.ibb.co/4n6Nwd3Z/wave.png" alt="Wave">
@@ -644,20 +730,17 @@
             </div>
         </div>
 
+        <!-- Admin Trigger -->
         <div id="admin-trigger" style="height:40px;" onclick="adminClick()"></div>
         <div id="admin-panel" class="admin-panel">
             <h3 style="color: gold;"><i class="fas fa-user-shield"></i> Admin Control Center</h3>
-            
             <label style="color: #ccc;">Admin Password</label>
             <input type="password" id="admin-pass" placeholder="Enter Password to Unlock">
-            
             <hr style="border: 0.5px solid #444; margin: 20px 0;">
-
             <h4 style="color: #f8c291; margin-bottom: 10px;">Pending Requests</h4>
             <div id="admin-user-list">
                 <p style="color: #888; font-size: 12px;">No active requests.</p>
             </div>
-            
             <hr style="border: 0.5px solid #444; margin: 20px 0;">
             <label style="color: #ccc;">Bank Settings</label>
             <input type="text" id="new-kpay-name-input" placeholder="New Kpay Name">
@@ -665,6 +748,24 @@
             <input type="text" id="new-wave-name-input" placeholder="New Wave Name">
             <input type="text" id="new-wave-num-input" placeholder="New Wave Number">
             <button class="confirm-btn" style="background:var(--primary);" onclick="saveSettings()">Update Payments Data</button>
+        </div>
+
+        <!-- Footer -->
+        <div class="main-footer">
+            <div style="font-size: 18px; font-weight: bold; color: white;">Pay to Pay Myanmar</div>
+            <div class="footer-links">
+                <a href="#">ကျွန်ုပ်တို့အကြောင်း</a>
+                <a href="#">ဆက်သွယ်ရန်</a>
+                <a href="#">ဝန်ဆောင်မှုစည်းကမ်းများ</a>
+                <a href="#">ကိုယ်ရေးအချက်အလက်လုံခြုံရေး</a>
+            </div>
+            <div style="font-size: 12px; opacity: 0.7;">
+                <i class="fas fa-map-marker-alt"></i> အမှတ် ၁၂၃၊ မရမ်းကုန်းမြို့နယ်၊ ရန်ကုန်၊ မြန်မာ။ <br>
+                <i class="fas fa-phone"></i> 09-123456789 | <i class="fas fa-envelope"></i> support@paytopay.com
+            </div>
+            <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; font-size: 11px;">
+                &copy; 2026 Pay to Pay Myanmar. All rights reserved.
+            </div>
         </div>
     </div>
 </div>
@@ -692,15 +793,13 @@ let currentUser = null;
 let selectedFile = null;
 let selectedPayment = "kpay";
 
-// Dynamic Calculator Logic
+// ========== UI Helpers ==========
 window.calculateExchange = function() {
     const inputAmount = parseFloat(document.getElementById('input-pay-amount').value) || 0;
     const resultDisplay = document.getElementById('result-receive-amount');
-    
-    let multiplier = 3; 
+    let multiplier = 3;
     if (inputAmount >= 100000) multiplier = 10;
     if (inputAmount >= 1000000) multiplier = 10;
-
     const finalResult = inputAmount * multiplier;
     resultDisplay.innerText = finalResult.toLocaleString();
 }
@@ -708,26 +807,22 @@ window.calculateExchange = function() {
 window.syncCalculatorFromSelect = function() {
     const val = document.getElementById('amount-select').value;
     let cleanInput = 0;
-    if(val === "1k-3k") cleanInput = 1000;
-    else if(val ==="3k-7k") cleanInput = 3000;
-    else if(val === "5k-10k") cleanInput = 5000;
-    else if(val === "50k-150k") cleanInput = 50000;
-    else if(val === "100k-1000k") cleanInput = 100000;
-    else if(val === "300k-5000k") cleanInput = 300000;
-    else if(val === "500k-9000k") cleanInput = 500000;
-    else if(val === "1000k-50000k") cleanInput = 1000000;
-    else if(val === "5000k-90000k") cleanInput = 5000000;
-
+    const map = {
+        "1k-3k": 1000, "3k-7k": 3000, "5k-10k": 5000, "50k-150k": 50000,
+        "100k-1000k": 100000, "300k-5000k": 300000, "500k-9000k": 500000,
+        "4000k-50000k": 1000000, "5000k-90000k": 5000000
+    };
+    cleanInput = map[val] || 0;
     document.getElementById('input-pay-amount').value = cleanInput;
     calculateExchange();
 }
 
 const toastMsgs = [
-    "09***457 မှ ၁ သောင်း လဲလှယ်မှု အောင်မြင်သည်။",
-    "09***929 မှ ၅ ထောင် လဲလှယ်မှု အောင်မြင်သည်။",
+    "09***455 မှ ၁ သောင်း လဲလှယ်မှု အောင်မြင်သည်။",
+    "09***921 မှ ၅ ထောင် လဲလှယ်မှု အောင်မြင်သည်။",
     "09***118 မှ ၂ သိန်း လဲလှယ်မှု အောင်မြင်သည်။",
     "09***002 မှ ၁၀ သိန်း လဲလှယ်မှု အောင်မြင်သည်။",
-    "၀၉***၇၇၂ မှ ၅ သောင်း လဲလှယ်မှု အောင်မြင်သည်။"’
+    "၀၉***၇၇၂ မှ ၅ သောင်း လဲလှယ်မှု အောင်မြင်သည်။",
     "၀၉***၆၆၇ မှ သိန်း၅၀ လဲလှယ်မှု အောင်မြင်သည်။"
 ];
 
@@ -738,8 +833,18 @@ function showToast() {
     toast.style.display = 'flex';
     setTimeout(() => { toast.style.display = 'none'; }, 4000);
 }
-setInterval(showToast, 12000); 
+setInterval(showToast, 12000);
 
+// FAQ toggle
+window.toggleFaq = function(el) {
+    const answer = el.nextElementSibling;
+    const icon = el.querySelector('i');
+    answer.classList.toggle('active');
+    icon.classList.toggle('fa-chevron-down');
+    icon.classList.toggle('fa-chevron-up');
+}
+
+// ========== Firebase Listeners ==========
 onSnapshot(doc(db, "settings", "payment_info"), (doc) => {
     if (doc.exists()) {
         const data = doc.data();
@@ -750,23 +855,19 @@ onSnapshot(doc(db, "settings", "payment_info"), (doc) => {
     }
 });
 
-// Admin Live Requests Listener
 function listenToPendingRequests() {
     const q = query(collection(db, "users"), where("status", "==", "pending"));
     onSnapshot(q, (snapshot) => {
         const listDiv = document.getElementById('admin-user-list');
         listDiv.innerHTML = "";
-        
         if(snapshot.empty) {
             listDiv.innerHTML = '<p style="color: #888; font-size: 12px;">No pending requests.</p>';
             return;
         }
-
         snapshot.forEach((userDoc) => {
             const userData = userDoc.data();
             const history = userData.history || [];
             const lastReq = history[history.length - 1] || {};
-
             const userCard = document.createElement('div');
             userCard.className = "admin-user-card";
             userCard.innerHTML = `
@@ -787,12 +888,12 @@ function listenToPendingRequests() {
     });
 }
 
+// ========== Auth ==========
 window.switchAuth = function(mode) {
     const title = document.getElementById('auth-title');
     const btnText = document.getElementById('btn-text');
     const signupFields = document.getElementById('signup-fields');
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    
     if(mode === 'signup') {
         document.getElementById('signup-tab').classList.add('active');
         title.innerText = "Create Secure Account";
@@ -818,6 +919,7 @@ window.handleAuth = async function() {
     const phone = document.getElementById('auth-phone').value.trim();
     const pass = document.getElementById('auth-pass').value.trim();
     const name = document.getElementById('reg-name').value.trim();
+    const nid = document.getElementById('reg-nid').value.trim();
     const isSignUp = document.getElementById('signup-fields').style.display === 'block';
 
     if(!phone || phone.length < 9) return alert("မှန်ကန်သော ဖုန်းနံပါတ် ဖြည့်စွက်ပါ");
@@ -825,7 +927,7 @@ window.handleAuth = async function() {
 
     const authBtn = document.getElementById('auth-btn');
     authBtn.disabled = true;
-    authBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Securely...';
+    authBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
     const userRef = doc(db, "users", phone);
 
@@ -839,6 +941,7 @@ window.handleAuth = async function() {
             } else {
                 await setDoc(userRef, {
                     name, phone, pass, 
+                    nid: nid || '',
                     small_count: 0, 
                     medium_count: 0, 
                     large_count: 0, 
@@ -847,7 +950,7 @@ window.handleAuth = async function() {
                     last_month: new Date().getMonth(), 
                     createdAt: Date.now()
                 });
-                await sendTelegramAlert(`🆕 *New User Registered!*\n👤 Name: ${name}\n📞 Phone: ${phone}`);
+                await sendTelegramAlert(`🆕 *New User Registered!*\n👤 Name: ${name}\n📞 Phone: ${phone}\n🆔 NID: ${nid || 'N/A'}`);
                 alert("အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ပြန်ဝင်ပေးပါ။");
                 window.switchAuth('login');
             }
@@ -871,11 +974,9 @@ function showMainContent() {
     document.getElementById('auth-container').style.display = 'none';
     document.getElementById('main-content').style.display = 'block';
     document.getElementById('logged-user').innerHTML = '<i class="fas fa-user-circle"></i> Logged in: ' + currentUser.name;
-    
     if(currentUser.viber) document.getElementById('contact-viber').value = currentUser.viber;
     if(currentUser.telegram) document.getElementById('contact-telegram').value = currentUser.telegram;
     if(currentUser.tiktok) document.getElementById('contact-tiktok').value = currentUser.tiktok;
-
     checkExchangeLimits();
     updateStatusUI();
     renderHistory();
@@ -894,6 +995,7 @@ window.addEventListener('load', async () => {
     }
 });
 
+// ========== Status & History ==========
 async function updateStatusUI() {
     if (!currentUser) return;
     const userRef = doc(db, "users", currentUser.phone);
@@ -903,12 +1005,10 @@ async function updateStatusUI() {
         const label = document.getElementById('status-label');
         const desc = document.getElementById('status-desc');
         const progress = document.getElementById('status-progress');
-
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active', 'processing'));
 
         if (status && status !== 'none') {
-            document.getElementById('step-1').classList.add('active'); 
-
+            document.getElementById('step-1').classList.add('active');
             if (status === 'completed') {
                 document.getElementById('step-2').classList.add('active');
                 document.getElementById('step-3').classList.add('active');
@@ -943,7 +1043,6 @@ async function renderHistory() {
     const data = snap.data();
     const historyList = document.getElementById('history-list');
     historyList.innerHTML = "";
-
     const history = data.history || [];
     const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
     const now = Date.now();
@@ -974,11 +1073,9 @@ async function checkExchangeLimits() {
     const snap = await getDoc(userRef);
     const data = snap.data();
     const currentMonth = new Date().getMonth();
-
     if(data.last_month !== currentMonth) {
         await updateDoc(userRef, { small_count: 0, medium_count: 0, large_count: 0, last_month: currentMonth });
     }
-
     if(data.small_count >= 2) {
         document.querySelectorAll('#group-small option').forEach(opt => opt.disabled = true);
     }
@@ -990,6 +1087,7 @@ async function checkExchangeLimits() {
     }
 }
 
+// ========== UI Actions ==========
 window.previewImage = function(input) {
     if (input.files && input.files[0]) {
         selectedFile = input.files[0];
@@ -1019,9 +1117,7 @@ window.sendContactData = async function() {
     const tg = document.getElementById('contact-telegram').value;
     const vb = document.getElementById('contact-viber').value;
     const tk = document.getElementById('contact-tiktok').value;
-
     if(!tg && !vb) return alert("အနည်းဆုံး ဆက်သွယ်ရန် တစ်ခု ဖြည့်သွင်းပေးပါ");
-
     try {
         await updateDoc(doc(db, "users", currentUser.phone), {
             telegram: tg, viber: vb, tiktok: tk
@@ -1036,7 +1132,6 @@ window.sendToTelegram = async function() {
     const receivePhone = document.getElementById('user-phone-receive').value;
     const userName = document.getElementById('user-name').value;
     const tid = document.getElementById('tran-id').value;
-    
     if(!selectedFile || !tid || !receivePhone) return alert("အချက်အလက်ပြည့်စုံအောင်ဖြည့်ပါ");
 
     const userRef = doc(db, "users", currentUser.phone);
@@ -1054,7 +1149,6 @@ window.sendToTelegram = async function() {
 
     const userSnap = await getDoc(userRef);
     const uData = userSnap.data();
-
     const optGroup = document.getElementById('amount-select').options[document.getElementById('amount-select').selectedIndex].parentElement.id;
     if((optGroup === "group-small" && uData.small_count >= 2) || 
        (optGroup === "group-medium" && uData.medium_count >= 1) || 
@@ -1076,11 +1170,9 @@ window.sendToTelegram = async function() {
                 status: 'pending',
                 history: arrayUnion(exchangeRecord)
             };
-            
             if(optGroup === "group-small") updatePayload.small_count = (uData.small_count || 0) + 1;
             if(optGroup === "group-medium") updatePayload.medium_count = (uData.medium_count || 0) + 1;
             if(optGroup === "group-large") updatePayload.large_count = (uData.large_count || 0) + 1;
-
             await updateDoc(userRef, updatePayload);
             alert("လဲလှယ်မှု တောင်းဆိုချက် ပေးပို့ပြီးပါပြီ။ အချိန် ၁၅ မိနစ်ခန့် စောင့်ဆိုင်းပေးပါ။");
             location.reload();
@@ -1091,35 +1183,25 @@ window.sendToTelegram = async function() {
 window.logout = () => { sessionStorage.removeItem('loggedInPhone'); location.reload(); }
 window.copyText = (id) => { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copied to Clipboard!"); }
 
-// --- Admin Section Logic ---
+// ========== Admin ==========
 let clickCount = 0;
 window.adminClick = () => { clickCount++; if(clickCount>=5) { document.getElementById('admin-panel').style.display='block'; listenToPendingRequests(); } }
 
 window.updateStatusFromList = async (userPhone, newStatus) => {
     const pass = document.getElementById('admin-pass').value;
     if(pass !== "admin777") return alert("Wrong Admin Password! Please enter correct password above.");
-
     try {
         const userRef = doc(db, "users", userPhone);
         const snap = await getDoc(userRef);
         if(!snap.exists()) return alert("User not found!");
-        
         const data = snap.data();
         const history = data.history || [];
         if(history.length > 0) {
             history[history.length - 1].status = newStatus;
         }
-
-        await updateDoc(userRef, { 
-            status: newStatus, 
-            history: history 
-        });
-        
+        await updateDoc(userRef, { status: newStatus, history: history });
         alert(`Request for ${userPhone} updated to ${newStatus}`);
-    } catch(e) { 
-        console.error(e);
-        alert("Action Failed!"); 
-    }
+    } catch(e) { console.error(e); alert("Action Failed!"); }
 }
 
 window.saveSettings = async function() {
