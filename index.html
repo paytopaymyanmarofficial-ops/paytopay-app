@@ -6,6 +6,11 @@
     <title>Pay to Pay Myanmar - Professional Exchange</title>
     <link href="https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase Compat SDK (ဒီမှာ ထည့်ထားပါ) -->
+    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore-compat.js"></script>
+    
     <style>
         :root {
             --primary: #1e3799;
@@ -450,7 +455,7 @@
     </div>
 </div>
 
-<!-- Live Chat Floating Button - Updated to @Paytopay3429 -->
+<!-- Live Chat Floating Button -->
 <a href="https://t.me/Paytopay3429" target="_blank" rel="noopener" class="live-chat-btn">
     <i class="fab fa-telegram-plane"></i> Live Chat
 </a>
@@ -770,30 +775,43 @@
     </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, collection, query, where, arrayUnion } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
-
+<!-- ============================================================ -->
+<!-- Firebase Compat Script - အဟောင်းအတိုင်း ပြန်ရေးထားပါ -->
+<!-- ============================================================ -->
+<script>
+// ============================================
+// 1. Firebase Config
+// ============================================
 const firebaseConfig = {
-  apiKey: "AIzaSyCIFugD25cAWqpdpOcUBk4cn8gDXvBdtZs",
-  authDomain: "paytopay-mm.firebaseapp.com",
-  databaseURL: "https://paytopay-mm-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "paytopay-mm",
-  storageBucket: "paytopay-mm.firebasestorage.app",
-  messagingSenderId: "242432384889",
-  appId: "1:242432384889:web:5b04b5a1c904bac3c019a8"
+    apiKey: "AIzaSyCIFugD25cAWqpdpOcUBk4cn8gDXvBdtZs",
+    authDomain: "paytopay-mm.firebaseapp.com",
+    databaseURL: "https://paytopay-mm-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "paytopay-mm",
+    storageBucket: "paytopay-mm.firebasestorage.app",
+    messagingSenderId: "242432384889",
+    appId: "1:242432384889:web:5b04b5a1c904bac3c019a8"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// ============================================
+// 2. Initialize Firebase (Compat)
+// ============================================
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
+console.log("✅ Firebase Connected Successfully!");
+
+// ============================================
+// 3. BOT Token & Chat ID
+// ============================================
 const BOT_TOKEN = "8689448201:AAGWjBhPY2UFrc9rODN3jROUcuwYyYXcmKU";
 const CHAT_ID = "7184126683";
 let currentUser = null;
 let selectedFile = null;
 let selectedPayment = "kpay";
 
-// ========== UI Helpers ==========
+// ============================================
+// 4. UI Helpers
+// ============================================
 window.calculateExchange = function() {
     const inputAmount = parseFloat(document.getElementById('input-pay-amount').value) || 0;
     const resultDisplay = document.getElementById('result-receive-amount');
@@ -835,7 +853,6 @@ function showToast() {
 }
 setInterval(showToast, 12000);
 
-// FAQ toggle
 window.toggleFaq = function(el) {
     const answer = el.nextElementSibling;
     const icon = el.querySelector('i');
@@ -844,9 +861,11 @@ window.toggleFaq = function(el) {
     icon.classList.toggle('fa-chevron-up');
 }
 
-// ========== Firebase Listeners ==========
-onSnapshot(doc(db, "settings", "payment_info"), (doc) => {
-    if (doc.exists()) {
+// ============================================
+// 5. Firebase Listeners (Compat)
+// ============================================
+db.collection("settings").doc("payment_info").onSnapshot((doc) => {
+    if (doc.exists) {
         const data = doc.data();
         document.getElementById('kpay-name').innerText = data.kpayName || "Admin";
         document.getElementById('kpay-num').innerText = data.kpayNum || "09xxxxxxx";
@@ -856,8 +875,7 @@ onSnapshot(doc(db, "settings", "payment_info"), (doc) => {
 });
 
 function listenToPendingRequests() {
-    const q = query(collection(db, "users"), where("status", "==", "pending"));
-    onSnapshot(q, (snapshot) => {
+    db.collection("users").where("status", "==", "pending").onSnapshot((snapshot) => {
         const listDiv = document.getElementById('admin-user-list');
         listDiv.innerHTML = "";
         if(snapshot.empty) {
@@ -888,7 +906,9 @@ function listenToPendingRequests() {
     });
 }
 
-// ========== Auth ==========
+// ============================================
+// 6. Auth Functions (Compat)
+// ============================================
 window.switchAuth = function(mode) {
     const title = document.getElementById('auth-title');
     const btnText = document.getElementById('btn-text');
@@ -929,17 +949,17 @@ window.handleAuth = async function() {
     authBtn.disabled = true;
     authBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-    const userRef = doc(db, "users", phone);
+    const userRef = db.collection("users").doc(phone);
 
     try {
         if(isSignUp) {
             if(!name) { alert("သင့်နာမည်ကို ထည့်သွင်းပေးပါ"); authBtn.disabled = false; return; }
-            const existingUser = await getDoc(userRef);
-            if (existingUser.exists()) {
+            const existingUser = await userRef.get();
+            if (existingUser.exists) {
                 alert("ဤဖုန်းနံပါတ်ဖြင့် အကောင့်ရှိပြီးသားဖြစ်ပါသည်။ Login ဝင်ကြည့်ပါ။");
                 window.switchAuth('login');
             } else {
-                await setDoc(userRef, {
+                await userRef.set({
                     name, phone, pass, 
                     nid: nid || '',
                     small_count: 0, 
@@ -955,8 +975,8 @@ window.handleAuth = async function() {
                 window.switchAuth('login');
             }
         } else {
-            const userSnap = await getDoc(userRef);
-            if(userSnap.exists() && userSnap.data().pass === pass) {
+            const userSnap = await userRef.get();
+            if(userSnap.exists && userSnap.data().pass === pass) {
                 currentUser = userSnap.data();
                 sessionStorage.setItem('loggedInPhone', phone);
                 await sendTelegramAlert(`🔓 *User Logged In!*\n👤 Name: ${currentUser.name}\n📞 Phone: ${phone}`);
@@ -965,7 +985,10 @@ window.handleAuth = async function() {
                 alert("ဖုန်းနံပါတ် သို့မဟုတ် စကားဝှက် မှားယွင်းနေပါသည်။");
             }
         }
-    } catch(e) { alert("ချို့ယွင်းချက် ဖြစ်ပေါ်နေပါသည်။"); }
+    } catch(e) { 
+        console.error("Auth Error:", e);
+        alert("ချို့ယွင်းချက် ဖြစ်ပေါ်နေပါသည်။ Error: " + e.message); 
+    }
     authBtn.disabled = false;
     authBtn.innerHTML = isSignUp ? 'Get Started <i class="fas fa-arrow-right"></i>' : 'Login Now <i class="fas fa-arrow-right"></i>';
 }
@@ -983,23 +1006,32 @@ function showMainContent() {
     calculateExchange();
 }
 
+// ============================================
+// 7. Check Login Status on Load
+// ============================================
 window.addEventListener('load', async () => {
     const savedPhone = sessionStorage.getItem('loggedInPhone');
     if (savedPhone) {
-        const userRef = doc(db, "users", savedPhone);
-        const snap = await getDoc(userRef);
-        if (snap.exists()) {
-            currentUser = snap.data();
-            showMainContent();
+        try {
+            const userRef = db.collection("users").doc(savedPhone);
+            const snap = await userRef.get();
+            if (snap.exists) {
+                currentUser = snap.data();
+                showMainContent();
+            }
+        } catch(e) {
+            console.error("Error loading user:", e);
         }
     }
 });
 
-// ========== Status & History ==========
+// ============================================
+// 8. Status & History (Compat)
+// ============================================
 async function updateStatusUI() {
     if (!currentUser) return;
-    const userRef = doc(db, "users", currentUser.phone);
-    onSnapshot(userRef, (snap) => {
+    const userRef = db.collection("users").doc(currentUser.phone);
+    userRef.onSnapshot((snap) => {
         const data = snap.data();
         const status = data.status;
         const label = document.getElementById('status-label');
@@ -1038,56 +1070,66 @@ async function updateStatusUI() {
 
 async function renderHistory() {
     if (!currentUser) return;
-    const userRef = doc(db, "users", currentUser.phone);
-    const snap = await getDoc(userRef);
-    const data = snap.data();
-    const historyList = document.getElementById('history-list');
-    historyList.innerHTML = "";
-    const history = data.history || [];
-    const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
-    const now = Date.now();
-    const validHistory = history.filter(item => (now - item.timestamp) < thirtyDaysInMs);
+    try {
+        const userRef = db.collection("users").doc(currentUser.phone);
+        const snap = await userRef.get();
+        const data = snap.data();
+        const historyList = document.getElementById('history-list');
+        historyList.innerHTML = "";
+        const history = data.history || [];
+        const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
+        const now = Date.now();
+        const validHistory = history.filter(item => (now - item.timestamp) < thirtyDaysInMs);
 
-    if (validHistory.length === 0) {
-        historyList.innerHTML = "<p style='text-align: center; color: #999;'>လဲလှယ်မှုမှတ်တမ်းမရှိသေးပါ။</p>";
-    } else {
-        validHistory.reverse().forEach(item => {
-            const div = document.createElement('div');
-            div.className = "history-item";
-            const dateStr = new Date(item.timestamp).toLocaleDateString('my-MM', { day: 'numeric', month: 'short', year: 'numeric' });
-            div.innerHTML = `
-                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                    <b>${item.amount}</b>
-                    <small style="color:#888;">${dateStr}</small>
-                </div>
-                <div style="font-size:12px;">Transaction ID: ${item.tid}</div>
-                <div class="h-status-${item.status}" style="font-size:12px; margin-top:5px;">Status: ${item.status.toUpperCase()}</div>
-            `;
-            historyList.appendChild(div);
-        });
+        if (validHistory.length === 0) {
+            historyList.innerHTML = "<p style='text-align: center; color: #999;'>လဲလှယ်မှုမှတ်တမ်းမရှိသေးပါ။</p>";
+        } else {
+            validHistory.reverse().forEach(item => {
+                const div = document.createElement('div');
+                div.className = "history-item";
+                const dateStr = new Date(item.timestamp).toLocaleDateString('my-MM', { day: 'numeric', month: 'short', year: 'numeric' });
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                        <b>${item.amount}</b>
+                        <small style="color:#888;">${dateStr}</small>
+                    </div>
+                    <div style="font-size:12px;">Transaction ID: ${item.tid}</div>
+                    <div class="h-status-${item.status}" style="font-size:12px; margin-top:5px;">Status: ${item.status.toUpperCase()}</div>
+                `;
+                historyList.appendChild(div);
+            });
+        }
+    } catch(e) {
+        console.error("Render history error:", e);
     }
 }
 
 async function checkExchangeLimits() {
-    const userRef = doc(db, "users", currentUser.phone);
-    const snap = await getDoc(userRef);
-    const data = snap.data();
-    const currentMonth = new Date().getMonth();
-    if(data.last_month !== currentMonth) {
-        await updateDoc(userRef, { small_count: 0, medium_count: 0, large_count: 0, last_month: currentMonth });
-    }
-    if(data.small_count >= 2) {
-        document.querySelectorAll('#group-small option').forEach(opt => opt.disabled = true);
-    }
-    if(data.medium_count >= 1) {
-        document.querySelectorAll('#group-medium option').forEach(opt => opt.disabled = true);
-    }
-    if(data.large_count >= 1) {
-        document.querySelectorAll('#group-large option').forEach(opt => opt.disabled = true);
+    try {
+        const userRef = db.collection("users").doc(currentUser.phone);
+        const snap = await userRef.get();
+        const data = snap.data();
+        const currentMonth = new Date().getMonth();
+        if(data.last_month !== currentMonth) {
+            await userRef.update({ small_count: 0, medium_count: 0, large_count: 0, last_month: currentMonth });
+        }
+        if(data.small_count >= 2) {
+            document.querySelectorAll('#group-small option').forEach(opt => opt.disabled = true);
+        }
+        if(data.medium_count >= 1) {
+            document.querySelectorAll('#group-medium option').forEach(opt => opt.disabled = true);
+        }
+        if(data.large_count >= 1) {
+            document.querySelectorAll('#group-large option').forEach(opt => opt.disabled = true);
+        }
+    } catch(e) {
+        console.error("Check limits error:", e);
     }
 }
 
-// ========== UI Actions ==========
+// ============================================
+// 9. UI Actions
+// ============================================
 window.previewImage = function(input) {
     if (input.files && input.files[0]) {
         selectedFile = input.files[0];
@@ -1119,12 +1161,15 @@ window.sendContactData = async function() {
     const tk = document.getElementById('contact-tiktok').value;
     if(!tg && !vb) return alert("အနည်းဆုံး ဆက်သွယ်ရန် တစ်ခု ဖြည့်သွင်းပေးပါ");
     try {
-        await updateDoc(doc(db, "users", currentUser.phone), {
+        await db.collection("users").doc(currentUser.phone).update({
             telegram: tg, viber: vb, tiktok: tk
         });
         await sendTelegramAlert(`👤 *User Contact Updated!*\n📞 Account: ${currentUser.phone}\n👤 Name: ${currentUser.name}\n✈️ Telegram: ${tg}\n📞 Viber: ${vb}\n🎵 TikTok: ${tk}`);
         alert("အချက်အလက်များ သိမ်းဆည်းပြီးပါပြီ။ ✅");
-    } catch(e) { alert("Error saving contacts!"); }
+    } catch(e) { 
+        console.error("Contact save error:", e);
+        alert("Error saving contacts!"); 
+    }
 }
 
 window.sendToTelegram = async function() {
@@ -1134,7 +1179,7 @@ window.sendToTelegram = async function() {
     const tid = document.getElementById('tran-id').value;
     if(!selectedFile || !tid || !receivePhone) return alert("အချက်အလက်ပြည့်စုံအောင်ဖြည့်ပါ");
 
-    const userRef = doc(db, "users", currentUser.phone);
+    const userRef = db.collection("users").doc(currentUser.phone);
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-sync fa-spin"></i> Securing Transaction...';
@@ -1147,43 +1192,49 @@ window.sendToTelegram = async function() {
         status: 'pending'
     };
 
-    const userSnap = await getDoc(userRef);
-    const uData = userSnap.data();
-    const optGroup = document.getElementById('amount-select').options[document.getElementById('amount-select').selectedIndex].parentElement.id;
-    if((optGroup === "group-small" && uData.small_count >= 2) || 
-       (optGroup === "group-medium" && uData.medium_count >= 1) || 
-       (optGroup === "group-large" && uData.large_count >= 1)) {
-        alert("ဤလအတွက် လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။");
-        location.reload();
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('chat_id', CHAT_ID);
-    formData.append('photo', selectedFile);
-    formData.append('caption', `🔔 *NEW EXCHANGE REQUEST*\n\n💰 Type: ${amount}\n👤 Pay Name: ${userName}\n📞 Acc Phone: ${currentUser.phone}\n📲 Receiver: ${receivePhone}\n🎫 TID: ${tid}\n\n📅 Date: ${new Date().toLocaleString()}`);
-
     try {
+        const userSnap = await userRef.get();
+        const uData = userSnap.data();
+        const optGroup = document.getElementById('amount-select').options[document.getElementById('amount-select').selectedIndex].parentElement.id;
+        if((optGroup === "group-small" && uData.small_count >= 2) || 
+           (optGroup === "group-medium" && uData.medium_count >= 1) || 
+           (optGroup === "group-large" && uData.large_count >= 1)) {
+            alert("ဤလအတွက် လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။");
+            location.reload();
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('chat_id', CHAT_ID);
+        formData.append('photo', selectedFile);
+        formData.append('caption', `🔔 *NEW EXCHANGE REQUEST*\n\n💰 Type: ${amount}\n👤 Pay Name: ${userName}\n📞 Acc Phone: ${currentUser.phone}\n📲 Receiver: ${receivePhone}\n🎫 TID: ${tid}\n\n📅 Date: ${new Date().toLocaleString()}`);
+
         const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
         if(res.ok) {
             let updatePayload = { 
                 status: 'pending',
-                history: arrayUnion(exchangeRecord)
+                history: firebase.firestore.FieldValue.arrayUnion(exchangeRecord)
             };
             if(optGroup === "group-small") updatePayload.small_count = (uData.small_count || 0) + 1;
             if(optGroup === "group-medium") updatePayload.medium_count = (uData.medium_count || 0) + 1;
             if(optGroup === "group-large") updatePayload.large_count = (uData.large_count || 0) + 1;
-            await updateDoc(userRef, updatePayload);
+            await userRef.update(updatePayload);
             alert("လဲလှယ်မှု တောင်းဆိုချက် ပေးပို့ပြီးပါပြီ။ အချိန် ၁၅ မိနစ်ခန့် စောင့်ဆိုင်းပေးပါ။");
             location.reload();
         }
-    } catch(e) { alert("Error!"); btn.disabled = false; }
+    } catch(e) { 
+        console.error("Send to telegram error:", e);
+        alert("Error!"); 
+        btn.disabled = false; 
+    }
 }
 
 window.logout = () => { sessionStorage.removeItem('loggedInPhone'); location.reload(); }
 window.copyText = (id) => { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copied to Clipboard!"); }
 
-// ========== Admin ==========
+// ============================================
+// 10. Admin Functions
+// ============================================
 let clickCount = 0;
 window.adminClick = () => { clickCount++; if(clickCount>=5) { document.getElementById('admin-panel').style.display='block'; listenToPendingRequests(); } }
 
@@ -1191,17 +1242,20 @@ window.updateStatusFromList = async (userPhone, newStatus) => {
     const pass = document.getElementById('admin-pass').value;
     if(pass !== "admin777") return alert("Wrong Admin Password! Please enter correct password above.");
     try {
-        const userRef = doc(db, "users", userPhone);
-        const snap = await getDoc(userRef);
-        if(!snap.exists()) return alert("User not found!");
+        const userRef = db.collection("users").doc(userPhone);
+        const snap = await userRef.get();
+        if(!snap.exists) return alert("User not found!");
         const data = snap.data();
         const history = data.history || [];
         if(history.length > 0) {
             history[history.length - 1].status = newStatus;
         }
-        await updateDoc(userRef, { status: newStatus, history: history });
+        await userRef.update({ status: newStatus, history: history });
         alert(`Request for ${userPhone} updated to ${newStatus}`);
-    } catch(e) { console.error(e); alert("Action Failed!"); }
+    } catch(e) { 
+        console.error("Update status error:", e);
+        alert("Action Failed!"); 
+    }
 }
 
 window.saveSettings = async function() {
@@ -1211,7 +1265,7 @@ window.saveSettings = async function() {
         const kp = document.getElementById('new-kpay-num-input').value;
         const wn = document.getElementById('new-wave-name-input').value;
         const wp = document.getElementById('new-wave-num-input').value;
-        await setDoc(doc(db, "settings", "payment_info"), {
+        await db.collection("settings").doc("payment_info").set({
             kpayName: kn || document.getElementById('kpay-name').innerText,
             kpayNum: kp || document.getElementById('kpay-num').innerText,
             waveName: wn || document.getElementById('wave-name').innerText,
