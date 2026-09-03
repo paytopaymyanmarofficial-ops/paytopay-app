@@ -1124,6 +1124,13 @@
     </div>
 
     <!-- ==========================================
+    NETWORK STATUS TOAST
+    ========================================== -->
+    <div id="network-toast" style="position: fixed; top: 20px; right: 20px; background: var(--danger); color: white; padding: 12px 20px; border-radius: 12px; z-index: 9999; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: bold; font-size: 14px; animation: fadeIn 0.3s ease;">
+        <i class="fas fa-wifi"></i> <span id="network-msg">အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်</span>
+    </div>
+
+    <!-- ==========================================
     LIVE CHAT FLOATING BUTTON
     ========================================== -->
     <a href="https://t.me/Paytopay3429" target="_blank" rel="noopener" class="live-chat-btn">
@@ -1512,12 +1519,89 @@
         // 2. INITIALIZE FIREBASE
         // ==========================================
         let db;
+        let isNetworkEnabled = true;
+        let networkToastTimer = null;
+
         try {
             firebase.initializeApp(firebaseConfig);
             db = firebase.firestore();
             console.log("✅ Firebase initialized successfully!");
 
-            // Test connection
+            // ==========================================
+            // 2.1 ENABLE NETWORK ON START
+            // ==========================================
+            // Firestore ကို အော့ဖ်လိုင်းမုဒ်ကနေ အွန်လိုင်းမုဒ်ပြန်ဖွင့်ပေးတယ်
+            db.enableNetwork()
+                .then(() => {
+                    console.log("🌐 Firestore network enabled successfully!");
+                    isNetworkEnabled = true;
+                    hideNetworkToast();
+                })
+                .catch((err) => {
+                    console.warn("⚠️ enableNetwork failed (maybe already enabled):", err);
+                });
+
+            // ==========================================
+            // 2.2 NETWORK STATUS LISTENER
+            // ==========================================
+            // အင်တာနက်ပြတ်သွားရင် disableNetwork လုပ်ပြီး
+            // ပြန်ရလာရင် enableNetwork လုပ်မယ်
+            window.addEventListener('online', async function() {
+                console.log("🌐 Network is back ONLINE!");
+                if (db) {
+                    try {
+                        await db.enableNetwork();
+                        isNetworkEnabled = true;
+                        hideNetworkToast();
+                        showMessage("✅ အင်တာနက်ချိတ်ဆက်မှု ပြန်လည်ကောင်းမွန်ပါပြီ။", 'success');
+                        setTimeout(() => {
+                            document.getElementById('message').style.display = 'none';
+                        }, 3000);
+                        // Reload user data
+                        const savedPhone = sessionStorage.getItem('loggedInPhone');
+                        if (savedPhone) {
+                            reloadUserData(savedPhone);
+                        }
+                    } catch (e) {
+                        console.error("❌ enableNetwork on online event failed:", e);
+                    }
+                }
+            });
+
+            window.addEventListener('offline', async function() {
+                console.log("📡 Network is OFFLINE!");
+                if (db) {
+                    try {
+                        await db.disableNetwork();
+                        isNetworkEnabled = false;
+                        showNetworkToast("အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်။ ပြန်ကောင်းလာပါက အလိုအလျောက် ပြန်ချိတ်ပေးပါမည်။");
+                        showMessage("⚠️ အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်။", 'error');
+                    } catch (e) {
+                        console.error("❌ disableNetwork on offline event failed:", e);
+                    }
+                }
+            });
+
+            // ==========================================
+            // 2.3 CHECK CONNECTION ON LOAD
+            // ==========================================
+            if (!navigator.onLine) {
+                setTimeout(async () => {
+                    if (db) {
+                        try {
+                            await db.disableNetwork();
+                            isNetworkEnabled = false;
+                            showNetworkToast("အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်။");
+                        } catch (e) {
+                            console.error("❌ disableNetwork on load failed:", e);
+                        }
+                    }
+                }, 1000);
+            }
+
+            // ==========================================
+            // 2.4 TEST CONNECTION & LOAD SETTINGS
+            // ==========================================
             db.collection("settings").doc("payment_info").get()
                 .then(doc => {
                     if (doc.exists) {
@@ -1533,11 +1617,52 @@
                 })
                 .catch(err => {
                     console.error("❌ Firestore test failed:", err);
+                    if (err.message && err.message.includes("offline")) {
+                        showNetworkToast("အင်တာနက်ချိတ်ဆက်မှု မရှိပါ။ ပြန်လည်ချိတ်ဆက်ရန် ကြိုးစားနေပါသည်...");
+                    }
                 });
 
         } catch (error) {
             console.error("❌ Firebase initialization error:", error);
             showMessage("Firebase ချိတ်ဆက်မှု ချို့ယွင်းနေပါသည်။ Error: " + error.message, 'error');
+        }
+
+        // ==========================================
+        // 2.5 NETWORK TOAST FUNCTIONS
+        // ==========================================
+        function showNetworkToast(msg) {
+            const toast = document.getElementById('network-toast');
+            document.getElementById('network-msg').innerText = msg || "အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်";
+            toast.style.display = 'block';
+            if (networkToastTimer) clearTimeout(networkToastTimer);
+        }
+
+        function hideNetworkToast() {
+            const toast = document.getElementById('network-toast');
+            toast.style.display = 'none';
+            if (networkToastTimer) clearTimeout(networkToastTimer);
+        }
+
+        // ==========================================
+        // 2.6 RELOAD USER DATA
+        // ==========================================
+        async function reloadUserData(phone) {
+            try {
+                const doc = await db.collection("users").doc(phone).get();
+                if (doc.exists) {
+                    currentUser = doc.data();
+                    document.getElementById('logged-user').innerHTML = '<i class="fas fa-user-circle"></i> Logged in: ' +
+                        currentUser.name;
+                    if (currentUser.viber) document.getElementById('contact-viber').value = currentUser.viber;
+                    if (currentUser.telegram) document.getElementById('contact-telegram').value = currentUser.telegram;
+                    if (currentUser.tiktok) document.getElementById('contact-tiktok').value = currentUser.tiktok;
+                    renderHistory();
+                    updateStatusUI();
+                    checkExchangeLimits();
+                }
+            } catch (e) {
+                console.error("Reload user data error:", e);
+            }
         }
 
         // ==========================================
@@ -1586,6 +1711,12 @@
         }
 
         window.handleAuth = async function() {
+            // Check network first
+            if (!navigator.onLine) {
+                showMessage("❌ အင်တာနက်ချိတ်ဆက်မှု မရှိပါ။ ကျေးဇူးပြု၍ အင်တာနက်ကို စစ်ဆေးပါ။", 'error');
+                return;
+            }
+
             const phone = document.getElementById('auth-phone').value.trim();
             const pass = document.getElementById('auth-pass').value.trim();
             const name = document.getElementById('reg-name').value.trim();
@@ -1613,6 +1744,16 @@
             authBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
             try {
+                // Ensure network is enabled before auth
+                if (db) {
+                    try {
+                        await db.enableNetwork();
+                        isNetworkEnabled = true;
+                    } catch (e) {
+                        console.log("enableNetwork during auth:", e);
+                    }
+                }
+
                 const userRef = db.collection("users").doc(phone);
 
                 if (isSignUp) {
@@ -1662,11 +1803,16 @@
                 }
             } catch (error) {
                 console.error("Auth Error:", error);
-                showMessage("❌ ချို့ယွင်းချက် ဖြစ်ပေါ်နေပါသည်။ Error: " + error.message, 'error');
+                if (error.message && error.message.includes("offline")) {
+                    showMessage("❌ အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်။ ကျေးဇူးပြု၍ အင်တာနက်ကို စစ်ဆေးပြီးမှ ပြန်ကြိုးစားပါ။", 'error');
+                } else {
+                    showMessage("❌ ချို့ယွင်းချက် ဖြစ်ပေါ်နေပါသည်။ Error: " + error.message, 'error');
+                }
             }
 
             authBtn.disabled = false;
-            authBtn.innerHTML = isSignUp ? 'Get Started <i class="fas fa-arrow-right"></i>' : 'Login Now <i class="fas fa-arrow-right"></i>';
+            authBtn.innerHTML = isSignUp ? 'Get Started <i class="fas fa-arrow-right"></i>' :
+            'Login Now <i class="fas fa-arrow-right"></i>';
         };
 
         function showMainContent() {
@@ -1700,7 +1846,12 @@
                             sessionStorage.removeItem('loggedInPhone');
                         }
                     })
-                    .catch(err => console.error("Load user error:", err));
+                    .catch(err => {
+                        console.error("Load user error:", err);
+                        if (err.message && err.message.includes("offline")) {
+                            showNetworkToast("အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်။ အကောင့်ဝင်ရန် အင်တာနက်ကို စစ်ဆေးပါ။");
+                        }
+                    });
             }
         });
 
@@ -1915,6 +2066,12 @@
                 showMessage("❌ ကျေးဇူးပြုပြီး Login ဝင်ပါ။", 'error');
                 return;
             }
+
+            if (!navigator.onLine) {
+                showMessage("❌ အင်တာနက်ချိတ်ဆက်မှု မရှိပါ။ ကျေးဇူးပြု၍ အင်တာနက်ကို စစ်ဆေးပါ။", 'error');
+                return;
+            }
+
             const tg = document.getElementById('contact-telegram').value;
             const vb = document.getElementById('contact-viber').value;
             const tk = document.getElementById('contact-tiktok').value;
@@ -1934,7 +2091,11 @@
                 }, 3000);
             } catch (e) {
                 console.error("Contact save error:", e);
-                showMessage("❌ Error saving contacts!", 'error');
+                if (e.message && e.message.includes("offline")) {
+                    showMessage("❌ အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်။ ကျေးဇူးပြု၍ အင်တာနက်ကို စစ်ဆေးပြီးမှ ပြန်ကြိုးစားပါ။", 'error');
+                } else {
+                    showMessage("❌ Error saving contacts!", 'error');
+                }
             }
         };
 
@@ -1943,6 +2104,12 @@
                 showMessage("❌ ကျေးဇူးပြုပြီး Login ဝင်ပါ။", 'error');
                 return;
             }
+
+            if (!navigator.onLine) {
+                showMessage("❌ အင်တာနက်ချိတ်ဆက်မှု မရှိပါ။ ကျေးဇူးပြု၍ အင်တာနက်ကို စစ်ဆေးပါ။", 'error');
+                return;
+            }
+
             const amount = document.getElementById('amount-select').value;
             const receivePhone = document.getElementById('user-phone-receive').value.trim();
             const userName = document.getElementById('user-name').value.trim();
@@ -1974,6 +2141,16 @@
             };
 
             try {
+                // Ensure network is enabled
+                if (db) {
+                    try {
+                        await db.enableNetwork();
+                        isNetworkEnabled = true;
+                    } catch (e) {
+                        console.log("enableNetwork during send:", e);
+                    }
+                }
+
                 const userSnap = await userRef.get();
                 const uData = userSnap.data();
                 const optGroup = document.getElementById('amount-select').options[document.getElementById('amount-select')
@@ -2020,7 +2197,11 @@
                 }
             } catch (e) {
                 console.error("Send to telegram error:", e);
-                showMessage("❌ Error: " + e.message, 'error');
+                if (e.message && e.message.includes("offline")) {
+                    showMessage("❌ အင်တာနက်ချိတ်ဆက်မှု ပြတ်တောက်နေပါသည်။ ကျေးဇူးပြု၍ အင်တာနက်ကို စစ်ဆေးပြီးမှ ပြန်ကြိုးစားပါ။", 'error');
+                } else {
+                    showMessage("❌ Error: " + e.message, 'error');
+                }
             }
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-paper-plane"></i> လဲလှယ်မှု အတည်ပြုမည်';
