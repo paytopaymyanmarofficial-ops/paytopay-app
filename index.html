@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pay to Pay Myanmar - Professional P2P Exchange | Licensed MSB</title>
-    <meta name="description" content="Pay to Pay Myanmar - Licensed Money Service Business. Secure P2P money exchange with AML/CFT compliance.">
     <link href="https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -250,7 +249,7 @@
         .license-badge i { color: var(--gold); }
         
         /* ============================================
-                   LIVE EXCHANGE TICKER (NEW)
+                   LIVE EXCHANGE TICKER
                    ============================================ */
         .live-ticker-wrapper {
             background: linear-gradient(135deg, #0a2540 0%, #1e3799 100%);
@@ -284,17 +283,12 @@
             z-index: 2;
         }
         
-        .ticker-label i {
-            font-size: 11px;
-        }
-        
         .live-dot {
             width: 8px;
             height: 8px;
             background: #fff;
             border-radius: 50%;
             animation: livePulse 1.5s infinite;
-            box-shadow: 0 0 0 0 rgba(255,255,255,0.7);
         }
         
         @keyframes livePulse {
@@ -310,9 +304,7 @@
             padding-left: 15px;
         }
         
-        .ticker-track:hover {
-            animation-play-state: paused;
-        }
+        .ticker-track:hover { animation-play-state: paused; }
         
         @keyframes tickerScroll {
             0% { transform: translateX(0); }
@@ -329,24 +321,12 @@
             font-weight: 500;
         }
         
-        .ticker-item i {
-            color: #1dd1a1;
-            font-size: 13px;
-        }
-        
-        .ticker-item b {
-            color: #f8c291;
-            font-weight: bold;
-        }
-        
-        .ticker-item .ticker-time {
-            font-size: 10.5px;
-            color: rgba(255,255,255,0.5);
-            margin-left: 5px;
-        }
+        .ticker-item i { color: #1dd1a1; font-size: 13px; }
+        .ticker-item b { color: #f8c291; font-weight: bold; }
+        .ticker-item .ticker-time { font-size: 10.5px; color: rgba(255,255,255,0.5); margin-left: 5px; }
         
         /* ============================================
-                   FLOATING NOTIFICATIONS (NEW)
+                   FLOATING NOTIFICATIONS
                    ============================================ */
         .floating-notification {
             position: fixed;
@@ -366,9 +346,7 @@
             min-width: 260px;
         }
         
-        .floating-notification.show {
-            left: 20px;
-        }
+        .floating-notification.show { left: 20px; }
         
         .floating-notification .icon-circle {
             background: linear-gradient(135deg, #079992, #1dd1a1);
@@ -384,10 +362,7 @@
             box-shadow: 0 4px 10px rgba(7, 153, 146, 0.4);
         }
         
-        .floating-notification .notif-content {
-            flex: 1;
-            min-width: 0;
-        }
+        .floating-notification .notif-content { flex: 1; min-width: 0; }
         
         .floating-notification .notif-title {
             font-size: 12px;
@@ -408,26 +383,15 @@
             gap: 5px;
         }
         
-        .floating-notification .notif-sub i {
-            color: var(--success);
-            font-size: 9px;
-        }
+        .floating-notification .notif-sub i { color: var(--success); font-size: 9px; }
         
-        .floating-notification.notif-2 {
-            border-left-color: var(--primary);
-            bottom: 180px;
-        }
-        
+        .floating-notification.notif-2 { border-left-color: var(--primary); bottom: 180px; }
         .floating-notification.notif-2 .icon-circle {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             box-shadow: 0 4px 10px rgba(30, 55, 153, 0.4);
         }
         
-        .floating-notification.notif-3 {
-            border-left-color: var(--warning);
-            bottom: 260px;
-        }
-        
+        .floating-notification.notif-3 { border-left-color: var(--warning); bottom: 260px; }
         .floating-notification.notif-3 .icon-circle {
             background: linear-gradient(135deg, #f39c12, #feca57);
             box-shadow: 0 4px 10px rgba(243, 156, 18, 0.4);
@@ -491,7 +455,7 @@
         .card h4 i { margin-right: 8px; }
         
         /* ============================================
-                   USER INFO STRIP (Replaces profile pic)
+                   USER INFO STRIP
                    ============================================ */
         .user-info-strip {
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
@@ -522,10 +486,7 @@
             text-transform: uppercase;
         }
         
-        .user-meta {
-            flex: 1;
-            min-width: 0;
-        }
+        .user-meta { flex: 1; min-width: 0; }
         
         .user-meta-name {
             font-size: 15px;
@@ -537,17 +498,9 @@
             text-overflow: ellipsis;
         }
         
-        .user-meta-phone {
-            font-size: 11.5px;
-            color: #888;
-            margin-bottom: 6px;
-        }
+        .user-meta-phone { font-size: 11.5px; color: #888; margin-bottom: 6px; }
         
-        .user-meta-badges {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
+        .user-meta-badges { display: flex; gap: 5px; flex-wrap: wrap; }
         
         .user-badge-mini {
             background: linear-gradient(135deg, #d1fae5, #a7f3d0);
@@ -565,6 +518,154 @@
             background: linear-gradient(135deg, #dbeafe, #bfdbfe);
             color: #1e3a8a;
         }
+        
+        /* ============================================
+                   CYCLE STATUS CARD (NEW)
+                   ============================================ */
+        .cycle-status-card {
+            background: linear-gradient(135deg, #eef7ff 0%, #dbeafe 100%);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid #93c5fd;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cycle-status-card::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(30, 55, 153, 0.1), transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .cycle-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed #93c5fd;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cycle-header i {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(30, 55, 153, 0.3);
+        }
+        
+        .cycle-header span {
+            font-size: 14.5px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .cycle-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cycle-info-item {
+            background: rgba(255,255,255,0.75);
+            border-radius: 12px;
+            padding: 10px 12px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(147, 197, 253, 0.5);
+        }
+        
+        .cycle-info-item.full { grid-column: span 2; }
+        
+        .cycle-label {
+            font-size: 10.5px;
+            color: #4b5563;
+            margin-bottom: 3px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .cycle-label i {
+            color: var(--secondary);
+            font-size: 10px;
+        }
+        
+        .cycle-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--primary);
+            line-height: 1.3;
+        }
+        
+        .cycle-value.highlight {
+            color: #dc2626;
+        }
+        
+        .cycle-value.success {
+            color: var(--success);
+        }
+        
+        .cycle-days-big {
+            font-size: 20px;
+            font-weight: 800;
+            color: #dc2626;
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+        
+        .cycle-days-big small {
+            font-size: 11px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .cycle-days-big.ready {
+            color: var(--success);
+        }
+        
+        .cycle-message {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #92400e;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cycle-message i {
+            color: #f59e0b;
+            margin-right: 5px;
+        }
+        
+        .cycle-message.success {
+            background: #d1fae5;
+            border-left-color: var(--success);
+            color: #065f46;
+        }
+        
+        .cycle-message.success i { color: var(--success); }
         
         /* ============================================
                    USER RULES SECTION
@@ -741,10 +842,7 @@
             gap: 12px;
         }
         
-        .monthly-limit-banner i {
-            font-size: 22px;
-            color: var(--primary);
-        }
+        .monthly-limit-banner i { font-size: 22px; color: var(--primary); }
         
         .monthly-limit-banner .limit-text {
             font-size: 12.5px;
@@ -752,10 +850,7 @@
             line-height: 1.5;
         }
         
-        .monthly-limit-banner .limit-text b {
-            font-size: 14px;
-            color: var(--primary);
-        }
+        .monthly-limit-banner .limit-text b { font-size: 14px; color: var(--primary); }
         
         .tier-grid {
             display: grid;
@@ -806,26 +901,27 @@
         }
         
         .tier-card.disabled {
-            opacity: 0.4;
+            opacity: 0.55;
             cursor: not-allowed;
             pointer-events: none;
-            filter: grayscale(80%);
+            filter: grayscale(60%);
+            background: #f9fafb;
         }
         
         .tier-card.disabled::before {
-            content: 'ကျန်မရှိ';
+            content: 'လဲမရသေး';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg);
+            top: 8px;
+            left: -22px;
+            transform: rotate(-35deg);
             background: var(--danger);
             color: white;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 10px;
+            padding: 2px 25px;
+            font-size: 8.5px;
             font-weight: bold;
             z-index: 10;
-            box-shadow: 0 3px 8px rgba(235, 77, 75, 0.4);
+            box-shadow: 0 3px 8px rgba(235, 77, 75, 0.3);
+            letter-spacing: 0.5px;
         }
         
         .tier-icon {
@@ -870,7 +966,22 @@
         }
         
         .tier-remain b { color: var(--success); font-size: 11px; }
+        .tier-remain.empty { background: #fee2e2; }
         .tier-remain.empty b { color: var(--danger); }
+        
+        .tier-reset-note {
+            display: none;
+            font-size: 9px;
+            color: var(--danger);
+            margin-top: 5px;
+            font-weight: bold;
+            line-height: 1.3;
+            padding: 0 2px;
+        }
+        
+        .tier-card.disabled .tier-reset-note {
+            display: block;
+        }
         
         #amount-options-card {
             display: none;
@@ -958,22 +1069,9 @@
             gap: 10px;
         }
         
-        .amount-pay {
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .amount-arrow {
-            color: #888;
-            font-size: 12px;
-        }
-        
-        .amount-receive {
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--success);
-        }
+        .amount-pay { font-size: 13px; font-weight: bold; color: var(--primary); }
+        .amount-arrow { color: #888; font-size: 12px; }
+        .amount-receive { font-size: 13px; font-weight: bold; color: var(--success); }
         
         /* ============================================
                    PAYMENT METHODS
@@ -1436,7 +1534,7 @@
         .info-content.active { display: block; animation: fadeIn 0.4s ease; }
         
         /* ============================================
-                   ADMIN PANEL
+                   ADMIN
                    ============================================ */
         .admin-panel {
             display: none;
@@ -1588,13 +1686,21 @@
             .floating-notification.notif-3 { display: none; }
             .user-info-strip { padding: 12px 14px; }
             .user-avatar-circle { width: 44px; height: 44px; font-size: 17px; }
+            .cycle-info-grid { gap: 8px; }
+            .cycle-value { font-size: 12.5px; }
+            .cycle-days-big { font-size: 17px; }
+            .tier-card.disabled::before {
+                font-size: 7.5px;
+                padding: 2px 20px;
+                left: -18px;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- ==========================================
-    FLOATING NOTIFICATIONS (3 Slots)
+    FLOATING NOTIFICATIONS
     ========================================== -->
     <div class="floating-notification" id="float-notif-1">
         <div class="icon-circle"><i class="fas fa-check"></i></div>
@@ -1735,22 +1841,18 @@
         </div>
 
         <div class="container">
-            <!-- ==========================================
-                 LIVE EXCHANGE TICKER (Marquee)
-                 ========================================== -->
+            <!-- LIVE EXCHANGE TICKER -->
             <div class="live-ticker-wrapper">
                 <div class="ticker-label">
                     <span class="live-dot"></span>
                     <i class="fas fa-bolt"></i> LIVE
                 </div>
                 <div style="overflow: hidden; flex: 1;">
-                    <div class="ticker-track" id="ticker-track">
-                        <!-- Populated by JS -->
-                    </div>
+                    <div class="ticker-track" id="ticker-track"></div>
                 </div>
             </div>
 
-            <!-- User Info Strip (Non-editable) -->
+            <!-- User Info Strip -->
             <div class="user-info-strip">
                 <div class="user-avatar-circle" id="user-avatar-initial">U</div>
                 <div class="user-meta">
@@ -1763,6 +1865,36 @@
                 </div>
             </div>
 
+            <!-- ==========================================
+                 CYCLE STATUS CARD (30-Day Cycle Info)
+                 ========================================== -->
+            <div class="cycle-status-card" id="cycle-status-card">
+                <div class="cycle-header">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>သင့်လဲလှယ်မှု ကာလ အခြေအနေ (ရက် ၃၀ စက်ဝန်း)</span>
+                </div>
+                <div class="cycle-info-grid">
+                    <div class="cycle-info-item">
+                        <div class="cycle-label"><i class="fas fa-play-circle"></i> စတင်လဲလှယ်သည့်နေ့</div>
+                        <div class="cycle-value" id="cycle-start-date">-</div>
+                    </div>
+                    <div class="cycle-info-item">
+                        <div class="cycle-label"><i class="fas fa-redo-alt"></i> ပြန်လဲနိုင်မည့်နေ့</div>
+                        <div class="cycle-value highlight" id="cycle-reset-date">-</div>
+                    </div>
+                    <div class="cycle-info-item full">
+                        <div class="cycle-label"><i class="fas fa-hourglass-half"></i> ကျန်ရှိသည့်ရက်</div>
+                        <div class="cycle-days-big" id="cycle-days-big">
+                            <span id="cycle-days-num">-</span> <small id="cycle-days-label">ရက် ကျန်ရှိသည်</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="cycle-message" id="cycle-message">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="cycle-message-text">Loading...</span>
+                </div>
+            </div>
+
             <!-- Trust Badges -->
             <div class="trust-badges">
                 <span class="trust-badge"><i class="fas fa-shield-alt"></i> 256-bit SSL</span>
@@ -1771,7 +1903,7 @@
                 <span class="trust-badge"><i class="fas fa-fingerprint"></i> KYC Verified</span>
             </div>
 
-            <!-- LIVE STATISTICS -->
+            <!-- STATS -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <i class="fas fa-exchange-alt"></i>
@@ -1795,33 +1927,29 @@
                 </div>
             </div>
 
-            <!-- ==========================================
-                 USER RULES SECTION
-                 ========================================== -->
+            <!-- RULES SECTION -->
             <div class="rules-section">
                 <h4><i class="fas fa-file-contract"></i> အသုံးပြုသူများ လိုက်နာရမည့် စည်းကမ်းချက်များ</h4>
                 <ol class="rules-list">
-                    <li><b>တစ်လလျှင် ၄ ကြိမ်သာ လဲလှယ်ခွင့်ရှိသည်။</b><br>
-                        <span style="font-size: 12.5px; color: #a01818;">- အသေးစား လဲလှယ်မှု: <b>၂ ကြိမ်</b> (ကြိုက်နှစ်သက်ရာ အသေးစား ပမာဏ ၂ မျိုး ရွေးချယ်နိုင်သည်)</span><br>
-                        <span style="font-size: 12.5px; color: #a01818;">- အလတ်စား လဲလှယ်မှု: <b>၁ ကြိမ်</b> (ကြိုက်နှစ်သက်ရာ တစ်မျိုးသာ ရွေးချယ်ရမည်)</span><br>
-                        <span style="font-size: 12.5px; color: #a01818;">- အကြီးစား လဲလှယ်မှု: <b>၁ ကြိမ်</b> (ကြိုက်နှစ်သက်ရာ တစ်မျိုးသာ ရွေးချယ်ရမည်)</span>
+                    <li><b>တစ်လဲလှယ်မှု စက်ဝန်း (ရက် ၃၀) အတွင်း ၄ ကြိမ်သာ လဲလှယ်ခွင့်ရှိသည်။</b><br>
+                        <span style="font-size: 12.5px; color: #a01818;">- စက်ဝန်းစတင်သည့်နေ့ = သင့်ပထမဆုံးလဲလှယ်သည့်နေ့ ဖြစ်သည်။</span><br>
+                        <span style="font-size: 12.5px; color: #a01818;">- ထိုနေ့မှစပြီး <b>ရက် ၃၀ ပြည့်မှသာ</b> လဲလှယ်မှု အကြိမ်ရေ ပြန် Reset ဖြစ်မည်။</span><br>
+                        <span style="font-size: 12.5px; color: #a01818;">- အသေးစား <b>၂ ကြိမ်</b> | အလတ်စား <b>၁ ကြိမ်</b> | အကြီးစား <b>၁ ကြိမ်</b></span>
                     </li>
-                    <li><b>တစ်ဦးတည်း Pay to Pay အကောင့် အများအပြား ဖွင့်လှစ်၍ အသေးစား လဲလှယ်မှုများကို အလွဲသုံးစားပြုလုပ်ခြင်း လုံးဝ မပြုလုပ်ရ။</b> ထိုသို့ ပြုလုပ်သည်ကို စစ်ဆေးတွေ့ရှိပါက <b>ဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်ခံရမည် ဖြစ်ပြီး အကောင့်အားလုံး ပိတ်သိမ်းခံရမည်။</li>
-                    <li><b>စည်းကမ်းချက်များကို လိုက်နာနိုင်မှသာ</b> လဲလှယ်မှု ပြုလုပ်ပေးမည် ဖြစ်ပါသည်။ စည်းကမ်းချိုးဖောက်ပါက ဝန်ဆောင်မှုကို ရပ်ဆိုင်းမည်။</li>
-                    <li><b>တကယ်လိုအပ်သူများသာ</b> လဲလှယ်ခွင့် ပြုပါသည်။ ငွေကြေးအလွဲသုံးစားလုပ်ရန် ရည်ရွယ်ချက်ဖြင့် လျှောက်ထားခြင်း မပြုလုပ်ပါရန်။</li>
-                    <li><b>မှန်ကန်သော အချက်အလက်များ</b> သာ ဖြည့်သွင်းရမည်။ မှားယွင်းသော အချက်အလက်များ ဖြည့်သွင်းပါက လဲလှယ်မှုကို ငြင်းပယ်မည်။</li>
-                    <li><b>ငွေကြေးခဝါချမှု (Money Laundering)</b> တွင် ပါဝင်သည့် အကောင့်များကို ချက်ချင်း ရပ်ဆိုင်းပြီး သက်ဆိုင်ရာ အာဏာပိုင်များထံ အစီရင်ခံပါသည်။</li>
+                    <li><b>ပြက္ခဒိန်လစဉ် ၁ ရက်နေ့မှာ Reset မဖြစ်ပါ။</b> ဥပမာ - စက်တင်ဘာ ၂၉ ရက်နေ့ စလဲပါက အောက်တိုဘာ ၂၉ ရက်နေ့ကျမှသာ ပြန်လဲနိုင်မည်။</li>
+                    <li><b>တစ်ဦးတည်း အကောင့်များစွာ ဖွင့်၍ အလွဲသုံးစားပြုလုပ်ခြင်း လုံးဝ မပြုလုပ်ရ။</b> တွေ့ရှိပါက <b>ဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်ခံရမည်။</li>
+                    <li><b>တကယ်လိုအပ်သူများသာ</b> လဲလှယ်ခွင့် ပြုပါသည်။</li>
+                    <li><b>မှန်ကန်သော အချက်အလက်များ</b> သာ ဖြည့်သွင်းရမည်။</li>
+                    <li><b>ငွေကြေးခဝါချမှု</b> တွင် ပါဝင်သည့် အကောင့်များကို ချက်ချင်း ရပ်ဆိုင်းမည်။</li>
                 </ol>
                 <div class="penalty-warning">
                     <i class="fas fa-exclamation-triangle"></i>
-                    <b>သတိပေးချက်:</b> အထက်ပါ စည်းကမ်းချက်များကို ချိုးဖောက်သည့် သုံးစွဲသူများအား 
-                    <b>ငွေဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်မည်ဖြစ်ပြီး အကောင့်ကို အပြီးအပိုင် ပိတ်သိမ်းမည် ဖြစ်ပါသည်။
+                    <b>သတိပေးချက်:</b> စည်းကမ်းချက်များကို ချိုးဖောက်သည့် သုံးစွဲသူများအား 
+                    <b>ငွေဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်မည်ဖြစ်ပြီး အကောင့်ကို အပြီးအပိုင် ပိတ်သိမ်းမည်။
                 </div>
             </div>
 
-            <!-- ==========================================
-                 EXCHANGE TIER SELECTOR
-                 ========================================== -->
+            <!-- EXCHANGE TIER SELECTOR -->
             <div class="exchange-flow-card">
                 <div class="flow-step-title">
                     <div class="step-number">1</div>
@@ -1834,7 +1962,7 @@
                 <div class="monthly-limit-banner">
                     <i class="fas fa-calendar-alt"></i>
                     <div class="limit-text">
-                        တစ်လလျှင် စုစုပေါင်း <b>၄ ကြိမ်</b> သာ လဲလှယ်ခွင့်ရှိပါသည်<br>
+                        ရက် ၃၀ စက်ဝန်းအတွင်း စုစုပေါင်း <b>၄ ကြိမ်</b> သာ လဲလှယ်ခွင့်ရှိပါသည်<br>
                         <small>(အသေးစား ၂ ကြိမ် + အလတ်စား ၁ ကြိမ် + အကြီးစား ၁ ကြိမ်)</small>
                     </div>
                 </div>
@@ -1844,24 +1972,27 @@
                         <div class="tier-icon small"><i class="fas fa-coins"></i></div>
                         <div class="tier-name">အသေးစား</div>
                         <div class="tier-range">1,000 - 150,000 MMK</div>
-                        <div class="tier-remain">ကျန်: <b id="small-remain">2</b>/2</div>
+                        <div class="tier-remain" id="small-remain-box">ကျန်: <b id="small-remain">2</b>/2</div>
+                        <div class="tier-reset-note" id="small-reset-note"></div>
                     </div>
                     <div class="tier-card" id="tier-card-medium" onclick="selectTier('medium')">
                         <div class="tier-icon medium"><i class="fas fa-money-bill-wave"></i></div>
                         <div class="tier-name">အလတ်စား</div>
                         <div class="tier-range">100,000 - 9,000,000 MMK</div>
-                        <div class="tier-remain">ကျန်: <b id="medium-remain">1</b>/1</div>
+                        <div class="tier-remain" id="medium-remain-box">ကျန်: <b id="medium-remain">1</b>/1</div>
+                        <div class="tier-reset-note" id="medium-reset-note"></div>
                     </div>
                     <div class="tier-card" id="tier-card-large" onclick="selectTier('large')">
                         <div class="tier-icon large"><i class="fas fa-gem"></i></div>
                         <div class="tier-name">အကြီးစား</div>
                         <div class="tier-range">1,000,000 - 90,000,000 MMK</div>
-                        <div class="tier-remain">ကျန်: <b id="large-remain">1</b>/1</div>
+                        <div class="tier-remain" id="large-remain-box">ကျန်: <b id="large-remain">1</b>/1</div>
+                        <div class="tier-reset-note" id="large-reset-note"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Step 2: Amount Options -->
+            <!-- Amount Options -->
             <div id="amount-options-card">
                 <div class="flow-step-title" style="border-bottom: none; padding-bottom: 0;">
                     <div class="step-number">2</div>
@@ -2019,7 +2150,7 @@
                 <button class="main-btn" style="background: #e2e8f0; margin-top: 12px; color: #4a5568; box-shadow: none;" onclick="logout()">Logout</button>
             </div>
 
-            <!-- FEEDBACK SECTION -->
+            <!-- FEEDBACK -->
             <div class="feedback-card">
                 <h4><i class="fas fa-comment-dots"></i> အကြံပြုချက် ပေးပို့ရန်</h4>
                 <p>သင်၏ အကြံပြုချက်၊ မှတ်ချက် သို့မဟုတ် တိုင်ကြားချက်များကို ကျွန်ုပ်တို့ထံ တိုက်ရိုက် ပေးပို့နိုင်ပါသည်။</p>
@@ -2043,12 +2174,16 @@
                 </button>
             </div>
 
-            <!-- FAQ Section -->
+            <!-- FAQ -->
             <div class="card">
                 <h4><i class="fas fa-question-circle"></i> အမေးများသောမေးခွန်းများ (FAQ)</h4>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">တစ်လကို ဘယ်နှကြိမ် လဲလှယ်နိုင်လဲ? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer">တစ်လလျှင် <b>စုစုပေါင်း ၄ ကြိမ်</b> သာ လဲလှယ်နိုင်ပါသည်။ အသေးစား ၂ ကြိမ်၊ အလတ်စား ၁ ကြိမ်၊ အကြီးစား ၁ ကြိမ် ဖြစ်ပါသည်။</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">ရက် ၃၀ စက်ဝန်းဆိုတာ ဘာလဲ? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer">သင့်၏ <b>ပထမဆုံး လဲလှယ်သည့်နေ့</b> မှ စတင်ပြီး <b>ရက် ၃၀ ပြည့်သည့်နေ့</b> အထိ ကာလကို ဆိုလိုပါသည်။ ထိုရက် ၃၀ အတွင်း အသေးစား ၂ ကြိမ်၊ အလတ်စား ၁ ကြိမ်၊ အကြီးစား ၁ ကြိမ် လဲလှယ်နိုင်ပါသည်။</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">ပြက္ခဒိန်လစဉ် ၁ ရက်နေ့မှာ Reset ဖြစ်လား? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer"><b>မဖြစ်ပါ။</b> သင့်၏ ပထမဆုံးလဲလှယ်သည့်နေ့မှစပြီး ရက် ၃၀ ပြည့်မှသာ Reset ဖြစ်ပါသည်။ ဥပမာ - စက်တင်ဘာ ၂၉ ရက်နေ့ စလဲပါက အောက်တိုဘာ ၂၉ ရက်နေ့ကျမှသာ ပြန်လဲနိုင်မည် ဖြစ်ပါသည်။</div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">ငွေလွှဲပြီးရင် ဘယ်လောက်ကြာကြာမှ ငွေပြန်ရမလဲ? <i class="fas fa-chevron-down"></i></button>
@@ -2056,11 +2191,7 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">အကောင့်များစွာဖွင့်ရင် ဘာဖြစ်မလဲ? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer">တစ်ဦးတည်း အကောင့်များစွာ ဖွင့်၍ အလွဲသုံးစားလုပ်ခြင်း တွေ့ရှိပါက <b>ဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်ခံရမည် ဖြစ်ပြီး အကောင့်အားလုံး ပိတ်သိမ်းခံရမည် ဖြစ်ပါသည်။</div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">ငွေကြေးခဝါချမှုဆိုတာ ဘာလဲ? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer">ငွေကြေးခဝါချမှု (Money Laundering) ဆိုသည်မှာ တရားမဝင်ရရှိထားသော ငွေကြေးကို တရားဝင်ငွေကြေးအဖြစ် အသွင်ပြောင်းခြင်းဖြစ်ပါသည်။ ကျွန်ုပ်တို့၏ KYC/AML စနစ်ဖြင့် ကာကွယ်ပေးပါသည်။</div>
+                    <div class="faq-answer">တစ်ဦးတည်း အကောင့်များစွာ ဖွင့်၍ အလွဲသုံးစားလုပ်ခြင်း တွေ့ရှိပါက <b>ဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်ခံရမည် ဖြစ်ပြီး အကောင့်အားလုံး ပိတ်သိမ်းခံရမည်။</div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">ကျွန်တော် ဘယ်လိုငွေပေးချေနိုင်မလဲ? <i class="fas fa-chevron-down"></i></button>
@@ -2147,6 +2278,12 @@
 
         const TELEGRAM_BOT_TOKEN = "8689448201:AAGWjBhPY2UFrc9rODN3jROUcuwYyYXcmKU";
         const TELEGRAM_CHAT_ID = "7184126683";
+
+        // ============================================
+        // CYCLE CONFIG
+        // ============================================
+        const CYCLE_DAYS = 30;
+        const CYCLE_MS = CYCLE_DAYS * 24 * 60 * 60 * 1000;
 
         try {
             firebase.initializeApp(firebaseConfig);
@@ -2266,6 +2403,23 @@
         };
 
         // ==========================================
+        // DATE HELPERS
+        // ==========================================
+        function formatDateMyanmar(timestamp) {
+            if (!timestamp) return "-";
+            const d = new Date(timestamp);
+            const day = d.getDate();
+            const monthNames = ["ဇန်နဝါရီ", "ဖေဖော်ဝါရီ", "မတ်", "ဧပြီ", "မေ", "ဇွန်", "ဇူလိုင်", "ဩဂုတ်", "စက်တင်ဘာ", "အောက်တိုဘာ", "နိုဝင်ဘာ", "ဒီဇင်ဘာ"];
+            const month = monthNames[d.getMonth()];
+            const year = d.getFullYear();
+            return `${day} ${month} ${year}`;
+        }
+
+        function daysBetween(fromTs, toTs) {
+            return Math.ceil((toTs - fromTs) / (24 * 60 * 60 * 1000));
+        }
+
+        // ==========================================
         // AUTH
         // ==========================================
         window.switchAuth = function(mode) {
@@ -2343,7 +2497,7 @@
                             large_count: 0,
                             history: [],
                             status: 'none',
-                            last_month: new Date().getMonth(),
+                            cycle_start_date: null,  // 30-day cycle start
                             createdAt: Date.now(),
                             kycStatus: 'pending',
                             amlCheck: 'passed'
@@ -2391,7 +2545,6 @@
             document.getElementById('logged-user').innerHTML = '<i class="fas fa-user-circle"></i> Logged in: ' + currentUser.name;
             document.getElementById('user-meta-name').innerText = currentUser.name;
             document.getElementById('user-meta-phone').innerText = currentUser.phone;
-            // Use first letter of name as avatar
             const initial = (currentUser.name || 'U').trim().charAt(0).toUpperCase();
             document.getElementById('user-avatar-initial').innerText = initial;
         }
@@ -2618,38 +2771,191 @@
             });
         }
 
+        // ==========================================
+        // CHECK EXCHANGE LIMITS (30-DAY CYCLE SYSTEM)
+        // ==========================================
         async function checkExchangeLimits() {
             if (!currentUser) return;
             try {
                 const userRef = db.collection("users").doc(currentUser.phone);
                 const snap = await userRef.get();
-                const data = snap.data();
-                const currentMonth = new Date().getMonth();
+                let data = snap.data();
                 
-                if (data.last_month !== currentMonth) {
-                    await userRef.update({ small_count: 0, medium_count: 0, large_count: 0, last_month: currentMonth });
-                    data.small_count = 0;
-                    data.medium_count = 0;
-                    data.large_count = 0;
+                const now = Date.now();
+                let cycleStart = data.cycle_start_date;
+                let smallCount = data.small_count || 0;
+                let mediumCount = data.medium_count || 0;
+                let largeCount = data.large_count || 0;
+                
+                // ============================================
+                // RESET LOGIC: If cycle has passed 30 days, reset
+                // ============================================
+                let cycleReset = false;
+                if (cycleStart && (now - cycleStart) >= CYCLE_MS) {
+                    // 30 days passed - reset counts
+                    cycleStart = null; // Will be set on next exchange
+                    smallCount = 0;
+                    mediumCount = 0;
+                    largeCount = 0;
+                    cycleReset = true;
+                    
+                    await userRef.update({
+                        small_count: 0,
+                        medium_count: 0,
+                        large_count: 0,
+                        cycle_start_date: null
+                    });
+                    
+                    console.log("🔄 Cycle reset! 30 days passed.");
                 }
                 
-                const smallRemain = Math.max(0, 2 - (data.small_count || 0));
-                const mediumRemain = Math.max(0, 1 - (data.medium_count || 0));
-                const largeRemain = Math.max(0, 1 - (data.large_count || 0));
+                // ============================================
+                // UPDATE CYCLE STATUS UI
+                // ============================================
+                updateCycleStatusUI(cycleStart, smallCount, mediumCount, largeCount);
+                
+                // ============================================
+                // UPDATE TIER COUNTERS
+                // ============================================
+                const smallRemain = Math.max(0, 2 - smallCount);
+                const mediumRemain = Math.max(0, 1 - mediumCount);
+                const largeRemain = Math.max(0, 1 - largeCount);
                 
                 document.getElementById('small-remain').innerText = smallRemain;
                 document.getElementById('medium-remain').innerText = mediumRemain;
                 document.getElementById('large-remain').innerText = largeRemain;
                 
-                if (smallRemain === 0) document.getElementById('tier-card-small')?.classList.add('disabled');
-                if (mediumRemain === 0) document.getElementById('tier-card-medium')?.classList.add('disabled');
-                if (largeRemain === 0) document.getElementById('tier-card-large')?.classList.add('disabled');
+                // Compute reset date (start + 30 days)
+                const resetDateStr = cycleStart ? formatDateMyanmar(cycleStart + CYCLE_MS) : "";
                 
-                if (smallRemain === 0) document.querySelector('#tier-card-small .tier-remain')?.classList.add('empty');
-                if (mediumRemain === 0) document.querySelector('#tier-card-medium .tier-remain')?.classList.add('empty');
-                if (largeRemain === 0) document.querySelector('#tier-card-large .tier-remain')?.classList.add('empty');
+                // ============================================
+                // HANDLE DISABLED TIERS
+                // ============================================
+                // Small tier
+                const smallCard = document.getElementById('tier-card-small');
+                const smallBox = document.getElementById('small-remain-box');
+                const smallNote = document.getElementById('small-reset-note');
+                if (smallRemain === 0) {
+                    smallCard?.classList.add('disabled');
+                    smallBox?.classList.add('empty');
+                    if (smallNote) smallNote.innerText = `ပြန်လဲ: ${resetDateStr}`;
+                } else {
+                    smallCard?.classList.remove('disabled');
+                    smallBox?.classList.remove('empty');
+                    if (smallNote) smallNote.innerText = "";
+                }
+                
+                // Medium tier
+                const mediumCard = document.getElementById('tier-card-medium');
+                const mediumBox = document.getElementById('medium-remain-box');
+                const mediumNote = document.getElementById('medium-reset-note');
+                if (mediumRemain === 0) {
+                    mediumCard?.classList.add('disabled');
+                    mediumBox?.classList.add('empty');
+                    if (mediumNote) mediumNote.innerText = `ပြန်လဲ: ${resetDateStr}`;
+                } else {
+                    mediumCard?.classList.remove('disabled');
+                    mediumBox?.classList.remove('empty');
+                    if (mediumNote) mediumNote.innerText = "";
+                }
+                
+                // Large tier
+                const largeCard = document.getElementById('tier-card-large');
+                const largeBox = document.getElementById('large-remain-box');
+                const largeNote = document.getElementById('large-reset-note');
+                if (largeRemain === 0) {
+                    largeCard?.classList.add('disabled');
+                    largeBox?.classList.add('empty');
+                    if (largeNote) largeNote.innerText = `ပြန်လဲ: ${resetDateStr}`;
+                } else {
+                    largeCard?.classList.remove('disabled');
+                    largeBox?.classList.remove('empty');
+                    if (largeNote) largeNote.innerText = "";
+                }
                 
             } catch (e) { console.error(e); }
+        }
+
+        // ==========================================
+        // UPDATE CYCLE STATUS UI
+        // ==========================================
+        function updateCycleStatusUI(cycleStart, smallCount, mediumCount, largeCount) {
+            const startDateEl = document.getElementById('cycle-start-date');
+            const resetDateEl = document.getElementById('cycle-reset-date');
+            const daysBigEl = document.getElementById('cycle-days-big');
+            const daysNumEl = document.getElementById('cycle-days-num');
+            const daysLabelEl = document.getElementById('cycle-days-label');
+            const msgEl = document.getElementById('cycle-message');
+            const msgTextEl = document.getElementById('cycle-message-text');
+            
+            const now = Date.now();
+            
+            if (!cycleStart) {
+                // No exchanges yet - cycle hasn't started
+                if (startDateEl) startDateEl.innerText = "မစတင်ရသေး";
+                if (resetDateEl) {
+                    resetDateEl.innerText = "ပထမဆုံးလဲပြီးမှ သတ်မှတ်မည်";
+                    resetDateEl.classList.remove('highlight');
+                    resetDateEl.classList.add('success');
+                }
+                if (daysNumEl) daysNumEl.innerText = "—";
+                if (daysLabelEl) daysLabelEl.innerText = "သင်လဲလှယ်လိုက်သည့်နေ့မှ စတင်ရေတွက်ပါမည်";
+                if (daysBigEl) {
+                    daysBigEl.classList.remove('ready');
+                }
+                if (msgEl) {
+                    msgEl.classList.remove('success');
+                    msgEl.style.background = "#dbeafe";
+                    msgEl.style.borderLeftColor = "#2563eb";
+                    msgEl.style.color = "#1e40af";
+                }
+                if (msgTextEl) msgTextEl.innerHTML = "✨ သင်သည် <b>ပထမဆုံး လဲလှယ်မှု</b> ကို မပြုလုပ်ရသေးပါ။ ပထမဆုံးလဲလှယ်သည့်နေ့မှစပြီး ရက် ၃၀ စက်ဝန်း စတင်မည်ဖြစ်ပါသည်။ ထိုစက်ဝန်းအတွင်း အသေးစား ၂ ကြိမ်၊ အလတ်စား ၁ ကြိမ်၊ အကြီးစား ၁ ကြိမ် လဲလှယ်နိုင်ပါသည်။";
+                return;
+            }
+            
+            // Cycle has started
+            const resetTs = cycleStart + CYCLE_MS;
+            const daysLeft = daysBetween(now, resetTs);
+            const totalUsed = smallCount + mediumCount + largeCount;
+            const allUsed = (smallCount >= 2 && mediumCount >= 1 && largeCount >= 1);
+            
+            if (startDateEl) startDateEl.innerText = formatDateMyanmar(cycleStart);
+            if (resetDateEl) {
+                resetDateEl.innerText = formatDateMyanmar(resetTs);
+                resetDateEl.classList.remove('success');
+                resetDateEl.classList.add('highlight');
+            }
+            
+            if (daysNumEl) daysNumEl.innerText = daysLeft > 0 ? daysLeft : 0;
+            
+            if (daysBigEl) {
+                daysBigEl.classList.remove('ready');
+            }
+            
+            if (daysLeft <= 0) {
+                // Should have been reset - edge case
+                if (daysLabelEl) daysLabelEl.innerText = "ရက် (Reset ဖြစ်ရန် အသင့်)";
+                if (daysBigEl) daysBigEl.classList.add('ready');
+                if (msgTextEl) msgTextEl.innerHTML = "🎉 သင့်၏ <b>ရက် ၃၀ စက်ဝန်း ပြည့်သွားပါပြီ။</b> ယခု လဲလှယ်မှု အကြိမ်ရေ ပြန်လည် Reset ဖြစ်သွားပါပြီ။ ပြန်လည်လဲလှယ်နိုင်ပါပြီ။";
+            } else if (allUsed) {
+                if (daysLabelEl) daysLabelEl.innerText = "ရက် ကျန်ရှိသည် (အားလုံးကုန်သွားပြီ)";
+                if (msgEl) {
+                    msgEl.classList.remove('success');
+                    msgEl.style.background = "#fee2e2";
+                    msgEl.style.borderLeftColor = "#dc2626";
+                    msgEl.style.color = "#991b1b";
+                }
+                if (msgTextEl) msgTextEl.innerHTML = `⚠️ သင့်၏ <b>ရက် ၃၀ စက်ဝန်း အတွင်း လဲလှယ်မှု ၄ ကြိမ်လုံး ကုန်သွားပါပြီ။</b> နောက်ထပ် <b>${daysLeft} ရက်</b> အကြာ ${formatDateMyanmar(resetTs)} တွင် ပြန်လည်လဲလှယ်နိုင်မည် ဖြစ်ပါသည်။`;
+            } else {
+                if (daysLabelEl) daysLabelEl.innerText = "ရက် ကျန်ရှိသည်";
+                if (msgEl) {
+                    msgEl.classList.remove('success');
+                    msgEl.style.background = "#fef3c7";
+                    msgEl.style.borderLeftColor = "#f59e0b";
+                    msgEl.style.color = "#92400e";
+                }
+                if (msgTextEl) msgTextEl.innerHTML = `📅 သင်သည် <b>${formatDateMyanmar(cycleStart)}</b> တွင် စတင်လဲလှယ်ခဲ့ပါသည်။ ရက် <b>${daysLeft}</b> အကြာ <b>${formatDateMyanmar(resetTs)}</b> တွင် လဲလှယ်မှု အကြိမ်ရေ Reset ဖြစ်ပါမည်။ လက်ရှိအသုံးပြုပြီး: <b>${totalUsed}/4 ကြိမ်</b>`;
+            }
         }
 
         // ==========================================
@@ -2757,7 +3063,7 @@ ${text}
         };
 
         // ==========================================
-        // SUBMIT EXCHANGE
+        // SUBMIT EXCHANGE (Sets cycle_start_date on first exchange)
         // ==========================================
         window.sendToTelegram = async function() {
             if (!currentUser) { showMessage("❌ Login ဝင်ပါ။", 'error'); return; }
@@ -2797,20 +3103,41 @@ ${text}
                 const userSnap = await userRef.get();
                 const uData = userSnap.data();
                 
+                const now = Date.now();
+                let cycleStart = uData.cycle_start_date;
+                
+                // ============================================
+                // CHECK IF CYCLE NEEDS RESET (30 days passed)
+                // ============================================
+                if (cycleStart && (now - cycleStart) >= CYCLE_MS) {
+                    // 30 days passed - reset counts before checking
+                    await userRef.update({
+                        small_count: 0,
+                        medium_count: 0,
+                        large_count: 0,
+                        cycle_start_date: null
+                    });
+                    uData.small_count = 0;
+                    uData.medium_count = 0;
+                    uData.large_count = 0;
+                    cycleStart = null;
+                }
+                
+                // Check limits
                 if (tierType === 'small' && (uData.small_count || 0) >= 2) {
-                    showMessage("❌ ဤလအတွက် အသေးစား လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။", 'error');
+                    showMessage("❌ ရက် ၃၀ စက်ဝန်းအတွင်း အသေးစား လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။", 'error');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-paper-plane"></i> လဲလှယ်မှု အတည်ပြုမည်';
                     return;
                 }
                 if (tierType === 'medium' && (uData.medium_count || 0) >= 1) {
-                    showMessage("❌ ဤလအတွက် အလတ်စား လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။", 'error');
+                    showMessage("❌ ရက် ၃၀ စက်ဝန်းအတွင်း အလတ်စား လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။", 'error');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-paper-plane"></i> လဲလှယ်မှု အတည်ပြုမည်';
                     return;
                 }
                 if (tierType === 'large' && (uData.large_count || 0) >= 1) {
-                    showMessage("❌ ဤလအတွက် အကြီးစား လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။", 'error');
+                    showMessage("❌ ရက် ၃၀ စက်ဝန်းအတွင်း အကြီးစား လဲလှယ်မှု အကြိမ်ရေ ပြည့်သွားပါပြီ။", 'error');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-paper-plane"></i> လဲလှယ်မှု အတည်ပြုမည်';
                     return;
@@ -2819,6 +3146,11 @@ ${text}
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('photo', selectedFile);
+                
+                const cycleInfo = cycleStart 
+                    ? `Cycle Started: ${new Date(cycleStart).toLocaleDateString()}` 
+                    : `Cycle Start: NOW (First exchange)`;
+                
                 formData.append('caption',
                     `🔔 *NEW EXCHANGE REQUEST*\n\n` +
                     `💰 Type: ${amount} (${tierType.toUpperCase()})\n` +
@@ -2826,8 +3158,9 @@ ${text}
                     `📞 Acc Phone: ${currentUser.phone}\n` +
                     `📲 Receiver: ${receivePhone}\n` +
                     `🎫 TID: ${tid}\n\n` +
+                    `📅 ${cycleInfo}\n` +
                     `⚠️ AML Check: PENDING\n` +
-                    `📅 Date: ${new Date().toLocaleString()}`
+                    `🕐 Date: ${new Date().toLocaleString()}`
                 );
                 
                 const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
@@ -2840,13 +3173,27 @@ ${text}
                         status: 'pending',
                         history: firebase.firestore.FieldValue.arrayUnion(exchangeRecord)
                     };
+                    
+                    // ============================================
+                    // SET CYCLE START DATE ON FIRST EXCHANGE
+                    // ============================================
+                    if (!cycleStart) {
+                        updatePayload.cycle_start_date = now;
+                        console.log("🎯 First exchange - cycle started at:", new Date(now).toLocaleString());
+                    }
+                    
                     if (tierType === 'small') updatePayload.small_count = (uData.small_count || 0) + 1;
                     if (tierType === 'medium') updatePayload.medium_count = (uData.medium_count || 0) + 1;
                     if (tierType === 'large') updatePayload.large_count = (uData.large_count || 0) + 1;
                     
                     await userRef.update(updatePayload);
-                    showMessage("✅ လဲလှယ်မှု တောင်းဆိုချက် ပေးပို့ပြီးပါပြီ။ ၁၅ မိနစ်ခန့် စောင့်ပါ။", 'success');
-                    setTimeout(() => location.reload(), 3000);
+                    
+                    if (!cycleStart) {
+                        showMessage("✅ လဲလှယ်မှု တောင်းဆိုချက် ပေးပို့ပြီးပါပြီ။ သင့်ရက် ၃၀ စက်ဝန်း ယခုစတင်ပါပြီ။ ၁၅ မိနစ်ခန့် စောင့်ပါ။", 'success');
+                    } else {
+                        showMessage("✅ လဲလှယ်မှု တောင်းဆိုချက် ပေးပို့ပြီးပါပြီ။ ၁၅ မိနစ်ခန့် စောင့်ပါ။", 'success');
+                    }
+                    setTimeout(() => location.reload(), 3500);
                 } else {
                     showMessage("❌ Telegram သို့ ပေးပို့ရာတွင် အမှားရှိပါသည်။", 'error');
                 }
@@ -2884,6 +3231,10 @@ ${text}
                     const userData = userDoc.data();
                     const history = userData.history || [];
                     const lastReq = history[history.length - 1] || {};
+                    const cycleStart = userData.cycle_start_date;
+                    const cycleInfo = cycleStart 
+                        ? new Date(cycleStart).toLocaleDateString() 
+                        : 'N/A';
                     const userCard = document.createElement('div');
                     userCard.className = "admin-user-card";
                     userCard.innerHTML = `
@@ -2892,7 +3243,8 @@ ${text}
                             <b>📞 Phone:</b> ${userData.phone}<br>
                             <b>💰 Type:</b> ${lastReq.amount || 'N/A'}<br>
                             <b>📲 Receiver:</b> ${lastReq.receivePhone || 'N/A'}<br>
-                            <b>🎫 TID:</b> ${lastReq.tid || 'N/A'}
+                            <b>🎫 TID:</b> ${lastReq.tid || 'N/A'}<br>
+                            <b>📅 Cycle Start:</b> ${cycleInfo}
                         </div>
                         <div class="admin-btn-group">
                             <button class="confirm-btn reject-btn" onclick="updateStatusFromList('${userData.phone}', 'rejected')">Reject ❌</button>
@@ -2955,30 +3307,29 @@ ${text}
         };
 
         // ==========================================
-        // LIVE EXCHANGE TICKER (Marquee)
+        // LIVE TICKER + FLOATING NOTIFICATIONS
         // ==========================================
         const LIVE_EXCHANGES = [
-            { phone: "09***455", amount: "၅ သောင်း", time: "1 min ago" },
+            { phone: "09***455", amount: "၁ သောင်း", time: "1 min ago" },
             { phone: "09***921", amount: "၅ ထောင်", time: "2 min ago" },
-            { phone: "09***118", amount: "၃ သိန်း", time: "3 min ago" },
+            { phone: "09***118", amount: "၂ သိန်း", time: "3 min ago" },
             { phone: "09***002", amount: "၁၀ သိန်း", time: "4 min ago" },
             { phone: "၀၉***၇၇၂", amount: "၅ သောင်း", time: "5 min ago" },
             { phone: "၀၉***၆၆၇", amount: "သိန်း ၅၀", time: "6 min ago" },
-            { phone: "09***334", amount: "၅ သောင်း", time: "7 min ago" },
+            { phone: "09***334", amount: "၃ သောင်း", time: "7 min ago" },
             { phone: "၀၉***၈၄၅", amount: "၅ သိန်း", time: "8 min ago" },
-            { phone: "09***677", amount: "၃ ထောင်", time: "9 min ago" },
-            { phone: "09***212", amount: "၁သိန်း ၅ သောင်း", time: "10 min ago" },
-            { phone: "၀၉***၅၅၈", amount: "၅ သောင်း", time: "11 min ago" },
+            { phone: "09***677", amount: "၇ ထောင်", time: "9 min ago" },
+            { phone: "09***212", amount: "၁၅ သောင်း", time: "10 min ago" },
+            { phone: "၀၉***၅၅၈", amount: "၂ သောင်း", time: "11 min ago" },
             { phone: "09***449", amount: "၁ သိန်း", time: "12 min ago" },
-            { phone: "09***331", amount: "၅ သောင်း", time: "13 min ago" },
-            { phone: "၀၉***၉၉၀", amount: "၃ ထောင်", time: "14 min ago" },
+            { phone: "09***331", amount: "၅၀ သောင်း", time: "13 min ago" },
+            { phone: "၀၉***၉၉၀", amount: "၈ ထောင်", time: "14 min ago" },
             { phone: "09***781", amount: "၃ သိန်း", time: "15 min ago" }
         ];
 
         function buildTicker() {
             const track = document.getElementById('ticker-track');
             if (!track) return;
-            
             const itemsHTML = LIVE_EXCHANGES.map(ex => 
                 `<span class="ticker-item">
                     <i class="fas fa-check-circle"></i>
@@ -2986,32 +3337,11 @@ ${text}
                     <span class="ticker-time">${ex.time}</span>
                 </span>`
             ).join('');
-            
-            // Duplicate for seamless loop
             track.innerHTML = itemsHTML + itemsHTML;
         }
         buildTicker();
 
-        // ==========================================
-        // FLOATING NOTIFICATIONS (Rotating)
-        // ==========================================
-        const FLOAT_MESSAGES = [
-            { phone: "09***455", amount: "၃ ထောင်"},
-            { phone: "09***921", amount: "၅ ထောင်" },
-            { phone: "09***118", amount: "၃ သိန်း" },
-            { phone: "09***002", amount: "၁၀ သိန်း" },
-            { phone: "၀၉***၇၇၂", amount: "၅ သောင်း" },
-            { phone: "၀၉***၆၆၇", amount: "သိန်း ၅၀" },
-            { phone: "09***334", amount: "၅ သောင်း" },
-            { phone: "၀၉***၈၄၅", amount: "၅ သိန်း" },
-            { phone: "09***677", amount: "၇ ထောင်" },
-            { phone: "09***212", amount: "၁သိန်း ၅ သောင်း" },
-            { phone: "၀၉***၅၅၈", amount: "၅ သောင်း" },
-            { phone: "09***449", amount: "၁ သိန်း" },
-            { phone: "09***331", amount: "၅ သောင်း" },
-            { phone: "၀၉***၉၉၀", amount: " ၁ထောင်" },
-            { phone: "09***781", amount: "၃ သိန်း" }
-        ];
+        const FLOAT_MESSAGES = LIVE_EXCHANGES.map(ex => ({ phone: ex.phone, amount: ex.amount }));
 
         function getRandomMessage() {
             return FLOAT_MESSAGES[Math.floor(Math.random() * FLOAT_MESSAGES.length)];
@@ -3021,50 +3351,25 @@ ${text}
             const notif = document.getElementById('float-notif-' + slotNumber);
             const title = document.getElementById('float-title-' + slotNumber);
             const timeEl = document.getElementById('float-time-' + slotNumber);
-            
             if (!notif || !title) return;
-            
             const msg = getRandomMessage();
             title.innerText = `${msg.phone} မှ ${msg.amount} လဲလှယ်မှု အောင်မြင်သည်။`;
-            
-            // Random relative time
             const mins = Math.floor(Math.random() * 5) + 1;
             if (timeEl) timeEl.innerText = mins + " min ago";
-            
             notif.classList.add('show');
-            
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 5500);
+            setTimeout(() => { notif.classList.remove('show'); }, 5500);
         }
 
-        // Rotate 3 slots at staggered intervals
         function scheduleFloatingNotifications() {
-            // Slot 1: every 12-18 seconds
-            setInterval(() => {
-                showFloatingNotification(1);
-            }, 14000);
-            
-            // Slot 2: every 16-22 seconds
-            setInterval(() => {
-                showFloatingNotification(2);
-            }, 18000);
-            
-            // Slot 3: every 20-26 seconds
-            setInterval(() => {
-                showFloatingNotification(3);
-            }, 22000);
-            
-            // Initial burst
+            setInterval(() => showFloatingNotification(1), 14000);
+            setInterval(() => showFloatingNotification(2), 18000);
+            setInterval(() => showFloatingNotification(3), 22000);
             setTimeout(() => showFloatingNotification(1), 3000);
             setTimeout(() => showFloatingNotification(2), 5500);
             setTimeout(() => showFloatingNotification(3), 8000);
         }
         scheduleFloatingNotifications();
 
-        // ==========================================
-        // STATS SIMULATION
-        // ==========================================
         function simulateLiveStats() {
             const txEl = document.getElementById('stat-tx');
             const userEl = document.getElementById('stat-users');
@@ -3085,7 +3390,7 @@ ${text}
         }
         simulateLiveStats();
 
-        console.log("🚀 Application ready!");
+        console.log("🚀 Application ready! 30-day cycle system active.");
     </script>
 </body>
 </html>
