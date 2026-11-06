@@ -1571,6 +1571,162 @@
         .admin-user-info { font-size: 13px; line-height: 1.5; margin-bottom: 10px; }
         .admin-user-info b { color: gold; }
         
+        /* Admin Message User Styles */
+        .msg-user-search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .msg-user-search input {
+            flex: 1;
+        }
+        .msg-user-search button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .msg-compose-area {
+            background: #2d3748;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+            border: 1px solid #4a5568;
+        }
+        .msg-compose-area.show { display: block; }
+        .msg-compose-area textarea {
+            background: #1a202c;
+            color: white;
+            border: 1px solid #4a5568;
+            margin-bottom: 10px;
+            min-height: 80px;
+        }
+        .msg-compose-area .send-btn {
+            background: #10ac84;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Admin Limit Control Styles */
+        .limit-control-area {
+            background: #2d3748;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #4a5568;
+        }
+        .limit-control-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .limit-control-grid input {
+            background: #1a202c;
+            border: 1px solid #4a5568;
+            color: white;
+        }
+        .save-limit-btn {
+            background: var(--warning);
+            color: #333;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* User Inbox Styles */
+        .inbox-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(235, 77, 75, 0.4);
+        }
+        .inbox-btn-container {
+            position: absolute;
+            top: 20px;
+            right: 80px; /* Shifted left for Video Icon */
+            z-index: 10;
+        }
+        .video-btn-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+        .action-icon-btn {
+            position: relative;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            background: rgba(255,255,255,0.15);
+            padding: 10px;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+        }
+        .action-icon-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
+        
+        #inbox-modal, #video-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .inbox-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        .inbox-item .msg-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .inbox-item .msg-body {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #333;
+        }
+        .inbox-item .msg-time {
+            font-size: 10px;
+            color: #999;
+            margin-top: 8px;
+            text-align: right;
+        }
+
         /* ============================================
                    FOOTER
                    ============================================ */
@@ -1662,6 +1818,15 @@
             .card { padding: 15px; }
             .history-icon {
                 top: 10px; left: 10px;
+                width: 40px; height: 40px; font-size: 20px;
+            }
+            .inbox-btn-container {
+                top: 10px; right: 60px;
+            }
+            .video-btn-container {
+                top: 10px; right: 10px;
+            }
+            .action-icon-btn {
                 width: 40px; height: 40px; font-size: 20px;
             }
             .payment-methods { flex-direction: column; }
@@ -1774,6 +1939,36 @@
     </div>
 
     <!-- ==========================================
+    INBOX MODAL (For User)
+    ========================================== -->
+    <div id="inbox-modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-envelope-open-text"></i> Admin ထံမှ စာများ</h3>
+            <div id="inbox-list">
+                <p style="text-align: center; color: #999;">စာများမရှိသေးပါ။</p>
+            </div>
+            <button class="main-btn" style="margin-top:20px;" onclick="closeInbox()">ပိတ်မည်</button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+    VIDEO MODAL (For User)
+    ========================================== -->
+    <div id="video-modal">
+        <div class="modal-content" style="max-width: 600px; padding: 15px;">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-play-circle"></i> Pay to Pay လဲလှယ်နည်း</h3>
+            <div style="background: #000; border-radius: 12px; overflow: hidden; position: relative; margin-bottom: 15px;">
+                <video controls style="width: 100%; display: block; border-radius: 12px;">
+                    <!-- သင့်ရဲ့ Video ဖိုင် -->
+                    <source src="video_2026-11-06_15-06-51.mp4" type="video/mp4">
+                    သင့်ဘရောက်ဇာသည် Video ကို မပံ့ပိုးပါ။
+                </video>
+            </div>
+            <button class="main-btn" onclick="closeVideo()">ပိတ်မည်</button>
+        </div>
+    </div>
+
+    <!-- ==========================================
     AUTH CONTAINER
     ========================================== -->
     <div id="auth-container">
@@ -1829,6 +2024,22 @@
             <button class="history-icon" onclick="openHistory()" title="မှတ်တမ်းကြည့်ရန်">
                 <i class="fas fa-history"></i>
             </button>
+            
+            <!-- Inbox Button -->
+            <div class="inbox-btn-container">
+                <button class="action-icon-btn" onclick="openInbox()" title="Admin စာများ">
+                    <i class="fas fa-envelope"></i>
+                    <span class="inbox-badge" id="inbox-badge" style="display: none;">0</span>
+                </button>
+            </div>
+
+            <!-- Video Button -->
+            <div class="video-btn-container">
+                <button class="action-icon-btn" onclick="openVideo()" title="လဲလှယ်နည်း Video">
+                    <i class="fas fa-play-circle"></i>
+                </button>
+            </div>
+
             <img class="main-logo" src="https://i.ibb.co/JWmddJQL/logo.png" alt="Pay to Pay Logo">
             <h2>PAY TO PAY <i class="fas fa-check-circle verified-badge"></i></h2>
             <p>Professional Myanmar P2P Money Exchange</p>
@@ -1937,15 +2148,15 @@
                         <span style="font-size: 12.5px; color: #a01818;">- အသေးစား <b>၂ ကြိမ်</b> | အလတ်စား <b>၁ ကြိမ်</b> | အကြီးစား <b>၁ ကြိမ်</b></span>
                     </li>
                     <li><b>ပြက္ခဒိန်လစဉ် ၁ ရက်နေ့မှာ Reset မဖြစ်ပါ။</b> ဥပမာ - စက်တင်ဘာ ၂၉ ရက်နေ့ စလဲပါက အောက်တိုဘာ ၂၉ ရက်နေ့ကျမှသာ ပြန်လဲနိုင်မည်။</li>
-                    <li><b>တစ်ဦးတည်း အကောင့်များစွာ ဖွင့်၍ အလွဲသုံးစားပြုလုပ်ခြင်း လုံးဝ မပြုလုပ်ရ။</b> တွေ့ရှိပါက <b>ဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်ခံရမည်။</li>
-                    <li><b>တကယ်လိုအပ်သူများသာ</b> လဲလှယ်ခွင့် ပြုပါသည်။တရားဝင်ငွေလွှဲရမည့်နံပါတ် 09983857117 Daw Wa</li>
-                    <li><b>မှန်ကန်သော အချက်အလက်များ</b> သာ ဖြည့်သွင်းရမည်။ Paytopay app တွင်တရားဝင်ငွေလွှဲရမည့်နံပါတ်မှာ Daw Wa ဖြစ်ပါသည်။ 09983857117။ i>
+                    <li><b>တစ်ဦးတည်း အကောင့်များစွာ ဖွင့်၍ အလွဲသုံးစားပြုလုပ်ခြင်း လုံးဝ မပြုလုပ်ရ. အိမ်ထောင်စုတစ်ခုတွင် Pay to pay app ကို တစ်ယောက်သာ အသုံးပြုပေးပါရန်။</b> တွေ့ရှိပါက <b>ဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်ခံရမည်။</li>
+                    <li><b>တကယ်လိုအပ်သူများသာ</b> လဲလှယ်ခွင့် ပြုပါသည်။ အသေးလဲလှယ်မှုတွင် 5K နှစ်ကြိမ်လဲလှယ်မရပါ. စည်းကမ်းချက်များကိုလိုက်နာ နိုင်မှသာ လဲလှယ်ပေးပါရန်. တရားဝင်ငွေလွှဲရမည့်နံပါတ် 09983857117 Daw Wa</li>
+                    <li><b>မှန်ကန်သော အချက်အလက်များ</b> သာ ဖြည့်သွင်းရမည်။ Paytopay app တွင်တရားဝင်ငွေလွှဲရမည့်နံပါတ်မှာ Daw Wa ဖြစ်ပါသည်။ 09983857117။</li>
                     <li><b>ငွေကြေးခဝါချမှု</b> တွင် ပါဝင်သည့် အကောင့်များကို ချက်ချင်း ရပ်ဆိုင်းမည်။</li>
                 </ol>
                 <div class="penalty-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     <b>သတိပေးချက်:</b> စည်းကမ်းချက်များကို ချိုးဖောက်သည့် သုံးစွဲသူများအား 
-                    <b>ငွေဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်မည်ဖြစ်ပြီး အကောင့်ကို အပြီးအပိုင် ပိတ်သိမ်းမည်။ကျန်သည့်ငွေလွှဲနံပ့တ်များကိုငွေလွှဲပါကP2P company ဘက်မှဖြေရှင်းပေးမည်မဟုတ်ပေ။
+                    <b>ငွေဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်မည်ဖြစ်ပြီး အကောင့်ကို အပြီးအပိုင် ပိတ်သိမ်းမည်။ကျန်သည့်ငွေလွှဲနံပါတ်များကိုငွေလွှဲပါကP2P company ဘက်မှဖြေရှင်းပေးမည်မဟုတ်ပေ။
                 </div>
             </div>
 
@@ -2018,7 +2229,7 @@
             <div id="p2p-info" class="info-content">
                 <h3 style="color:var(--primary); margin-top: 0;"><i class="fas fa-user-shield"></i> လုံခြုံစိတ်ချရသော ငွေကြေးဝန်ဆောင်မှု</h3>
                 <p>မြန်မာနိုင်ငံတွင် လက်ရှိဖြစ်ပေါ်နေသော ငွေကြေးစီးဆင်းမှုစနစ်များ၌ မသန့်ရှင်းသော လမ်းကြောင်းများမှ ရရှိလာသော ငွေကြေးများကြောင့် သာမန်ပြည်သူများ၏ ဘဏ်အကောင့်များ ပိတ်သိမ်းခံရခြင်းမှ ကာကွယ်ရန် ကျွန်ုပ်တို့မှ တာဝန်ယူပါသည်။</p>
-                <p><strong>ကျွန်ုပ်တို့၏ ရည်ရွယ်ချက်မှာ-</strong> အသုံးပြုသူများ၏ ငွေကြေးစီးဆင်းမှု လုံခြုံစိတ်ချရစေရန် စနစ်တကျ စစ်ဆေးပေးခြင်း (Secure Flow Management) ကို အခြေခံကျကျ ကိုင်တွယ်ဖြေရှင်းပေးရန် ဖြစ်ပါသည်။</p>
+                <p><strong>ကျွန်ုပ်တို့၏ ရည်ရွယ်ချက်မှာ-</strong> ငွေကြေးခဝါချသူများ တည်ဆောက်ထားခြင်းဖြစ်တာကြောင့် လူကြီးမင်းတို့ ယုံကြည်စိတ်ချစွာ လဲလှယ်နိုင်ပါသည်. အသုံးပြုသူတစ်ယောက်သည် တစ်လတွင် အများဆုံး သိန်း100 ထိ လဲလှယ်ခွင့်ရှိပါသည်. အသုံးပြုသူများ၏ ငွေကြေးစီးဆင်းမှု လုံခြုံစိတ်ချရစေရန် စနစ်တကျ စစ်ဆေးပေးခြင်း (Secure Flow Management) ကို အခြေခံကျကျ ကိုင်တွယ်ဖြေရှင်းပေးရန် ဖြစ်ပါသည်။</p>
                 <div class="guarantee-box">
                     <i class="fas fa-handshake"></i> <b>100% Guarantee:</b> လဲလှယ်မှု ကြာချိန်သည် ၅ မိနစ်မှ ၁၅ မိနစ်အတွင်းသာ ကြာမြင့်မည်။ အကယ်၍ ၁ နာရီထက် ကျော်လွန်ပါက ငွေပမာဏကို ၁၀၀% အပြည့်အဝ တာဝန်ယူ ပြန်ပေးမည် ဖြစ်ပါသည်။
                 </div>
@@ -2050,7 +2261,7 @@
 
             <div class="feature-section">
                 <h3><i class="fas fa-network-wired"></i> P2P နည်းပညာ အကြောင်း</h3>
-                <p><b>P2P (Peer-to-Peer)</b> ဆိုသည်မှာ အသုံးပြုသူများအချင်းချင်း <b>ဗဟိုဘဏ် သို့မဟုတ် ဘဏ်လုပ်ငန်း အလယ်အလတ်မလိုဘဲ</b> တိုက်ရိုက် ငွေကြေးလဲလှယ်နိုင်သည့် နည်းပညာစနစ်ဖြစ်ပါသည်။</p>
+                <p><b>P2P (Peer-to-Peer)</b> ဆိုသည်မှာ အသုံးပြုသူများအချင်းချင်း <b>ဗဟိုဘဏ် သို့မဟုတ် ဘဏ်လုပ်ငန်း အလယ်အလတ်မလိုဘဲ</b> တိုက်ရိုက် ငွေကြေးလဲလှယ်နိုင်သည့် နည်းပညာစနစ်ဖြစ်ပါသည်. ငွေကြေးခဝါချသူနှင့် ငွေကြေးလိုအပ်သူကိုချိတ်ဆက်ပေးခြင်းဖြစ်ပါသည်. p>
                 <ul class="feature-list">
                     <li><i class="fas fa-fingerprint"></i> <b>Identity Verification</b></li>
                     <li><i class="fas fa-file-shield"></i> <b>Transaction Validation</b></li>
@@ -2187,11 +2398,11 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">ငွေလွှဲပြီးရင် ဘယ်လောက်ကြာကြာမှ ငွေပြန်ရမလဲ? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer">ပုံမှန်အားဖြင့် ၅ မိနစ်မှ ၁၅ မိနစ်အတွင်း သင့်ဖုန်းနံပါတ်သို့ ငွေပြန်ရောက်ရှိမည် ဖြစ်ပါသည်။</div>
+                    <div class="faq-answer">ပုံမှန်အားဖြင့် ၅ မိနစ်မှ ၁၅ မိနစ်အတွင်း သင့်ဖုန်းနံပါတ်သို့ ငွေပြန်ရောက်ရှိမည် ဖြစ်ပါသည်. 15မိနစ်အတွင်း ငွေလဲလှယ်မှု မရောက်ရှိပါက Customer Service သို့ ဆက်သွယ်ပါ.https://t.me/Paytopaymyanmar7790 ။</div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">အကောင့်များစွာဖွင့်ရင် ဘာဖြစ်မလဲ? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-answer">တစ်ဦးတည်း အကောင့်များစွာ ဖွင့်၍ အလွဲသုံးစားလုပ်ခြင်း တွေ့ရှိပါက <b>ဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်ခံရမည် ဖြစ်ပြီး အကောင့်အားလုံး ပိတ်သိမ်းခံရမည်။</div>
+                    <div class="faq-answer">တစ်ဦးတည်း အကောင့်များစွာ ဖွင့်၍ အလွဲသုံးစားလုပ်ခြင်း တွေ့ရှိပါက <b>ဒဏ်ကြေးနှင့် ပြစ်ဒဏ်</b> ချမှတ်ခံရမည် ဖြစ်ပြီး အကောင့်အားလုံး ပိတ်သိမ်းခံရမည်. အကောင့်အများပြားဖွင့်ပါက ဒဏ်ကြေး 3 သောင်းကျပ် ပေးဆောင်ရမည်. 5k နှစ်ကြိမ်လဲပါက ပြန်လည်လွှဲပြောင်းပေးမည် မဟုတ်ပေ./div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">ကျွန်တော် ဘယ်လိုငွေပေးချေနိုင်မလဲ? <i class="fas fa-chevron-down"></i></button>
@@ -2214,6 +2425,47 @@
                     <input type="password" id="admin-pass" placeholder="Enter Password to Unlock">
                 </div>
                 <hr style="border: 0.5px solid #444; margin: 20px 0;">
+                
+                <!-- Admin Message Feature -->
+                <h4 style="color: #f8c291; margin-bottom: 10px;"><i class="fas fa-envelope"></i> သီးသန့်စာတို ပို့ရန် (Direct Message)</h4>
+                <div class="msg-user-search">
+                    <input type="text" id="msg-target-phone" placeholder="User ၏ ဖုန်းနံပါတ် (09...)">
+                    <button onclick="checkUserForMessage()">စစ်ဆေး</button>
+                </div>
+                <div id="msg-compose-area" class="msg-compose-area">
+                    <div style="color: #ccc; font-size: 12px; margin-bottom: 5px;">ပို့မည့်သူ: <span id="msg-target-name" style="color: #f8c291;"></span></div>
+                    <textarea id="admin-msg-text" placeholder="စာ အကြောင်းအရာ..."></textarea>
+                    <button class="send-btn" onclick="sendAdminMessage()"><i class="fas fa-paper-plane"></i> စာပို့မည်</button>
+                </div>
+                <hr style="border: 0.5px solid #444; margin: 20px 0;">
+
+                <!-- Admin Limit Control Feature -->
+                <h4 style="color: #f8c291; margin-bottom: 10px;"><i class="fas fa-sliders-h"></i> ငွေလဲခွင့် ပြန်လည်ပြင်ဆင်ရန် (User Limit Control)</h4>
+                <div class="limit-control-area">
+                    <div style="color: #ccc; font-size: 12px; margin-bottom: 5px;">User ၏ ဖုန်းနံပါတ် ထည့်ပါ</div>
+                    <input type="text" id="limit-target-phone" placeholder="09xxxxxxxxx" style="margin-bottom: 10px;">
+                    <div class="limit-control-grid">
+                        <div>
+                            <label style="color: #aaa; font-size: 10px;">Small Count</label>
+                            <input type="number" id="limit-small" value="0" min="0" max="2">
+                        </div>
+                        <div>
+                            <label style="color: #aaa; font-size: 10px;">Medium Count</label>
+                            <input type="number" id="limit-medium" value="0" min="0" max="1">
+                        </div>
+                        <div>
+                            <label style="color: #aaa; font-size: 10px;">Large Count</label>
+                            <input type="number" id="limit-large" value="0" min="0" max="1">
+                        </div>
+                        <div>
+                            <label style="color: #aaa; font-size: 10px;">Cycle Start (Timestamp)</label>
+                            <input type="number" id="limit-cycle-start" placeholder="Leave blank to reset">
+                        </div>
+                    </div>
+                    <button class="save-limit-btn" onclick="updateUserLimits()"><i class="fas fa-save"></i> အချက်အလက်များ သိမ်းဆည်းမည်</button>
+                </div>
+                <hr style="border: 0.5px solid #444; margin: 20px 0;">
+
                 <h4 style="color: #f8c291; margin-bottom: 10px;">Pending Requests</h4>
                 <div id="admin-user-list">
                     <p style="color: #888; font-size: 12px;">No active requests.</p>
@@ -2247,7 +2499,7 @@
                 </div>
                 <div style="font-size: 12px; opacity: 0.7;">
                     <i class="fas fa-map-marker-alt"></i> အမှတ် ၁၂၃၊ မရမ်းကုန်းမြို့နယ်၊ ရန်ကုန်၊ မြန်မာ။ <br>
-                    <i class="fas fa-phone"></i> 09-951214043 | <i class="fas fa-envelope"></i> support@paytopay.com
+                    <i class="fas fa-phone"></i> 09-951214050 | <i class="fas fa-envelope"></i> support@paytopay.com
                 </div>
                 <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; font-size: 11px;">
                     &copy; 2026 Pay to Pay Myanmar. All rights reserved. | <i class="fas fa-shield-halved"></i> AML/CFT Compliant
@@ -2364,6 +2616,7 @@
                     renderHistory();
                     updateStatusUI();
                     checkExchangeLimits();
+                    checkUnreadMessages();
                 }
             } catch (e) { console.error(e); }
         }
@@ -2500,7 +2753,8 @@
                             cycle_start_date: null,  // 30-day cycle start
                             createdAt: Date.now(),
                             kycStatus: 'pending',
-                            amlCheck: 'passed'
+                            amlCheck: 'passed',
+                            messages: []
                         });
                         showMessage("✅ အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ပြန်ဝင်ပါ။", 'success');
                         window.switchAuth('login');
@@ -2538,6 +2792,7 @@
             checkExchangeLimits();
             updateStatusUI();
             renderHistory();
+            checkUnreadMessages();
         }
 
         function updateUserInfoUI() {
@@ -2564,6 +2819,101 @@
                     .catch(err => console.error(err));
             }
         });
+
+        // ==========================================
+        // INBOX / ADMIN MESSAGES
+        // ==========================================
+        window.openInbox = function() {
+            document.getElementById('inbox-modal').style.display = 'block';
+            renderInboxMessages();
+            markInboxAsRead();
+        };
+
+        window.closeInbox = function() {
+            document.getElementById('inbox-modal').style.display = 'none';
+        };
+
+        async function renderInboxMessages() {
+            if (!currentUser) return;
+            try {
+                const snap = await db.collection("users").doc(currentUser.phone).get();
+                const data = snap.data();
+                const msgs = data.messages || [];
+                const listDiv = document.getElementById('inbox-list');
+                if (!listDiv) return;
+                listDiv.innerHTML = "";
+
+                if (msgs.length === 0) {
+                    listDiv.innerHTML = "<p style='text-align: center; color: #999;'>စာများမရှိသေးပါ။</p>";
+                } else {
+                    const sorted = [...msgs].reverse();
+                    sorted.forEach(m => {
+                        const div = document.createElement('div');
+                        div.className = "inbox-item";
+                        const dateStr = new Date(m.timestamp).toLocaleString('my-MM');
+                        div.innerHTML = `
+                            <div class="msg-title">
+                                <span><i class="fas fa-user-shield" style="color: var(--primary);"></i> Admin</span>
+                                <span class="msg-time">${dateStr}</span>
+                            </div>
+                            <div class="msg-body">${m.text}</div>
+                        `;
+                        listDiv.appendChild(div);
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function checkUnreadMessages() {
+            if (!currentUser) return;
+            try {
+                const snap = await db.collection("users").doc(currentUser.phone).get();
+                const data = snap.data();
+                const msgs = data.messages || [];
+                const unread = msgs.filter(m => !m.read).length;
+                const badge = document.getElementById('inbox-badge');
+                if (badge) {
+                    if (unread > 0) {
+                        badge.innerText = unread;
+                        badge.style.display = 'flex';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function markInboxAsRead() {
+            if (!currentUser) return;
+            try {
+                const userRef = db.collection("users").doc(currentUser.phone);
+                const snap = await userRef.get();
+                const data = snap.data();
+                const msgs = data.messages || [];
+                const updated = msgs.map(m => ({ ...m, read: true }));
+                await userRef.update({ messages: updated });
+                checkUnreadMessages(); // Refresh badge
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // ==========================================
+        // VIDEO MODAL
+        // ==========================================
+        window.openVideo = function() {
+            document.getElementById('video-modal').style.display = 'block';
+        };
+
+        window.closeVideo = function() {
+            const video = document.querySelector('#video-modal video');
+            if (video) video.pause(); // Stop video when closing
+            document.getElementById('video-modal').style.display = 'none';
+        };
 
         // ==========================================
         // TIER SELECTION
@@ -3207,7 +3557,7 @@ ${text}
         };
 
         // ==========================================
-        // ADMIN
+        // ADMIN PANEL
         // ==========================================
         let clickCount = 0;
         window.adminClick = function() {
@@ -3278,6 +3628,144 @@ ${text}
             } catch (e) {
                 console.error(e);
                 showMessage("❌ Action Failed!", 'error');
+            }
+        };
+
+        // ==========================================
+        // ADMIN DIRECT MESSAGE
+        // ==========================================
+        let msgTargetUser = null;
+
+        window.checkUserForMessage = async function() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass !== "admin777") {
+                showMessage("❌ Wrong Admin Password!", 'error');
+                return;
+            }
+            
+            const phone = document.getElementById('msg-target-phone').value.trim();
+            if (!phone) {
+                showMessage("❌ ဖုန်းနံပါတ် ထည့်ပါ", 'error');
+                return;
+            }
+            
+            try {
+                const snap = await db.collection("users").doc(phone).get();
+                if (snap.exists) {
+                    msgTargetUser = snap.data();
+                    document.getElementById('msg-target-name').innerText = msgTargetUser.name + " (" + msgTargetUser.phone + ")";
+                    document.getElementById('msg-compose-area').classList.add('show');
+                    showMessage("✅ User တွေ့ပါပြီ။ စာ ရေးသားနိုင်ပါပြီ။", 'success');
+                } else {
+                    document.getElementById('msg-compose-area').classList.remove('show');
+                    showMessage("❌ ဤဖုန်းနံပါတ်ဖြင့် User မတွေ့ပါ", 'error');
+                }
+            } catch (e) {
+                console.error(e);
+                showMessage("❌ Error: " + e.message, 'error');
+            }
+        };
+
+        window.sendAdminMessage = async function() {
+            if (!msgTargetUser) {
+                showMessage("❌ ဦးစွာ User ကို ရှာပါ", 'error');
+                return;
+            }
+            
+            const text = document.getElementById('admin-msg-text').value.trim();
+            if (!text) {
+                showMessage("❌ စာ အကြောင်းအရာ ရေးပါ", 'error');
+                return;
+            }
+            
+            const btn = event.target;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ပို့နေပါသည်...';
+            
+            try {
+                const userRef = db.collection("users").doc(msgTargetUser.phone);
+                const newMsg = {
+                    text: text,
+                    timestamp: Date.now(),
+                    read: false
+                };
+                
+                await userRef.update({
+                    messages: firebase.firestore.FieldValue.arrayUnion(newMsg)
+                });
+                
+                showMessage("✅ စာ ပို့ပြီးပါပြီ။", 'success');
+                document.getElementById('admin-msg-text').value = '';
+                document.getElementById('msg-compose-area').classList.remove('show');
+                msgTargetUser = null;
+            } catch (e) {
+                console.error(e);
+                showMessage("❌ Error: " + e.message, 'error');
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> စာပို့မည်';
+        };
+
+        // ==========================================
+        // ADMIN LIMIT CONTROL
+        // ==========================================
+        window.updateUserLimits = async function() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass !== "admin777") {
+                showMessage("❌ Wrong Admin Password!", 'error');
+                return;
+            }
+
+            const phone = document.getElementById('limit-target-phone').value.trim();
+            if (!phone) {
+                showMessage("❌ User ၏ ဖုန်းနံပါတ် ထည့်ပါ", 'error');
+                return;
+            }
+
+            const small = parseInt(document.getElementById('limit-small').value) || 0;
+            const medium = parseInt(document.getElementById('limit-medium').value) || 0;
+            const large = parseInt(document.getElementById('limit-large').value) || 0;
+            const cycleStartVal = document.getElementById('limit-cycle-start').value;
+
+            try {
+                const userRef = db.collection("users").doc(phone);
+                const snap = await userRef.get();
+                
+                if (!snap.exists) {
+                    showMessage("❌ User မတွေ့ပါ", 'error');
+                    return;
+                }
+
+                let updateData = {
+                    small_count: small,
+                    medium_count: medium,
+                    large_count: large
+                };
+
+                if (cycleStartVal === '') {
+                    // Reset cycle start date
+                    updateData.cycle_start_date = null;
+                } else {
+                    updateData.cycle_start_date = parseInt(cycleStartVal);
+                }
+
+                await userRef.update(updateData);
+                showMessage(`✅ User ၏ ငွေလဲခွင့် အခြေအနေကို ပြင်ဆင်ပြီးပါပြီ။ (Small: ${small}, Medium: ${medium}, Large: ${large})`, 'success');
+                
+                // If the user is currently logged in on this device, refresh data
+                if (currentUser && currentUser.phone === phone) {
+                    reloadUserData(phone);
+                }
+                
+                setTimeout(() => {
+                    const m = document.getElementById('message');
+                    if (m) m.style.display = 'none';
+                }, 4000);
+
+            } catch (e) {
+                console.error(e);
+                showMessage("❌ Error: " + e.message, 'error');
             }
         };
 
